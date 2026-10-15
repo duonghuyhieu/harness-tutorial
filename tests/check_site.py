@@ -98,11 +98,12 @@ def content_percents() -> set[str]:
     return {m.replace(",", ".") for m in PERCENT.findall(text)}
 
 
-def check_page(key: str, strict: bool, errors: list[str], warnings: list[str]) -> None:
+def check_page(key: str, strict: bool, errors: list[str], warnings: list[str], must_exist: bool = False) -> None:
+    """`must_exist`: this page itself is required; `strict`: links to planned pages must resolve too (release gate)."""
     spec = PAGES[key]
     path = ROOT / spec["file"]
     if not path.exists():
-        (errors if strict else warnings).append(f"{spec['file']} does not exist yet."
+        (errors if (strict or must_exist) else warnings).append(f"{spec['file']} does not exist yet."
                                                 f"\n  FIX: build it from docs/CONTENT.md and docs/PAGE-TEMPLATE.html.")
         return
     p, raw = parse(path)
@@ -236,7 +237,7 @@ def main() -> int:
     if not args.smoke:
         keys = [args.page] if args.page else list(PAGES)
         for k in keys:
-            check_page(k, strict=args.strict or k == args.page, errors=errors, warnings=warnings)
+            check_page(k, strict=args.strict, errors=errors, warnings=warnings, must_exist=(k == args.page))
     for w in warnings:
         print("WARNING:", w)
     for e in errors:
