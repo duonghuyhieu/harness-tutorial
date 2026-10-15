@@ -209,16 +209,52 @@
       "category": "feature",
       "behavior": "principles.html (Nguyên lý xử lý): thirteen principle blocks (mechanism, artifact, anti-pattern) from docs/CONTENT.md Page 3, the loop diagram in the loop section, and links back to the problems they answer",
       "verification": "python tests/check_site.py --page principles",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [
         "F002"
       ],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T20:58:09+07:00",
+        "commit": "62c8765",
+        "command": "python tests/check_site.py --page principles",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "WARNING: principles.html: links to references.html, not built yet\nWARNING: principles.html: links to references.html, not built yet\nWARNING: principles.html: links to references.html, not built yet\nWARNING: principles.html: links to references.html, not built yet\nWARNING: principles.html: links to references.html, not built yet\nWARNING: principles.html: links to references.html, not built yet\nWARNING: principles.html: links to references.html, not built yet\nsite check: PASS",
+        "loop": {
+          "attempts": 1,
+          "cost_usd": 0.672221,
+          "runs": [
+            {
+              "role": "maker",
+              "subtype": "success",
+              "cost": 0.478877,
+              "turns": 11
+            },
+            {
+              "role": "reviewer",
+              "subtype": "success",
+              "cost": 0.19334440000000003,
+              "turns": 10
+            }
+          ],
+          "reviewer_evidence": "`python scripts/harness.py try F003` printed \"site check: PASS\" and exit 0. `harness.py check` passed rules, docs, lint and test. `check --only test` passed. `git status` shows only principles.html and feature_list.json changed. The feature_list.json change is harness-owned, so there is no scope violation and nothing under assets/, tests/ or docs/ changed. I read principles.html in full against docs/CONTENT.md Page 3. It has all 13 principle blocks with the exact ids and order, and each block ha"
+        }
+      },
       "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
       "scope": [
         "principles.html"
       ],
-      "priority": 12
+      "priority": 12,
+      "activated_at": "2026-10-15T20:56:03+07:00",
+      "activated_commit": "62c8765e13f34ef3d34a2b4a7af1ffc7eee37999",
+      "loop_runs": [
+        {
+          "run": "20261015-205603-F003",
+          "outcome": "passing",
+          "report_sha256": "c5bca9c60d4f30c5eb8d26752188e3cf5881ee016b571ccb2aa45bbdabad2d0f"
+        }
+      ]
     },
     {
       "id": "F004",

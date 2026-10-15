@@ -5,10 +5,10 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-15T20:56:03+07:00_
-- Branch / commit: `main` @ `cebd819 feat(F001): index.html (Tổng quan): thesis hero with the animated loop d`
-- Last check: PASS (quick, 2026-10-15T20:56:03+07:00, @cebd819)
-- Features: 6/11 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-15T20:58:09+07:00_
+- Branch / commit: `main` @ `62c8765 feat(F002): problems.html (Các vấn đề của AI agent ngày nay): nine probl`
+- Last check: PASS (quick, 2026-10-15T20:58:09+07:00, @62c8765)
+- Features: 7/11 passing, VCR 1.0
 - Active: none
 - Blocked: none
 - Uncommitted changes: 2 file(s)
