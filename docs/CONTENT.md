@@ -167,7 +167,7 @@ Problem → mechanism table (rows; keep these exact mechanisms):
 | Unsafe autonomous runs | `loop`: maker → read-only reviewer → test gate → pass-gate, budgets and attempt limits, integrity restore of harness files after every session |
 | Fragile installs (lesson from claudekit) | settings merged entry by entry, manifest with sha256 per file, `update`/`uninstall` touch only unchanged files, no silent postinstall surprises |
 
-Evaluation facts (all [do] unless noted; 15–16/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287; kit 2.1.2):
+Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287; kit 2.1.2):
 - 113 automated tests pass, including 6 regression tests for the defects that three independent read-only reviews
   found in 2.0.0 (each of those 6 fails on 2.0.0) and the regression tests for the bugs building this site exposed.
 - CI on GitHub Actions (Ubuntu, Windows, macOS × Python 3.10 and 3.12) passes. Its first run found a real defect:
@@ -187,7 +187,7 @@ Evaluation facts (all [do] unless noted; 15–16/10/2026, Windows 11, Python 3.1
   11 partly, 0 not yet, after 2.1.x added path-scoped rules, visible hook failures and an opt-in fail-closed guard,
   a Stop gate on unverified changes, a hashed log of injected context, atomic state writes, config validation,
   a Claude Code version check and CI [sl self-assessment].
-- Controlled pilot (16/10/2026) [do — pilot, small n]: one task (checkout() from a 7-rule spec, 26 hidden
+- Controlled pilot (15/10/2026) [do — pilot, small n]: one task (checkout() from a 7-rule spec, 26 hidden
   acceptance tests), the same prompt and model, a plain repository (A) vs the same repository with harness-kit and
   the task as the active feature whose verification is the visible test command (B). Haiku, 10 runs per arm:
   fully correct 3/10 (A) vs 4/10 (B), Fisher p = 1.00; hidden tests passed 97.3% vs 97.7% on average; every run

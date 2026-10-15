@@ -25,7 +25,7 @@ _Auto-updated by `harness.py handoff` at 2026-10-15T23:53:01+07:00_
       conditions, citation keys and labels, references, cost wording, PowerShell/npm update commands, contrast,
       no-JS reveal, pause/play for animations, state machine mirroring the runtime, copy fallback; harness-kit 2.0.1
       facts (105 tests, V001–V007, strict 5/14/2 rating, independent review note).
-- [x] 2026-10-16: F011 harness-kit 2.1.2 facts and the controlled pilot (baseline vs harness-kit, Bảng 2 on
+- [x] 2026-10-15: F011 harness-kit 2.1.2 facts and the controlled pilot (baseline vs harness-kit, Bảng 2 on
       harness-kit.html); limits restated.
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
