@@ -5,10 +5,10 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-15T20:58:09+07:00_
-- Branch / commit: `main` @ `62c8765 feat(F002): problems.html (Các vấn đề của AI agent ngày nay): nine probl`
-- Last check: PASS (quick, 2026-10-15T20:58:09+07:00, @62c8765)
-- Features: 7/11 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-15T21:00:34+07:00_
+- Branch / commit: `main` @ `fcbe924 feat(F003): principles.html (Nguyên lý xử lý): thirteen principle blocks`
+- Last check: PASS (quick, 2026-10-15T21:00:34+07:00, @fcbe924)
+- Features: 8/11 passing, VCR 1.0
 - Active: none
 - Blocked: none
 - Uncommitted changes: 2 file(s)

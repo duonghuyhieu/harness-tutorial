@@ -261,16 +261,52 @@
       "category": "feature",
       "behavior": "harness-kit.html (harness-kit đã xử lý thế nào): three-layer architecture, the problem→mechanism table, the interactive feature state machine, the hook timeline, evaluation stat cards with evidence tags, and the stated limits — docs/CONTENT.md Page 4",
       "verification": "python tests/check_site.py --page harness-kit",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [
         "F003"
       ],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T21:00:34+07:00",
+        "commit": "fcbe924",
+        "command": "python tests/check_site.py --page harness-kit",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "WARNING: harness-kit.html: links to references.html, not built yet\nWARNING: harness-kit.html: links to references.html, not built yet\nWARNING: harness-kit.html: links to references.html, not built yet\nWARNING: harness-kit.html: links to references.html, not built yet\nWARNING: harness-kit.html: links to references.html, not built yet\nWARNING: harness-kit.html: links to references.html, not built yet\nWARNING: harness-kit.html: links to guide.html, not built yet\nsite check: PASS",
+        "loop": {
+          "attempts": 1,
+          "cost_usd": 0.781189,
+          "runs": [
+            {
+              "role": "maker",
+              "subtype": "success",
+              "cost": 0.5925512000000001,
+              "turns": 13
+            },
+            {
+              "role": "reviewer",
+              "subtype": "success",
+              "cost": 0.1886374,
+              "turns": 9
+            }
+          ],
+          "reviewer_evidence": "`python scripts/harness.py try F004` printed \"site check: PASS\". The output had only warnings that guide.html and references.html aren't built yet, which are expected for pages that come later. `python scripts/harness.py check` returned PASS (rules, docs, lint, test). `check --only test` also returned PASS, and no test files were added or changed. Git status shows only harness-kit.html (new) and feature_list.json (harness-owned). Nothing in assets/, tests/ or docs/ was touched, so scope is clean"
+        }
+      },
       "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
       "scope": [
         "harness-kit.html"
       ],
-      "priority": 13
+      "priority": 13,
+      "activated_at": "2026-10-15T20:58:10+07:00",
+      "activated_commit": "fcbe924f783a575d3fac01e5baf72053e2de851f",
+      "loop_runs": [
+        {
+          "run": "20261015-205810-F004",
+          "outcome": "passing",
+          "report_sha256": "db64122d429f7d250414177f7cce98c820e601969fdcab38a208a4991be48d50"
+        }
+      ]
     },
     {
       "id": "F005",

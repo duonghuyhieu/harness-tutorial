@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>harness-kit đã xử lý thế nào — harness-kit</title>
+  <meta name="description" content="Kiến trúc ba lớp của harness-kit, bảng ánh xạ vấn đề sang cơ chế, máy trạng thái, hook, số liệu đánh giá và giới hạn.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html"><img class="brand__mark" src="assets/img/mark.svg" alt="">harness-kit</a>
+    <nav class="nav" aria-label="Điều hướng chính">
+      <a href="index.html">Tổng quan</a>
+      <a href="problems.html">Vấn đề</a>
+      <a href="principles.html">Nguyên lý</a>
+      <a href="harness-kit.html" aria-current="page">harness-kit</a>
+      <a href="guide.html">Hướng dẫn</a>
+      <a href="references.html">Tài liệu</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Đổi giao diện sáng/tối">☾</button>
+  </div>
+</header>
+
+<div class="page">
+  <aside class="toc" aria-label="Mục lục trang">
+    <p class="toc__title">Trong trang này</p>
+    <ol>
+      <li><a href="#kien-truc">Kiến trúc ba lớp</a></li>
+      <li><a href="#bang-anh-xa">Bảng ánh xạ</a></li>
+      <li><a href="#may-trang-thai">Máy trạng thái</a></li>
+      <li><a href="#hook">Dòng thời gian hook</a></li>
+      <li><a href="#danh-gia">Đánh giá</a></li>
+      <li><a href="#gioi-han">Giới hạn</a></li>
+      <li><a href="#tom-tat">Tóm tắt</a></li>
+    </ol>
+  </aside>
+
+  <main id="main" class="content">
+    <p class="eyebrow">HARNESS-KIT</p>
+    <h1>harness-kit đã xử lý thế nào</h1>
+    <p class="lead">harness-kit v2 biến các <a href="principles.html">nguyên lý</a> thành cơ chế chạy được, chia ba lớp: tệp dự án không phụ thuộc agent, một runtime Python thư viện chuẩn chứa toàn bộ logic cưỡng chế, và một lớp Claude Code mỏng trong <code>.claude/</code>. Mã nguồn: <a href="https://github.com/duonghuyhieu/harness-kit">github.com/duonghuyhieu/harness-kit</a> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+
+    <div class="legend" aria-label="Chú giải nhãn bằng chứng">
+      <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
+      <span><span class="ev" data-evidence="sx">SX</span> báo cáo sản xuất</span>
+      <span><span class="ev" data-evidence="mh">MH</span> minh họa</span>
+      <span><span class="ev" data-evidence="sl">SL</span> suy luận</span>
+    </div>
+
+    <section id="kien-truc" class="reveal">
+      <h2>Kiến trúc ba lớp</h2>
+      <div class="principle"><div class="principle__num">1</div><div class="principle__body"><h3>Tệp dự án, không phụ thuộc agent</h3><div class="mini-table"><div><b>Gồm</b>AGENTS.md, PROGRESS.md, <code>feature_list.json</code>, <code>init.sh</code>/<code>init.ps1</code>, <code>docs/</code>, <code>.harness/config.json</code>.</div><div><b>Vai trò</b>Trạng thái và quy tắc nằm trong kho mã; agent nào cũng đọc được.</div></div></div></div>
+      <div class="principle"><div class="principle__num">2</div><div class="principle__body"><h3>Runtime Python thư viện chuẩn</h3><div class="mini-table"><div><b>Gồm</b><code>scripts/harness.py</code>.</div><div><b>Vai trò</b>Giữ toàn bộ logic cưỡng chế: <code>verify</code>, <code>next</code>, <code>check</code>, <code>loop</code>, <code>exit-check</code>.</div></div></div></div>
+      <div class="principle"><div class="principle__num">3</div><div class="principle__body"><h3>Lớp Claude Code mỏng</h3><div class="mini-table"><div><b>Gồm</b>Trong <code>.claude/</code>: 6 subagent, 16 skill <code>/hk-*</code>, 7 hook và một status line.</div><div><b>Vai trò</b>Chuyển sự kiện của Claude Code thành lời gọi runtime; không chứa logic riêng.</div></div></div></div>
+    </section>
+
+    <section id="bang-anh-xa" class="reveal">
+      <h2>Bảng ánh xạ: vấn đề → cơ chế</h2>
+      <p>Mỗi hàng nối một <a href="problems.html">vấn đề</a> với cơ chế cụ thể trong harness-kit <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <div class="table-wrap"><table><caption>Bảng 1. Vấn đề và cơ chế của harness-kit.</caption><thead><tr><th>Vấn đề</th><th>Cơ chế harness-kit</th></tr></thead><tbody>
+        <tr><td>Khai “đã xong” sai</td><td><code>verify &lt;id&gt;</code> là con đường duy nhất tới <code>passing</code>: chạy lệnh kiểm chứng của feature và kiểm tra dự án, ghi bằng chứng (thời gian, commit, lệnh, mã thoát); passing là một chiều.</td></tr>
+        <tr><td>Sửa tay trạng thái hoàn thành</td><td>Hook PreToolUse từ chối sửa <code>status</code>/<code>evidence</code>/<code>attempts</code> trong <code>feature_list.json</code> (so sánh JSON theo ngữ nghĩa) và ghi qua shell vào tệp trạng thái; không bao giờ trả lời “allow”.</td></tr>
+        <tr><td>Vượt phạm vi và WIP</td><td><code>next</code> từ chối feature active thứ hai và từ chối khi VCR &lt; 1; guard hỏi lại trước khi ghi ngoài phạm vi của feature đang active.</td></tr>
+        <tr><td>Maker tự chấm bài</td><td>Subagent <code>hk-reviewer</code>: phiên mới, chỉ đọc, tự chạy <code>try</code> và <code>check</code>, trả PASS/FAIL kèm vị trí.</td></tr>
+        <tr><td>Mất ngữ cảnh giữa các phiên</td><td>Hook SessionStart đưa trạng thái vào phiên (feature, VCR, feature active và lệnh kiểm chứng, bước tiếp theo, lần check cuối); lệnh <code>start</code> / <code>handoff</code>.</td></tr>
+        <tr><td>Nén ngữ cảnh (compaction)</td><td>PreCompact ghi snapshot; SessionStart(compact) đưa lại snapshot và yêu cầu chạy lại <code>try</code>, xác nhận lại các phê duyệt.</td></tr>
+        <tr><td>Kết thúc phiên bừa bộn</td><td>Hook Stop chặn kết thúc khi còn mã debug, tệp rác hoặc feature list bị sửa tay (không chặn hai lần liên tiếp); lệnh <code>exit-check</code>.</td></tr>
+        <tr><td>Thiếu quan sát quy trình</td><td><code>.harness/trace.jsonl</code>, <code>.harness/activity.jsonl</code>, <code>last-check.json</code> và báo cáo của loop kèm danh sách kiểm lý thuyết tính từ log.</td></tr>
+        <tr><td>Agent thất bại không rõ nguyên nhân</td><td><code>fail --layer</code> và <code>failures</code> (nút thắt theo lỗi quan sát được), <code>/hk-diagnose</code>, <code>hk-debugger</code>.</td></tr>
+        <tr><td>Chạy tự động thiếu an toàn</td><td><code>loop</code>: maker → reviewer chỉ đọc → cổng kiểm thử → pass-gate, có ngân sách và giới hạn số lần thử, khôi phục tệp harness sau mỗi phiên.</td></tr>
+        <tr><td>Cài đặt mong manh (bài học từ claudekit)</td><td>Settings được gộp từng mục, manifest có sha256 cho từng tệp, <code>update</code>/<code>uninstall</code> chỉ đụng tệp chưa bị sửa, không có bất ngờ postinstall.</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <section id="may-trang-thai" class="reveal">
+      <h2>Máy trạng thái của feature</h2>
+      <p>Bấm các nút để xem runtime cho phép gì: trạng thái đi <code>not_started → active → passing</code> một chiều, và <code>blocked</code> là lối thoát chính thức <span class="ev" data-evidence="mh">MH</span>.</p>
+      <figure class="figure"><div data-component="state-machine"></div><figcaption>Hình 1. Máy trạng thái feature: next / try / verify fail / verify pass / block.</figcaption></figure>
+    </section>
+
+    <section id="hook" class="reveal">
+      <h2>Dòng thời gian hook</h2>
+      <p>Các hook của lớp Claude Code, theo thứ tự xảy ra trong một phiên <span class="ev" data-evidence="mh">MH</span>.</p>
+      <ol data-component="hook-timeline"></ol>
+    </section>
+
+    <section id="danh-gia" class="reveal">
+      <h2>Đánh giá</h2>
+      <p>Số liệu đo ngày 15/10/2026 trên Windows 11, Python 3.12, Claude Code 2.1.287 <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <div class="stat-grid">
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="97" data-decimals="0" data-suffix="">97</span><span class="stat__label">kiểm thử tự động đạt (85 kế thừa từ v1, 12 cho hook và trình cài đặt v2)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="6" data-decimals="0" data-suffix="">6</span><span class="stat__label">feature V001–V006 của kit qua pass-gate của chính nó</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="3" data-decimals="0" data-suffix="">3</span><span class="stat__label">cách cài (npx, install.sh, install.ps1); <code>doctor</code> đều báo HEALTHY</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="sl"><span class="ev" data-evidence="sl">SL</span><span class="stat__value" data-count-to="10" data-decimals="0" data-suffix=" / 21">10 / 21</span><span class="stat__label">yêu cầu thiết kế đáp ứng đầy đủ; 9 đáp ứng một phần, 2 chưa đáp ứng (tự đánh giá)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+      </div>
+      <h3>Hai kiểm tra trên Claude Code thật</h3>
+      <ul>
+        <li>Không dùng công cụ, mô hình nêu đúng feature đang active và lệnh kiểm chứng của nó — thông tin chỉ hook SessionStart đã đưa vào (n = 1, kiểm tra sự tồn tại) <span class="ev" data-evidence="do">Đo</span>.</li>
+        <li>Khi được yêu cầu sửa <code>status</code> của một feature thành <code>passing</code> dưới <code>--permission-mode acceptEdits</code>, hook từ chối và tệp vẫn ở <code>not_started</code> (n = 1) <span class="ev" data-evidence="do">Đo</span>.</li>
+      </ul>
+    </section>
+
+    <section id="gioi-han" class="reveal">
+      <h2>Giới hạn</h2>
+      <div class="callout callout--note"><p class="callout__title">Cần nói rõ</p>
+        <p>Hook là hàng rào bên trong tiến trình của agent, không phải sandbox; hãy bật sandboxing của Claude Code để cô lập hệ thống tệp và mạng. Bằng chứng ở trên cho thấy các cơ chế hoạt động, không cho thấy chúng cải thiện kết quả bao nhiêu; thí nghiệm có đối chứng là việc cần làm sau.</p></div>
+    </section>
+
+    <section id="tom-tat" class="reveal">
+      <h2>Tóm tắt</h2>
+      <p>harness-kit đặt cưỡng chế vào runtime chạy được và dùng hook làm hàng rào, nên “xong” do lệnh quyết định chứ không do lời agent <span class="ev" data-evidence="sl">SL</span>. Hướng dẫn cài đặt nằm ở <a href="guide.html">trang Hướng dẫn</a>.</p>
+    </section>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>harness-kit — hướng dẫn và cơ sở học thuật. Mã nguồn: <a href="https://github.com/duonghuyhieu/harness-kit">github.com/duonghuyhieu/harness-kit</a></span>
+    <span>Số liệu tra cứu ngày 15/10/2026. Mỗi con số mang nhãn bằng chứng: Đo · SX · MH · SL.</span>
+  </div>
+</footer>
+</body>
+</html>
