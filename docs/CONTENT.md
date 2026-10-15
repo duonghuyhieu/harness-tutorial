@@ -164,7 +164,8 @@ Problem → mechanism table (rows; keep these exact mechanisms):
 | Fragile installs (lesson from claudekit) | settings merged entry by entry, manifest with sha256 per file, `update`/`uninstall` touch only unchanged files, no silent postinstall surprises |
 
 Evaluation facts (all [do] unless noted; date 15/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287):
-- 97 automated tests pass (85 inherited from v1 + 12 for v2 hooks and installer).
+- 99 automated tests pass (85 inherited from v1, 12 for v2 hooks and installer, and 2 regression tests for the
+  bugs that building this site exposed — see "Dogfooding" below).
 - The kit runs under its own harness: features V001–V006 passed its own `verify` pass-gate.
 - Real Claude Code check 1: without using tools, the model correctly named the active feature and its verification
   command — information that only the SessionStart hook had injected (n = 1, existence check).
@@ -172,6 +173,21 @@ Evaluation facts (all [do] unless noted; date 15/10/2026, Windows 11, Python 3.1
   edit was denied by the hook and the file stayed `not_started` (n = 1).
 - Install via npx, install.sh and install.ps1: `doctor` reported HEALTHY for all three.
 - Design requirements from the comparative analysis: 10 of 21 fully met, 9 partly, 2 not yet [sl self-assessment].
+Dogfooding — this site was built with harness-kit's own loop (all [sx], single project, 15/10/2026):
+- 6 page features, each with `python tests/check_site.py --page <page>` as its verification command; maker
+  (Claude Sonnet, fresh session, write access only to its page) → read-only reviewer → pass-gate → commit.
+- After the fixes below, every page passed in its first attempt; reported cost of the loop runs: about 4.26 USD in
+  total (first, failed run 0.69 USD included).
+- Bug 1 found by the loop's own integrity check: the project's v2 hooks write `.harness/activity.jsonl` inside loop
+  sessions, and the loop treated that as the maker editing harness files — two correct attempts were rejected and
+  the feature blocked. Fixed: those files are runtime state (regression test added).
+- Bug 2: after `block` → `unblock`, the feature kept its old activation commit, so the loop reported a later
+  harness fix as scope drift and refused to start. Fixed: `unblock` resets the base (regression test added).
+- A third problem was in this site's own checker: page mode treated links to not-yet-built pages as errors;
+  logged with `fail --layer feedback` and fixed.
+- Lesson [sl]: the failures were in the harness (tools, state, feedback layers), not in the model — exactly what
+  Lesson 01 predicts; logging them by layer pointed to the fix.
+
 Limits (must be stated): hooks are guardrails inside the agent's process, not a sandbox; turn on Claude Code's own
 sandboxing for filesystem/network isolation; evidence above shows the mechanisms work, not how much they improve
 outcomes — a controlled experiment is future work.

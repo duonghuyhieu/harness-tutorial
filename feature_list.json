@@ -428,6 +428,21 @@
       ],
       "verify_check": "full",
       "priority": 16
+    },
+    {
+      "id": "F008",
+      "category": "feature",
+      "behavior": "harness-kit.html and guide.html report the dogfooding results exactly as docs/CONTENT.md Page 4 states them: 99 tests (not 97), a 'Dogfooding' subsection in #danh-gia (6 page features, first-attempt passes after the fixes, about 4.26 USD, the two harness-kit bugs and the checker problem with their fixes, the layer lesson), and the guide's #cach-xay-dung box updated to match",
+      "verification": "python tests/check_site.py --page harness-kit && python tests/check_site.py --page guide",
+      "status": "not_started",
+      "depends_on": [],
+      "evidence": null,
+      "out_of_scope": "assets/, tests/, docs/, other pages",
+      "scope": [
+        "harness-kit.html",
+        "guide.html"
+      ],
+      "priority": 9
     }
   ]
 }
