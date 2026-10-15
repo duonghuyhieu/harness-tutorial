@@ -110,8 +110,6 @@
         "index.html"
       ],
       "priority": 10,
-      "activated_at": "2026-10-15T20:42:27+07:00",
-      "activated_commit": "d5e930672375384e67e12b825d3d4234c6029288",
       "loop_runs": [
         {
           "run": "20261015-204227-F001",

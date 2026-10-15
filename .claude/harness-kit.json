@@ -2,7 +2,7 @@
   "kit": "harness-kit",
   "version": "2.0.0",
   "kit_root": "D:/harness-kit",
-  "updated_at": "2026-10-15T20:48:04+07:00",
+  "updated_at": "2026-10-15T20:52:55+07:00",
   "files": {
     ".claude/agents/hk-debugger.md": "0ebe5f52a1d6c893ae8cc13e7b2bf1a4deb4e25deeee37e59e55d2a4595b09cd",
     ".claude/agents/hk-docs-keeper.md": "8ed53d47fbe8401c256167b78b140dccfa8fee4aa66e72e91f235674aaa3c761",
