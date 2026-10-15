@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tổng quan — harness engineering và harness-kit</title>
+  <meta name="description" content="Mô hình mạnh không có nghĩa là thực thi đáng tin cậy: tổng quan về harness engineering và cách harness-kit biến nguyên lý thành cơ chế.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html"><img class="brand__mark" src="assets/img/mark.svg" alt="">harness-kit</a>
+    <nav class="nav" aria-label="Điều hướng chính">
+      <a href="index.html" aria-current="page">Tổng quan</a>
+      <a href="problems.html">Vấn đề</a>
+      <a href="principles.html">Nguyên lý</a>
+      <a href="harness-kit.html">harness-kit</a>
+      <a href="guide.html">Hướng dẫn</a>
+      <a href="references.html">Tài liệu</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Đổi giao diện sáng/tối">☾</button>
+  </div>
+</header>
+
+<div class="page">
+  <aside class="toc" aria-label="Mục lục trang">
+    <p class="toc__title">Trong trang này</p>
+    <ol>
+      <li><a href="#luan-diem">Luận điểm</a></li>
+      <li><a href="#so-lieu">Số liệu then chốt</a></li>
+      <li><a href="#dinh-nghia">Định nghĩa</a></li>
+      <li><a href="#pho-tien-hoa">Phổ các tầng kỹ thuật</a></li>
+      <li><a href="#lo-trinh">Lộ trình đọc</a></li>
+    </ol>
+  </aside>
+
+  <main id="main" class="content">
+    <section id="luan-diem" class="reveal">
+      <p class="eyebrow">Tổng quan</p>
+      <h1>Mô hình mạnh không có nghĩa là thực thi đáng tin cậy.</h1>
+      <p class="lead">Harness — mọi thứ nằm ngoài trọng số của mô hình — quyết định bao nhiêu năng lực của mô hình
+        trở thành công việc đáng tin cậy. Trang này tóm tắt luận điểm, các số liệu nền tảng và lộ trình đọc.</p>
+
+      <div class="legend" aria-label="Chú giải nhãn bằng chứng">
+        <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
+        <span><span class="ev" data-evidence="sx">SX</span> báo cáo sản xuất</span>
+        <span><span class="ev" data-evidence="mh">MH</span> minh họa</span>
+        <span><span class="ev" data-evidence="sl">SL</span> suy luận</span>
+      </div>
+
+      <figure class="figure">
+        <div class="loop-diagram" data-component="loop-diagram"></div>
+        <figcaption>Hình 1. Vòng lặp của harness: chạy, quan sát, quy lỗi về một tầng, sửa tầng đó rồi chạy lại.</figcaption>
+      </figure>
+    </section>
+
+    <section id="so-lieu" class="reveal">
+      <h2>Số liệu then chốt</h2>
+      <p>Cùng một mô hình có thể cho kết quả rất khác nhau khi harness thay đổi. Mỗi con số dưới đây giữ nhãn bằng chứng
+        và nguồn của nó; các điều kiện được nêu ngay trong mô tả.</p>
+      <div class="stat-grid">
+        <div class="stat" data-evidence="sx">
+          <span class="ev" data-evidence="sx">SX</span>
+          <span class="stat__value">20 phút → 6 giờ</span>
+          <span class="stat__label">Opus 4.5 chạy đơn lẻ: khoảng 20 phút, 9 USD, tính năng cốt lõi không hoạt động. Với harness đầy đủ: khoảng 6 giờ, 200 USD, ứng dụng chạy được. Không phải thí nghiệm cùng ngân sách.</span>
+          <span class="stat__source"><a class="cite" href="references.html#ref-rajasekaran-2026">Rajasekaran, 2026</a></span>
+        </div>
+        <div class="stat" data-evidence="sx">
+          <span class="ev" data-evidence="sx">SX</span>
+          <span class="stat__value" data-count-to="66.5" data-decimals="1" data-suffix="%">66,5%</span>
+          <span class="stat__label">Cùng mô hình, chỉ đổi harness: Terminal Bench 2.0 tăng từ 52,8% lên 66,5%.</span>
+          <span class="stat__source"><a class="cite" href="references.html#ref-trivedy-2026">Trivedy, 2026</a></span>
+        </div>
+        <div class="stat" data-evidence="sx">
+          <span class="ev" data-evidence="sx">SX</span>
+          <span class="stat__value">≈ 1 triệu dòng</span>
+          <span class="stat__label">Khoảng 1.500 pull request trong năm tháng bởi ba kỹ sư dùng Codex (khoảng 3,5 PR mỗi kỹ sư mỗi ngày).</span>
+          <span class="stat__source"><a class="cite" href="references.html#ref-lopopolo-2026">Lopopolo, 2026</a></span>
+        </div>
+        <div class="stat" data-evidence="do">
+          <span class="ev" data-evidence="do">Đo</span>
+          <span class="stat__value" data-count-to="77.2" data-decimals="1" data-suffix="%">77,2%</span>
+          <span class="stat__label">Claude Sonnet 4.5 trên SWE-bench Verified: 500 tác vụ, 10 lượt thử, scaffold gồm bash và thay thế chuỗi. Benchmark chỉ áp dụng cho đúng mô hình, scaffold và điều kiện đã nêu.</span>
+          <span class="stat__source"><a class="cite" href="references.html#ref-anthropic-2025-sonnet45">Anthropic, 2025</a></span>
+        </div>
+      </div>
+    </section>
+
+    <section id="dinh-nghia" class="reveal">
+      <h2>Định nghĩa: Agent = Model + Harness</h2>
+      <p>Một harness gồm năm hệ con. Trong năm hệ con này, phản hồi (feedback) có giá trị biên cao nhất
+        <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a>.</p>
+      <div class="card-grid">
+        <div class="card"><span class="card__kicker">1 · Instructions</span><h3>Hướng dẫn</h3><p>Tệp hướng dẫn ngắn, đóng vai trò bản đồ chỉ tới tài liệu chi tiết.</p></div>
+        <div class="card"><span class="card__kicker">2 · Tools</span><h3>Công cụ</h3><p>Những gì agent được phép gọi, đọc và ghi.</p></div>
+        <div class="card"><span class="card__kicker">3 · Environment</span><h3>Môi trường</h3><p>Nơi agent chạy: có thể khởi động, kiểm thử và giới hạn rõ ràng.</p></div>
+        <div class="card"><span class="card__kicker">4 · State</span><h3>Trạng thái</h3><p>Tiến độ, danh sách tính năng và lịch sử được lưu trên đĩa.</p></div>
+        <div class="card"><span class="card__kicker">5 · Feedback</span><h3>Phản hồi</h3><p>Kiểm tra chạy bằng lệnh, không dựa vào lời tự báo cáo của agent.</p></div>
+      </div>
+    </section>
+
+    <section id="pho-tien-hoa" class="reveal">
+      <h2>Phổ các tầng kỹ thuật</h2>
+      <p>Mỗi tầng bao bọc tầng trước, không thay thế nó
+        <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a>.</p>
+      <div class="spectrum" data-component="spectrum">
+        <div class="spectrum__step"><b>Prompt engineering</b><small>Soạn chỉ dẫn cho một lượt</small></div>
+        <div class="spectrum__step"><b>Context engineering</b><small>Chọn thông tin đưa vào ngữ cảnh</small></div>
+        <div class="spectrum__step"><b>Harness engineering</b><small>Công cụ, trạng thái, kiểm chứng quanh mô hình</small></div>
+        <div class="spectrum__step"><b>Loop engineering</b><small>Mục tiêu, kiểm chứng bằng máy, điều kiện dừng</small></div>
+        <div class="spectrum__step"><b>Graph engineering</b><small>Nhiều vai trò với nút, cạnh và trạng thái chung</small></div>
+      </div>
+    </section>
+
+    <section id="lo-trinh" class="reveal">
+      <h2>Lộ trình đọc</h2>
+      <div class="card-grid">
+        <a class="card" href="problems.html"><span class="card__kicker">1</span><h3>Vấn đề</h3><p>Các lỗi thực tế của AI agent ngày nay.</p></a>
+        <a class="card" href="principles.html"><span class="card__kicker">2</span><h3>Nguyên lý</h3><p>Nguyên lý xử lý theo harness engineering.</p></a>
+        <a class="card" href="harness-kit.html"><span class="card__kicker">3</span><h3>harness-kit</h3><p>Cách harness-kit biến nguyên lý thành cơ chế.</p></a>
+        <a class="card" href="guide.html"><span class="card__kicker">4</span><h3>Hướng dẫn</h3><p>Cài đặt và quy trình làm việc hằng ngày.</p></a>
+        <a class="card" href="references.html"><span class="card__kicker">5</span><h3>Tài liệu tham khảo</h3><p>Nguồn của mọi con số trên site.</p></a>
+      </div>
+
+      <h3>Tóm tắt</h3>
+      <p>Năng lực của mô hình chỉ trở thành kết quả đáng tin cậy khi harness bao quanh nó đủ tốt.
+        Các số liệu trên là báo cáo sản xuất hoặc phép đo có điều kiện nêu rõ, không phải bằng chứng nhân quả tổng quát
+        <span class="ev" data-evidence="sl">SL</span>.</p>
+    </section>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>harness-kit — hướng dẫn và cơ sở học thuật. Mã nguồn: <a href="https://github.com/duonghuyhieu/harness-kit">github.com/duonghuyhieu/harness-kit</a></span>
+    <span>Số liệu tra cứu ngày 15/10/2026. Mỗi con số mang nhãn bằng chứng: Đo · SX · MH · SL.</span>
+  </div>
+</footer>
+</body>
+</html>

@@ -102,9 +102,36 @@
       "category": "feature",
       "behavior": "index.html (Tổng quan): thesis hero with the animated loop diagram, ≥4 sourced stat cards, the five-subsystem definition, the animated prompt→graph spectrum, reading-path cards — all facts from docs/CONTENT.md Page 1",
       "verification": "python tests/check_site.py --page index",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T20:53:51+07:00",
+        "commit": "0efaba3",
+        "command": "python tests/check_site.py --page index",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "WARNING: index.html: links to references.html, not built yet\nWARNING: index.html: links to references.html, not built yet\nWARNING: index.html: links to problems.html, not built yet\nWARNING: index.html: links to principles.html, not built yet\nWARNING: index.html: links to harness-kit.html, not built yet\nWARNING: index.html: links to guide.html, not built yet\nWARNING: index.html: links to references.html, not built yet\nsite check: PASS",
+        "loop": {
+          "attempts": 1,
+          "cost_usd": 0.423645,
+          "runs": [
+            {
+              "role": "maker",
+              "subtype": "success",
+              "cost": 0.13452039999999998,
+              "turns": 5
+            },
+            {
+              "role": "reviewer",
+              "subtype": "success",
+              "cost": 0.28912499999999997,
+              "turns": 10
+            }
+          ],
+          "reviewer_evidence": "`python scripts/harness.py try F001` passed (site check PASS). The only output was warnings that other pages (problems, principles, harness-kit, guide, references) are not built yet. That is expected, because those pages belong to other features. `python scripts/harness.py check` passed rules, docs, lint and test, and `check --only test` passed. `git status` shows only index.html (new) and feature_list.json (harness-managed), so scope is clean. No test or check files were changed. I compared ind"
+        }
+      },
       "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
       "scope": [
         "index.html"
@@ -115,8 +142,15 @@
           "run": "20261015-204227-F001",
           "outcome": "exhausted",
           "report_sha256": "15002958bab8cebef9d6e290a7c5093644438721d2408873c124d973652baa6e"
+        },
+        {
+          "run": "20261015-205306-F001",
+          "outcome": "passing",
+          "report_sha256": "0383c5b925d6389e6d34bd36e59f8b237ca7789c6a9f4d56b0cf018468aaf561"
         }
-      ]
+      ],
+      "activated_at": "2026-10-15T20:53:06+07:00",
+      "activated_commit": "0efaba3cd9d02c258f9832e85f916abf225b261d"
     },
     {
       "id": "F002",

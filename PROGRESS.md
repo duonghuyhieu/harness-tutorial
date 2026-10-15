@@ -5,7 +5,13 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_`handoff` has not been run yet._
+_Auto-updated by `harness.py handoff` at 2026-10-15T20:53:51+07:00_
+- Branch / commit: `main` @ `0efaba3 chore(harness): kit update (unblock resets activation base)`
+- Last check: PASS (quick, 2026-10-15T20:53:51+07:00, @0efaba3)
+- Features: 5/11 passing, VCR 1.0
+- Active: none
+- Blocked: none
+- Uncommitted changes: 2 file(s)
 <!-- harness:auto:end -->
 
 ## Done
