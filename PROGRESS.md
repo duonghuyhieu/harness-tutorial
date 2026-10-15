@@ -5,13 +5,13 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-15T21:56:43+07:00_
-- Branch / commit: `main` @ `da223dc feat(F009, F007): visual polish after screenshot review; release gate and README`
-- Last check: PASS (quick, 2026-10-15T21:56:42+07:00, @da223dc)
-- Features: 14/14 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-15T23:53:01+07:00_
+- Branch / commit: `main` @ `59564d9 fix(site): apply the independent site review and harness-kit 2.0.1 facts (F010)`
+- Last check: PASS (quick, 2026-10-15T23:52:53+07:00, @59564d9)
+- Features: 15/15 passing, VCR 1.0
 - Active: none
 - Blocked: none
-- Uncommitted changes: 12 file(s)
+- Uncommitted changes: 4 file(s)
 <!-- harness:auto:end -->
 
 ## Done
@@ -25,6 +25,8 @@ _Auto-updated by `harness.py handoff` at 2026-10-15T21:56:43+07:00_
       conditions, citation keys and labels, references, cost wording, PowerShell/npm update commands, contrast,
       no-JS reveal, pause/play for animations, state machine mirroring the runtime, copy fallback; harness-kit 2.0.1
       facts (105 tests, V001–V007, strict 5/14/2 rating, independent review note).
+- [x] 2026-10-16: F011 harness-kit 2.1.2 facts and the controlled pilot (baseline vs harness-kit, Bảng 2 on
+      harness-kit.html); limits restated.
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 

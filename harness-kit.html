@@ -104,13 +104,25 @@
 
     <section id="danh-gia" class="reveal">
       <h2>Đánh giá</h2>
-      <p>Số liệu đo ngày 15/10/2026 trên Windows 11, Python 3.12, Claude Code 2.1.287 <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <p>Số liệu đo ngày 15–16/10/2026 trên Windows 11, Python 3.12, Claude Code 2.1.287, với harness-kit 2.1.2 <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
       <div class="stat-grid">
-        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="105" data-decimals="0" data-suffix="">105</span><span class="stat__label">kiểm thử tự động đạt (85 kế thừa từ v1, 12 cho hook và trình cài đặt v2, 2 kiểm thử hồi quy cho lỗi tìm thấy khi tự dùng, 6 cho lỗi do rà soát độc lập tìm ra)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
-        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="7" data-decimals="0" data-suffix="">7</span><span class="stat__label">feature V001–V007 của kit qua pass-gate của chính nó</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="113" data-decimals="0" data-suffix="">113</span><span class="stat__label">kiểm thử tự động đạt, gồm các kiểm thử hồi quy cho lỗi do tự dùng và do rà soát độc lập tìm ra; CI trên Ubuntu, Windows, macOS với Python 3.10 và 3.12 đều qua</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="10" data-decimals="0" data-suffix="">10</span><span class="stat__label">feature V001–V010 của kit qua pass-gate của chính nó</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
         <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="4" data-decimals="0" data-suffix="">4</span><span class="stat__label">cách cài (one-liner PowerShell, one-liner bash, npx, <code>npm install -D</code>); <code>doctor</code> đều báo HEALTHY</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
-        <div class="stat" data-evidence="sl"><span class="ev" data-evidence="sl">SL</span><span class="stat__value" data-count-to="5" data-decimals="0" data-suffix=" / 21">5 / 21</span><span class="stat__label">yêu cầu thiết kế đáp ứng đầy đủ khi chấm chặt theo câu chữ; 14 đáp ứng một phần, 2 chưa đáp ứng (tự đánh giá)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="sl"><span class="ev" data-evidence="sl">SL</span><span class="stat__value" data-count-to="10" data-decimals="0" data-suffix=" / 21">10 / 21</span><span class="stat__label">yêu cầu thiết kế đáp ứng đầy đủ khi chấm chặt theo câu chữ; 11 đáp ứng một phần, 0 chưa đáp ứng (tự đánh giá, sau bản 2.1.x)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
       </div>
+      <h3>Thí nghiệm thử nghiệm có đối chứng</h3>
+      <p>Cùng một tác vụ (viết <code>checkout()</code> theo đặc tả 7 quy tắc, chấm bằng 26 test ẩn agent không thấy), cùng prompt, cùng mô hình: repo thường (A) so với cùng repo đã cài harness-kit, tác vụ là feature đang active với lệnh kiểm chứng là chính các test hiển thị (B) — B không có thêm thông tin nào <span class="ev" data-evidence="do">Đo</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <div class="table-wrap"><table><caption>Bảng 2. Kết quả thử nghiệm (thử nghiệm nhỏ, ngày 16/10/2026).</caption><thead><tr><th>Chỉ số</th><th>A: không harness</th><th>B: harness-kit</th></tr></thead><tbody>
+        <tr><td>Haiku, đúng hoàn toàn (26/26)</td><td>3/10</td><td>4/10</td></tr>
+        <tr><td>Haiku, tỷ lệ test ẩn đạt trung bình</td><td>97,3%</td><td>97,7%</td></tr>
+        <tr><td>Haiku, khai “xong” nhưng test ẩn hỏng</td><td>7/10</td><td>6/10</td></tr>
+        <tr><td>Haiku, chi phí trung vị</td><td>0,19 USD</td><td>0,12 USD</td></tr>
+        <tr><td>Sonnet, đúng hoàn toàn</td><td>5/5</td><td>5/5</td></tr>
+        <tr><td>Sonnet, có thêm test / chạy <code>verify</code></td><td>0/5 / —</td><td>4/5 / 4/5</td></tr>
+        <tr><td>Sonnet, chi phí trung vị</td><td>0,11 USD</td><td>0,21 USD</td></tr>
+      </tbody></table></div>
+      <p>Khác biệt về độ đúng không có ý nghĩa thống kê (Fisher p = 1,00). Lỗi chủ đạo — số lượng không nguyên phải bị từ chối — là quy tắc mà lệnh kiểm chứng không kiểm, nên harness không thể bắt được: harness không tốt hơn lệnh kiểm chứng của nó. Lợi ích mà harness nhắm tới (trạng thái qua nhiều phiên, WIP, scope trong công việc dài) không được tác vụ một phiên này thử thách <span class="ev" data-evidence="sl">SL</span>.</p>
       <h3>Hai kiểm tra trên Claude Code thật</h3>
       <ul>
         <li>Không dùng công cụ, mô hình nêu đúng feature đang active và lệnh kiểm chứng của nó — thông tin chỉ hook SessionStart đã đưa vào (n = 1, kiểm tra sự tồn tại) <span class="ev" data-evidence="mh">MH</span>.</li>
@@ -133,7 +145,7 @@
     <section id="gioi-han" class="reveal">
       <h2>Giới hạn</h2>
       <div class="callout callout--note"><p class="callout__title">Cần nói rõ</p>
-        <p>Hook là hàng rào bên trong tiến trình của agent, không phải sandbox; hãy bật sandboxing của Claude Code để cô lập hệ thống tệp và mạng. Bằng chứng ở trên cho thấy các cơ chế hoạt động, không cho thấy chúng cải thiện kết quả bao nhiêu; thí nghiệm có đối chứng là việc cần làm sau.</p></div>
+        <p>Hook là hàng rào bên trong tiến trình của agent, không phải sandbox; hãy bật sandboxing của Claude Code để cô lập hệ thống tệp và mạng. Bằng chứng ở trên cho thấy các cơ chế hoạt động; thử nghiệm có đối chứng duy nhất (một tác vụ ngắn, mẫu nhỏ) chưa thấy tác động lên độ đúng — cần thí nghiệm nhiều phiên, nhiều feature, nhiều lần chạy hơn.</p></div>
     </section>
 
     <section id="tom-tat" class="reveal">

@@ -547,6 +547,30 @@
       "priority": 21,
       "activated_at": "2026-10-15T21:28:11+07:00",
       "activated_commit": "da223dc64dedde9669fb1d2860f7f7eb2d3eccfa"
+    },
+    {
+      "id": "F011",
+      "category": "content",
+      "behavior": "harness-kit 2.1.2 facts (113 tests, CI, V001–V010, strict 10/11/0 rating) and the controlled pilot results (Bảng 2 on harness-kit.html, honest reading and limits)",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-15T23:52:53+07:00",
+        "commit": "59564d9",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.2,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md"
+      ],
+      "priority": 22,
+      "activated_at": "2026-10-15T23:52:52+07:00",
+      "activated_commit": "59564d9308902ef4165fb13e33c33d9f0c0721aa"
     }
   ]
 }

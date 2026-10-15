@@ -167,11 +167,12 @@ Problem → mechanism table (rows; keep these exact mechanisms):
 | Unsafe autonomous runs | `loop`: maker → read-only reviewer → test gate → pass-gate, budgets and attempt limits, integrity restore of harness files after every session |
 | Fragile installs (lesson from claudekit) | settings merged entry by entry, manifest with sha256 per file, `update`/`uninstall` touch only unchanged files, no silent postinstall surprises |
 
-Evaluation facts (all [do] unless noted; date 15/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287):
-- 105 automated tests pass (85 inherited from v1, 12 for v2 hooks and installer, 2 regression tests for the bugs
-  that building this site exposed — see "Dogfooding" below — and 6 regression tests for the defects that three
-  independent read-only reviews found in 2.0.0; each of those 6 fails on 2.0.0).
-- The kit runs under its own harness: features V001–V007 passed its own `verify` pass-gate.
+Evaluation facts (all [do] unless noted; 15–16/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287; kit 2.1.2):
+- 113 automated tests pass, including 6 regression tests for the defects that three independent read-only reviews
+  found in 2.0.0 (each of those 6 fails on 2.0.0) and the regression tests for the bugs building this site exposed.
+- CI on GitHub Actions (Ubuntu, Windows, macOS × Python 3.10 and 3.12) passes. Its first run found a real defect:
+  on Python 3.10, the documented minimum, the kit silently skipped pyproject.toml (no tomllib); 2.1.2 fixes it.
+- The kit runs under its own harness: features V001–V010 passed its own `verify` pass-gate.
 - Independent review (15/10/2026) [do]: three read-only reviewers (code, end-to-end install, docs) found, among
   others, hooks not recognized for some `--python` values (uninstall could leave hooks pointing at a deleted
   dispatcher), the guard missing non-ASCII paths on Windows, and the pass-gate weakened because an active feature's
@@ -182,8 +183,20 @@ Evaluation facts (all [do] unless noted; date 15/10/2026, Windows 11, Python 3.1
   edit was denied by the hook and the file stayed `not_started` (n = 1).
 - Install via the PowerShell one-liner, the bash one-liner, npx and `npm install -D`: `doctor` reported HEALTHY for all
   four (end-to-end review); the 2.0.1 PowerShell one-liner was re-run from GitHub after the fixes: HEALTHY.
-- Design requirements from the comparative analysis, rated strictly against their wording: 5 of 21 fully met,
-  14 partly, 2 not yet [sl self-assessment].
+- Design requirements from the comparative analysis, rated strictly against their wording: 10 of 21 fully met,
+  11 partly, 0 not yet, after 2.1.x added path-scoped rules, visible hook failures and an opt-in fail-closed guard,
+  a Stop gate on unverified changes, a hashed log of injected context, atomic state writes, config validation,
+  a Claude Code version check and CI [sl self-assessment].
+- Controlled pilot (16/10/2026) [do — pilot, small n]: one task (checkout() from a 7-rule spec, 26 hidden
+  acceptance tests), the same prompt and model, a plain repository (A) vs the same repository with harness-kit and
+  the task as the active feature whose verification is the visible test command (B). Haiku, 10 runs per arm:
+  fully correct 3/10 (A) vs 4/10 (B), Fisher p = 1.00; hidden tests passed 97.3% vs 97.7% on average; every run
+  claimed done, so the verification gap was 7/10 vs 6/10; median cost 0.19 vs 0.12 USD. Sonnet, 5 runs per arm:
+  5/5 vs 5/5 fully correct; B ran `verify` in 4/5 runs, added tests in 4/5 (A 0/5), the Stop hook blocked twice;
+  median cost 0.11 vs 0.21 USD. The dominant failure (a non-integer quantity must be rejected) is a rule the
+  verification command does not test. Reading [sl]: on a single-feature, single-session task the pilot finds no
+  effect on correctness; a harness is no better than its verification; the benefits it targets (state across
+  sessions, WIP, scope in long work) are not exercised by such a task.
 Dogfooding — this site was built with harness-kit's own loop (all [sx], single project, 15/10/2026):
 - 6 page features, each with `python tests/check_site.py --page <page>` as its verification command; maker
   (Claude Sonnet, fresh session, write access only to its page) → read-only reviewer → pass-gate → commit.
@@ -201,8 +214,8 @@ Dogfooding — this site was built with harness-kit's own loop (all [sx], single
   Lesson 01 predicts; logging them by layer pointed to the fix.
 
 Limits (must be stated): hooks are guardrails inside the agent's process, not a sandbox; turn on Claude Code's own
-sandboxing for filesystem/network isolation; evidence above shows the mechanisms work, not how much they improve
-outcomes — a controlled experiment is future work.
+sandboxing for filesystem/network isolation; the evidence shows the mechanisms work; the one controlled pilot (one
+short task) found no effect on correctness — multi-session, multi-feature experiments with more runs remain.
 
 Interactive pieces expected on this page: the feature state machine stepper (buttons: next / try / verify fail /
 verify pass / block) showing what the runtime allows; the hook timeline (SessionStart → UserPromptSubmit → PreToolUse
