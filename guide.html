@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hướng dẫn sử dụng — harness-kit</title>
+  <meta name="description" content="Cài đặt harness-kit trên Windows, macOS/Linux hoặc npm, quy trình hằng ngày, 16 skill và 6 agent, ví dụ một feature, vòng lặp tự động, cập nhật và xử lý sự cố.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body>
+<a class="skip-link" href="#main">Bỏ qua điều hướng</a>
+<div class="progress" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand" href="index.html"><img class="brand__mark" src="assets/img/mark.svg" alt="">harness-kit</a>
+    <nav class="nav" aria-label="Điều hướng chính">
+      <a href="index.html">Tổng quan</a>
+      <a href="problems.html">Vấn đề</a>
+      <a href="principles.html">Nguyên lý</a>
+      <a href="harness-kit.html">harness-kit</a>
+      <a href="guide.html" aria-current="page">Hướng dẫn</a>
+      <a href="references.html">Tài liệu</a>
+    </nav>
+    <button class="theme-toggle" type="button" aria-label="Đổi giao diện sáng/tối">☾</button>
+  </div>
+</header>
+
+<div class="page">
+  <aside class="toc" aria-label="Mục lục trang">
+    <p class="toc__title">Trong trang này</p>
+    <ol>
+      <li><a href="#cai-dat">Cài đặt</a></li>
+      <li><a href="#cai-gi">Cài những gì</a></li>
+      <li><a href="#quy-trinh">Quy trình hằng ngày</a></li>
+      <li><a href="#lenh">Skill và agent</a></li>
+      <li><a href="#vi-du">Ví dụ một feature</a></li>
+      <li><a href="#vong-lap">Vòng lặp tự động</a></li>
+      <li><a href="#cap-nhat">Cập nhật, gỡ, doctor</a></li>
+      <li><a href="#su-co">Xử lý sự cố</a></li>
+      <li><a href="#cach-xay-dung">Cách trang này được xây dựng</a></li>
+      <li><a href="#tom-tat">Tóm tắt</a></li>
+    </ol>
+  </aside>
+
+  <main id="main" class="content">
+    <p class="eyebrow">HƯỚNG DẪN</p>
+    <h1>Hướng dẫn sử dụng</h1>
+    <p class="lead">Từ một dòng lệnh cài đặt tới quy trình hằng ngày và vòng lặp tự động. Cơ chế đằng sau từng lệnh được giải thích ở trang <a href="harness-kit.html">harness-kit</a>. Mã nguồn: <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+
+    <div class="legend" aria-label="Chú giải nhãn bằng chứng">
+      <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
+      <span><span class="ev" data-evidence="sx">SX</span> báo cáo sản xuất</span>
+      <span><span class="ev" data-evidence="mh">MH</span> minh họa</span>
+      <span><span class="ev" data-evidence="sl">SL</span> suy luận</span>
+    </div>
+
+    <section id="cai-dat" class="reveal">
+      <h2>Cài đặt</h2>
+      <p>Chạy một lệnh trong thư mục dự án rồi mở Claude Code; không cần bước nào khác. Yêu cầu: Python 3.10 trở lên có trên PATH. Chạy lại lệnh sẽ cập nhật kit và giữ các tệp bạn đã sửa <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <div class="tabs" data-component="tabs">
+        <div role="tablist" aria-label="Cách cài">
+          <button role="tab" id="tab-win" aria-controls="panel-win">Windows</button>
+          <button role="tab" id="tab-unix" aria-controls="panel-unix">macOS / Linux</button>
+          <button role="tab" id="tab-npm" aria-controls="panel-npm">npm</button>
+        </div>
+        <div role="tabpanel" id="panel-win" aria-labelledby="tab-win"><pre><code>irm https://raw.githubusercontent.com/duonghuyhieu/harness-kit/main/install.ps1 | iex</code></pre></div>
+        <div role="tabpanel" id="panel-unix" aria-labelledby="tab-unix"><pre><code>curl -fsSL https://raw.githubusercontent.com/duonghuyhieu/harness-kit/main/install.sh | bash</code></pre><p>Dùng được trong macOS, Linux và Git Bash.</p></div>
+        <div role="tabpanel" id="panel-npm" aria-labelledby="tab-npm"><pre><code>npx github:duonghuyhieu/harness-kit
+# hoặc
+npm install -D github:duonghuyhieu/harness-kit</code></pre></div>
+      </div>
+      <p>Minh họa phiên cài đặt trên Windows <span class="ev" data-evidence="mh">MH</span>:</p>
+      <div data-component="terminal" aria-label="Minh họa terminal">
+        <span data-line="prompt">irm https://raw.githubusercontent.com/duonghuyhieu/harness-kit/main/install.ps1 | iex</span>
+        <span data-line="out">Downloading harness-kit ...</span>
+        <span data-line="ok">DONE — harness-kit 2.0.0 is installed and active</span>
+      </div>
+    </section>
+
+    <section id="cai-gi" class="reveal">
+      <h2>Cài những gì</h2>
+      <ul>
+        <li>Ở gốc dự án: <code>AGENTS.md</code>, <code>CLAUDE.md</code>, <code>PROGRESS.md</code>, <code>feature_list.json</code>, <code>init.sh</code> / <code>init.ps1</code>, thư mục <code>docs/</code>.</li>
+        <li>Runtime và cấu hình: <code>scripts/harness.py</code>, <code>.harness/config.json</code>, <code>.harness/rules.json</code>.</li>
+        <li>Lớp Claude Code trong <code>.claude/</code>: <code>agents/</code>, <code>skills/hk-*/</code>, <code>hooks/harness_hook.py</code>, <code>output-styles/</code>, <code>settings.json</code> và manifest <code>harness-kit.json</code>.</li>
+      </ul>
+      <div class="callout callout--note"><p class="callout__title">Không ghi đè tệp của bạn</p><p>Tệp xung đột được đưa vào <code>.harness/proposals/</code>; <code>settings.json</code> có sẵn được gộp từng mục.</p></div>
+    </section>
+
+    <section id="quy-trinh" class="reveal">
+      <h2>Quy trình hằng ngày</h2>
+      <ol>
+        <li><code>/hk-start</code> — vào ca.</li>
+        <li><code>/hk-plan</code> — biến yêu cầu thành feature có lệnh kiểm chứng và phạm vi.</li>
+        <li><code>/hk-implement</code> — <code>next</code>, build trong phạm vi, <code>try</code>, hk-reviewer, <code>verify</code>.</li>
+        <li><code>/hk-handoff</code> — cập nhật PROGRESS.md, ghi quyết định, <code>exit-check</code>, commit.</li>
+      </ol>
+      <p>Lệnh runtime tương đương cho mọi agent: <code>python scripts/harness.py start</code>, <code>add</code>, <code>next</code>, <code>try &lt;id&gt;</code>, <code>verify &lt;id&gt;</code>, <code>handoff</code>, <code>exit-check</code>.</p>
+    </section>
+
+    <section id="lenh" class="reveal">
+      <h2>16 skill và 6 agent</h2>
+      <div class="table-wrap"><table><caption>Bảng 1. Mười sáu skill.</caption><thead><tr><th>Skill</th><th>Dùng để</th></tr></thead><tbody>
+        <tr><td><code>/hk-help</code></td><td>Giải thích quy trình và lệnh, gợi ý bước tiếp theo.</td></tr>
+        <tr><td><code>/hk-init</code></td><td>Khởi tạo tùy chọn: làm dự án chạy được, kiểm thử được, nối tiếp được.</td></tr>
+        <tr><td><code>/hk-start</code></td><td>Vào ca: dựng lại ngữ cảnh từ kho mã, kiểm tra baseline, chọn một feature.</td></tr>
+        <tr><td><code>/hk-plan</code></td><td>Biến yêu cầu thành feature có lệnh kiểm chứng và phạm vi.</td></tr>
+        <tr><td><code>/hk-implement</code></td><td>Làm trọn một feature: next, build trong phạm vi, try, reviewer, verify.</td></tr>
+        <tr><td><code>/hk-review</code></td><td>Đánh giá độc lập bằng subagent hk-reviewer chỉ đọc.</td></tr>
+        <tr><td><code>/hk-verify</code></td><td>Chạy pass-gate cho một feature.</td></tr>
+        <tr><td><code>/hk-handoff</code></td><td>Tan ca: cập nhật PROGRESS.md, ghi quyết định, exit-check.</td></tr>
+        <tr><td><code>/hk-audit</code></td><td>Chấm harness theo năm hệ con và chỉ ra nút thắt.</td></tr>
+        <tr><td><code>/hk-diagnose</code></td><td>Vòng chẩn đoán lỗi: tái hiện, tìm nguyên nhân gốc, quy về một lớp.</td></tr>
+        <tr><td><code>/hk-loop</code></td><td>Chạy hoặc thiết kế vòng lặp tự động.</td></tr>
+        <tr><td><code>/hk-graph</code></td><td>Quyết định có cần điều phối nhiều agent theo đồ thị hay không.</td></tr>
+        <tr><td><code>/hk-optimize</code></td><td>Tối ưu hoặc tái cấu trúc mã cũ một cách an toàn.</td></tr>
+        <tr><td><code>/hk-observe</code></td><td>Thêm tín hiệu quan sát cho hệ thống và quy trình.</td></tr>
+        <tr><td><code>/hk-clean</code></td><td>Khôi phục và giữ trạng thái sạch.</td></tr>
+        <tr><td><code>/hk-docs</code></td><td>Giữ kho mã là hệ thống ghi chép.</td></tr>
+      </tbody></table></div>
+      <div class="table-wrap"><table><caption>Bảng 2. Sáu agent.</caption><thead><tr><th>Agent</th><th>Vai trò</th></tr></thead><tbody>
+        <tr><td><code>hk-reviewer</code></td><td>Người kiểm độc lập, chỉ đọc; tự chạy kiểm chứng.</td></tr>
+        <tr><td><code>hk-maker</code></td><td>Làm đúng một feature active trong phạm vi rồi dừng.</td></tr>
+        <tr><td><code>hk-planner</code></td><td>Biến yêu cầu thành feature kiểm chứng được.</td></tr>
+        <tr><td><code>hk-debugger</code></td><td>Chẩn đoán lỗi dựa trên bằng chứng, quy về lớp harness.</td></tr>
+        <tr><td><code>hk-docs-keeper</code></td><td>Giữ AGENTS.md và docs/ luôn cập nhật.</td></tr>
+        <tr><td><code>hk-initializer</code></td><td>Pha khởi tạo: làm dự án chạy được trước khi làm feature.</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <section id="vi-du" class="reveal">
+      <h2>Ví dụ một feature</h2>
+      <p>Minh họa <span class="ev" data-evidence="mh">MH</span>: thêm một feature kiểm chứng bằng pytest rồi đưa nó qua pass-gate.</p>
+      <pre><code>python scripts/harness.py add --id F012 --behavior "POST /orders returns 201 and persists the order" --verify "pytest tests/test_orders.py -q" --scope "src/orders/*" "tests/test_orders.py"
+python scripts/harness.py next
+# implement trong phạm vi
+python scripts/harness.py try F012
+# hk-reviewer kiểm độc lập
+python scripts/harness.py verify F012   # PASS, bằng chứng được ghi lại</code></pre>
+    </section>
+
+    <section id="vong-lap" class="reveal">
+      <h2>Vòng lặp tự động</h2>
+      <pre><code>python scripts/harness.py loop --dry-run
+python scripts/harness.py loop --max-features 3 --max-attempts 3 --max-total-usd 5 --model sonnet
+python scripts/harness.py report</code></pre>
+      <p><code>report</code> in danh sách kiểm lý thuyết; chỉ thêm <code>--commit</code> nếu bạn đã chấp thuận trước việc commit. Chính trang web này được xây bằng vòng lặp ấy — xem hộp <a href="#cach-xay-dung">Cách trang này được xây dựng</a>.</p>
+    </section>
+
+    <section id="cap-nhat" class="reveal">
+      <h2>Cập nhật, gỡ cài đặt, doctor</h2>
+      <ul>
+        <li>Cập nhật: chạy lại lệnh cài đặt, hoặc <code>python ~/.harness-kit/harness.py update .</code>.</li>
+        <li>Gỡ: <code>python ~/.harness-kit/harness.py uninstall .</code>.</li>
+        <li>Kiểm tra sức khỏe: <code>python ~/.harness-kit/harness.py doctor .</code>.</li>
+      </ul>
+    </section>
+
+    <section id="su-co" class="reveal">
+      <h2>Xử lý sự cố</h2>
+      <details class="faq"><summary>Hook không chạy</summary><p>Chạy <code>doctor</code>: lệnh kiểm tra python cho hook và việc đăng ký hook.</p></details>
+      <details class="faq"><summary>“workspace has not been trusted”</summary><p>Mở dự án một lần ở chế độ tương tác và chấp nhận trust. Sau đó các quy tắc allow có hiệu lực; hook và quy tắc deny vốn đã áp dụng.</p></details>
+      <details class="faq"><summary>Bị hỏi trước khi ghi ngoài phạm vi</summary><p>Đây là thiết kế. Thêm tệp vào scope của feature hoặc tạo feature mới; hoặc đặt <code>"scope_guard": "off"</code>.</p></details>
+      <details class="faq"><summary>Hook Stop chặn kết thúc</summary><p>Sửa các vấn đề được liệt kê rồi chạy <code>exit-check</code>.</p></details>
+      <details class="faq"><summary>Lệnh test hoặc lint sai</summary><p>Sửa mục <code>commands</code> trong <code>.harness/config.json</code>.</p></details>
+      <details class="faq"><summary>Tắt hook cho một phiên</summary><p>Đặt biến môi trường <code>HARNESS_HOOKS=off</code>.</p></details>
+    </section>
+
+    <section id="cach-xay-dung" class="reveal">
+      <h2>Cách trang này được xây dựng</h2>
+      <div class="callout callout--note"><p class="callout__title">Chính trang này dùng harness-kit</p>
+        <p>Mỗi trang là một feature có lệnh kiểm chứng (<code>python tests/check_site.py --page &lt;trang&gt;</code>), một phiên maker cho mỗi trang, một reviewer chỉ đọc và pass-gate. Báo cáo của lần chạy nằm trong <code>.harness/runs/</code> (cục bộ) <span class="ev" data-evidence="sx">SX</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p></div>
+    </section>
+
+    <section id="tom-tat" class="reveal">
+      <h2>Tóm tắt</h2>
+      <p>Cài bằng một lệnh, làm việc theo chuỗi start → plan → implement → handoff, để lệnh <code>verify</code> quyết định “xong”, và dùng <code>doctor</code> khi nghi ngờ. Nguồn tham khảo ở <a href="references.html">trang Tài liệu</a> <span class="ev" data-evidence="sl">SL</span>.</p>
+    </section>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <span>harness-kit — hướng dẫn và cơ sở học thuật. Mã nguồn: <a href="https://github.com/duonghuyhieu/harness-kit">github.com/duonghuyhieu/harness-kit</a></span>
+    <span>Số liệu tra cứu ngày 15/10/2026. Mỗi con số mang nhãn bằng chứng: Đo · SX · MH · SL.</span>
+  </div>
+</footer>
+</body>
+</html>

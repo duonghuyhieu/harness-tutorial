@@ -313,16 +313,52 @@
       "category": "feature",
       "behavior": "guide.html (Hướng dẫn sử dụng): install tabs (Windows / macOS-Linux / npm) with the terminal replay, what gets installed, daily workflow, all 16 skills and 6 agents, worked example, autonomous loop, update/uninstall/doctor, troubleshooting FAQ, and the 'Cách trang này được xây dựng' box — docs/CONTENT.md Page 5",
       "verification": "python tests/check_site.py --page guide",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [
         "F004"
       ],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T21:02:13+07:00",
+        "commit": "0f07050",
+        "command": "python tests/check_site.py --page guide",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "WARNING: guide.html: links to references.html, not built yet\nWARNING: guide.html: links to references.html, not built yet\nWARNING: guide.html: links to references.html, not built yet\nWARNING: guide.html: links to references.html, not built yet\nWARNING: guide.html: links to references.html, not built yet\nsite check: PASS",
+        "loop": {
+          "attempts": 1,
+          "cost_usd": 0.53306,
+          "runs": [
+            {
+              "role": "maker",
+              "subtype": "success",
+              "cost": 0.3889548,
+              "turns": 10
+            },
+            {
+              "role": "reviewer",
+              "subtype": "success",
+              "cost": 0.1441054,
+              "turns": 11
+            }
+          ],
+          "reviewer_evidence": "`python scripts/harness.py try F005` passed (site check PASS). Its only warnings are that references.html isn't built yet, which is expected because that is a later feature. `python scripts/harness.py check` passed (rules, docs, lint, test). `check --only test` passed, and it runs `tests/check_site.py`. `git status` shows only `guide.html` as the maker's new file, plus the harness-owned `feature_list.json`. Nothing in `assets/`, `tests/`, `docs/CONTENT.md` or the other pages changed. I found no "
+        }
+      },
       "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
       "scope": [
         "guide.html"
       ],
-      "priority": 14
+      "priority": 14,
+      "activated_at": "2026-10-15T21:00:34+07:00",
+      "activated_commit": "0f070505949530ab2374f41636c992e4aed05a93",
+      "loop_runs": [
+        {
+          "run": "20261015-210034-F005",
+          "outcome": "passing",
+          "report_sha256": "f82dc045c199e3b69c12ace76582ab502b520b947945fe46d4000898e5388d43"
+        }
+      ]
     },
     {
       "id": "F006",
