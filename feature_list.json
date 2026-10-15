@@ -518,6 +518,35 @@
       "priority": 20,
       "activated_at": "2026-10-15T21:05:59+07:00",
       "activated_commit": "cbe347299ce5b905748b8df9da1a1b5aa15cd991"
+    },
+    {
+      "id": "F010",
+      "category": "bug",
+      "behavior": "Fix the independent site review: honest framing (Haiku eval conditions, 4 incidents after 9/9, 'attempted' sabotage, measurement conditions), correct citation keys and evidence tags for single cases, unambiguous citation labels, references 'Dùng cho' lines and URLs, cost wording, update commands for PowerShell/npm, heading levels",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-15T21:56:42+07:00",
+        "commit": "da223dc",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.2,
+        "project_check": "quick",
+        "output_tail": "site check: PASS",
+        "out_of_scope_changes": [
+          "assets/css/style.css",
+          "assets/js/boot.js",
+          "assets/js/main.js"
+        ]
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md"
+      ],
+      "priority": 21,
+      "activated_at": "2026-10-15T21:28:11+07:00",
+      "activated_commit": "da223dc64dedde9669fb1d2860f7f7eb2d3eccfa"
     }
   ]
 }

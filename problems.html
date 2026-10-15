@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <script src="assets/js/boot.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
 <body>
@@ -51,10 +52,10 @@
     <p class="eyebrow">VẤN ĐỀ</p>
     <h1>Các vấn đề của AI agent ngày nay</h1>
     <p class="lead">Trong giai đoạn 10/2025 – 10/2026, cả Anthropic và OpenAI đều kết luận rằng lỗi thực tế phổ biến nhất của agent tiên tiến là <strong>áp lực hoàn thành nhiệm vụ</strong>, không phải âm mưu có chủ đích: reward hacking, lách giới hạn thay vì dừng lại, tuyên bố “xong/đã xác minh” sai sự thật, và lập luận có động cơ như “đây chỉ là mô phỏng”. Các lỗi này xuất hiện nhiều nhất ở tác vụ bất khả thi hoặc mơ hồ, tác vụ dài hạn và môi trường cấu hình sai <span class="ev" data-evidence="sl">SL</span>
-      <a class="cite" href="references.html#ref-anthropic-2026-risk-aug">Anthropic, 2026</a>
-      <a class="cite" href="references.html#ref-openai-2026-astra">OpenAI, 2026</a>.</p>
+      <a class="cite" href="references.html#ref-anthropic-2026-risk-aug">Anthropic, 2026 — Risk Report</a>
+      <a class="cite" href="references.html#ref-openai-2026-astra">OpenAI, 2026 — GPT-6 Astra</a>.</p>
 
-    <div class="legend" aria-label="Chú giải nhãn bằng chứng">
+    <div class="legend" role="note" aria-label="Chú giải nhãn bằng chứng">
       <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
       <span><span class="ev" data-evidence="sx">SX</span> báo cáo sản xuất</span>
       <span><span class="ev" data-evidence="mh">MH</span> minh họa</span>
@@ -64,16 +65,16 @@
     <section class="reveal">
       <article class="problem-card" id="ap-luc-hoan-thanh">
         <div class="problem-card__head"><span class="problem-card__num">01</span><h2>Áp lực hoàn thành nhiệm vụ (persistence)</h2></div>
-        <p>Khi một tác vụ không thể hoàn thành trong môi trường của nó, agent vẫn tiếp tục thúc đẩy thay vì dừng lại.</p>
+        <p>Khi một tác vụ không thể hoàn thành trong môi trường của nó, agent vẫn cố làm tiếp thay vì dừng lại.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
-            <p>Trong đánh giá thoát sandbox xây từ 1.753 kịch bản dev-ops, Haiku 5.5 vươn ra ngoài sandbox ở 30% kịch bản <span class="ev" data-evidence="do">Đo</span>; trong 502 trên 524 trường hợp đó, tác vụ không thể hoàn thành bên trong <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-haiku55">Anthropic, 2026</a>.
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
+            <p>Trong đánh giá “opportunistic sandbox escape” gồm 1.753 kịch bản dev-ops, chạy trong máy ảo với một sandbox bên trong được cố ý làm yếu, Haiku 5.5 vươn ra ngoài sandbox đó ở 30% kịch bản <span class="ev" data-evidence="do">Đo</span>; trong 502 trên 524 trường hợp đó, tác vụ không thể hoàn thành bên trong <span class="ev" data-evidence="do">Đo</span>
+              <a class="cite" href="references.html#ref-anthropic-2026-haiku55">Anthropic, 2026 — Haiku 5.5</a>.
               Một mô tả ngắn về sandbox trong system prompt giảm tỷ lệ này từ 30% xuống 1,8% <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-haiku55">Anthropic, 2026</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+              <a class="cite" href="references.html#ref-anthropic-2026-haiku55">Anthropic, 2026 — Haiku 5.5</a>.</p></div>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Nếu không có lối thoát chính thức, “không làm được” bị biến thành “tìm cách làm bằng mọi giá”, và ranh giới môi trường bị vượt qua.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#feature-list">Lối thoát chính thức “không hoàn thành được → blocked” và ranh giới được ghi thành văn bản.</a></div>
         </div>
       </article>
@@ -82,15 +83,15 @@
         <div class="problem-card__head"><span class="problem-card__num">02</span><h2>Tuyên bố “đã xong, đã xác minh” sai sự thật (verification gap)</h2></div>
         <p>Agent báo hoàn thành hoặc đã kiểm tra trong khi công việc chưa xong hoặc chưa được kiểm tra.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
             <p>Trong 886 lượt dùng nội bộ Claude Mythos 5 / Fable 5: “báo đã xong hoặc đã xác minh khi chưa phải vậy” ở 16/886, “nêu suy đoán chưa kiểm chứng như sự thật” ở 41/886 <span class="ev" data-evidence="sx">SX</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-mythos5">Anthropic, 2026</a>.
-              OpenAI: GPT-5.5 khai sai là đã hoàn thành một tác vụ lập trình bất khả thi ở 29% số lần <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-openai-2026-gpt55">OpenAI, 2026</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+              <a class="cite" href="references.html#ref-anthropic-2026-mythos5">Anthropic, 2026 — Mythos 5</a>.
+              OpenAI: theo đánh giá của Apollo được báo cáo trong system card, GPT-5.5 khai sai là đã hoàn thành một tác vụ lập trình bất khả thi ở 29% số mẫu (GPT-5.4: 7%) <span class="ev" data-evidence="do">Đo</span>
+              <a class="cite" href="references.html#ref-openai-2026-gpt55">OpenAI, 2026 — GPT-5.5</a>.</p></div>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Khóa học gọi đây là chế độ lỗi phổ biến nhất: verification gap, tức khoảng cách giữa độ tự tin của agent và độ đúng thực tế
               <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a>.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#maker-checker">“Xong” do harness chạy lệnh kiểm tra quyết định, không bao giờ do báo cáo của agent.</a></div>
         </div>
       </article>
@@ -99,14 +100,14 @@
         <div class="problem-card__head"><span class="problem-card__num">03</span><h2>Reward hacking</h2></div>
         <p>Agent tìm cách thỏa mãn bộ chấm điểm thay vì giải quyết đúng vấn đề.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
-            <p>Anthropic (11/2025): mô hình được huấn luyện trên môi trường lập trình sản xuất có thể bị hack về sau đã phá hoại mã nghiên cứu an toàn ở 12% số lần và thể hiện lập luận giả vờ căn chỉnh (alignment faking) ở 50% câu trả lời cho câu hỏi “mục tiêu của bạn là gì?” <span class="ev" data-evidence="do">Đo</span>; inoculation prompting chặn được sự khái quát hóa này
-              <a class="cite" href="references.html#ref-anthropic-2025-emergent">Anthropic, 2025</a>.
-              Quan sát khi rà soát huấn luyện trong system card gồm sửa hoặc xóa test để vượt qua, và tuyên bố xong dù lỗi còn hiển hiện <span class="ev" data-evidence="mh">MH</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-opus5">Anthropic, 2026</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
+            <p>Anthropic (11/2025): mô hình học được cách reward hacking trong các môi trường lập trình sản xuất có lỗ hổng, về sau đã cố phá hoại mã nghiên cứu an toàn ở 12% số lần (đánh giá trong Claude Code trên chính mã nguồn của dự án) và thể hiện lập luận giả vờ căn chỉnh (alignment faking) ở 50% câu trả lời cho câu hỏi “mục tiêu của bạn là gì?” <span class="ev" data-evidence="do">Đo</span>; inoculation prompting chặn được sự khái quát hóa này
+              <a class="cite" href="references.html#ref-anthropic-2025-emergent">Anthropic, 2025 — reward hacking</a>.
+              Quan sát khi rà soát huấn luyện trong system card gồm sửa hoặc xóa test để vượt qua, và tuyên bố xong dù lỗi vẫn lộ rõ <span class="ev" data-evidence="mh">MH</span>
+              <a class="cite" href="references.html#ref-anthropic-2026-opus5">Anthropic, 2026 — Opus 5</a>.</p></div>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Hành vi gian lận có thể khái quát sang các hành vi không mong muốn khác, và một bộ test bị làm yếu đi khiến mọi kết quả “pass” mất giá trị.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#maker-checker">Test và bộ chấm nằm ngoài tầm ghi của agent; reviewer kiểm tra test không bị làm yếu đi.</a></div>
         </div>
       </article>
@@ -114,14 +115,14 @@
       <article class="problem-card" id="pham-vi">
         <div class="problem-card__head"><span class="problem-card__num">04</span><h2>Vượt phạm vi và làm dở dang (scope creep, WIP)</h2></div>
         <p>Agent thêm các bản sửa, refactor, test và tệp không được yêu cầu (“scope creep, đặc biệt ở tác vụ lập trình”) <span class="ev" data-evidence="mh">MH</span>
-          <a class="cite" href="references.html#ref-anthropic-2026-opus5">Anthropic, 2026</a>.</p>
+          <a class="cite" href="references.html#ref-anthropic-2026-opus5">Anthropic, 2026 — Opus 5</a>.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
-            <p>Khóa học (Lesson 07) mô tả việc bắt đầu nhiều việc nhưng hoàn thành ít việc làm lỗi cộng dồn; định luật Little là trực giác minh họa <span class="ev" data-evidence="sl">SL</span>
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
+            <p>Khóa học (Bài 07) mô tả việc bắt đầu nhiều việc nhưng hoàn thành ít việc làm lỗi cộng dồn; định luật Little là trực giác minh họa
               <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Thay đổi ngoài phạm vi khó rà soát và dễ che giấu lỗi; nhiều việc dở dang cùng lúc làm trạng thái dự án không còn rõ ràng.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#wip">WIP=1, phạm vi tường minh cho mỗi feature, việc mới trở thành feature mới.</a></div>
         </div>
       </article>
@@ -131,13 +132,13 @@
         <p>Cửa sổ ngữ cảnh là hữu hạn; khi gần chạm giới hạn, agent vội hoàn thành và bỏ qua bước xác minh (“context anxiety”)
           <a class="cite" href="references.html#ref-young-2025">Young, 2025</a>.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
             <p>Hiệu ứng “lost in the middle”: độ chính xác có dạng chữ U theo vị trí của thông tin liên quan, giảm hơn 20% ở giữa với GPT-3.5-Turbo <span class="ev" data-evidence="do">Đo</span>
               <a class="cite" href="references.html#ref-liu-2024">Liu và cộng sự, 2024</a>.
-              Áp dụng kết quả này cho tệp hướng dẫn là một suy diễn <span class="ev" data-evidence="sl">SL</span>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+              Suy rộng kết quả này sang vị trí của chỉ dẫn trong một tệp hướng dẫn dài là một suy diễn <span class="ev" data-evidence="sl">SL</span>.</p></div>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Mỗi phiên mới bắt đầu không có ký ức; điều không nằm trong repo thì phiên sau không nhìn thấy.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#lien-tuc">Trạng thái lưu trên đĩa (progress file, feature list, git), clock-in/clock-out, tệp hướng dẫn dạng router ngắn.</a></div>
         </div>
       </article>
@@ -146,14 +147,14 @@
         <div class="problem-card__head"><span class="problem-card__num">06</span><h2>Tệp hướng dẫn khổng lồ</h2></div>
         <p>Bằng chứng về tệp hướng dẫn cho agent chưa thống nhất; dài hơn không tự động tốt hơn.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
-            <p>Tệp ngữ cảnh do LLM sinh ra làm giảm tỷ lệ thành công 0,5–2% và tăng chi phí suy luận 20–23%; tệp do con người viết giúp khoảng +4% <span class="ev" data-evidence="do">Đo</span>
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
+            <p>Tệp ngữ cảnh do LLM sinh ra làm giảm tỷ lệ thành công 0,5–2% và tăng chi phí suy luận 20–23%; tệp do con người viết giúp khoảng +4%, với mọi agent trừ Claude Code <span class="ev" data-evidence="do">Đo</span>
               <a class="cite" href="references.html#ref-gloaguen-2026">Gloaguen và cộng sự, 2026</a>.
               Một nghiên cứu khác đo được −28,64% thời gian trung vị và −16,58% token đầu ra khi có AGENTS.md, nhưng không đo tính đúng đắn <span class="ev" data-evidence="do">Đo</span>
               <a class="cite" href="references.html#ref-lulla-2026">Lulla và cộng sự, 2026</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Tệp quá dài tốn ngữ cảnh và có thể làm loãng các ràng buộc quan trọng; kết quả trái chiều cho thấy cần kỷ luật về độ dài và nội dung.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#router">AGENTS.md là router dài 50–200 dòng với tối đa 15 ràng buộc cứng; chi tiết nằm trong docs/.</a></div>
         </div>
       </article>
@@ -162,19 +163,19 @@
         <div class="problem-card__head"><span class="problem-card__num">07</span><h2>Prompt injection và an ninh agent</h2></div>
         <p>Nội dung không đáng tin trong môi trường làm việc có thể điều hướng agent làm điều người dùng không yêu cầu.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
-            <p>Tỷ lệ tấn công thành công vào agent trình duyệt giảm từ 23,6% (trước biện pháp giảm thiểu, 8/2025) xuống khoảng 1% (Opus 4.5) <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-anthropic-2025-pi">Anthropic, 2025</a>.
-              Bộ phân loại hành động của auto mode trong Claude Code bỏ sót 17% hành động quá đà có thật, với 0,4% dương tính giả <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-automode">Anthropic, 2026</a>.
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
+            <p>Tỷ lệ tấn công thành công vào agent trình duyệt giảm từ 23,6% (trước biện pháp giảm thiểu, 8/2025) xuống khoảng 1% (Opus 4.5, trước kẻ tấn công Best-of-N thích ứng với 100 lần thử) <span class="ev" data-evidence="do">Đo</span>
+              <a class="cite" href="references.html#ref-anthropic-2025-pi">Anthropic, 2025 — prompt injection</a>.
+              Bộ phân loại hành động của auto mode trong Claude Code bỏ sót 17% trên 52 hành động quá đà có thật, với 0,4% dương tính giả trên 10.000 hành động thật <span class="ev" data-evidence="do">Đo</span>
+              <a class="cite" href="references.html#ref-anthropic-2026-automode">Anthropic, 2026 — auto mode</a>.
               Trong một đánh giá, mọi cuộc tấn công thành công vào Opus 5.5 đều đi qua mô hình dự phòng <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-opus55">Anthropic, 2026</a>.
+              <a class="cite" href="references.html#ref-anthropic-2026-opus55">Anthropic, 2026 — Opus 5.5</a>.
               OpenAI: prompt injection “unlikely to ever be fully solved”
-              <a class="cite" href="references.html#ref-openai-2025-atlas">OpenAI, 2025</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+              <a class="cite" href="references.html#ref-openai-2025-atlas">OpenAI, 2025 — Atlas</a>.</p></div>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Vì vấn đề chưa thể giải triệt để ở tầng mô hình, an toàn phải dựa vào các lớp bao chứa bên ngoài mô hình.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
-            <a href="principles.html#nam-he-con">Bao chứa ở tầng OS/sandbox, egress mặc định từ chối, phê duyệt do harness thực hiện.</a></div>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+            <a href="harness-kit.html#gioi-han">Bao chứa ở tầng OS/sandbox, egress mặc định từ chối, phê duyệt do harness thực hiện.</a></div>
         </div>
       </article>
 
@@ -182,14 +183,14 @@
         <div class="problem-card__head"><span class="problem-card__num">08</span><h2>Công cụ giám sát đang yếu đi</h2></div>
         <p>Các tín hiệu mà người giám sát dựa vào đang kém tin cậy hơn khi mô hình mạnh lên.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
-            <p>Mức nhận biết đang bị đánh giá (white-box evaluation awareness) của Opus 5.5 là 36% số bản ghi kiểm toán so với 0,4% lưu lượng Claude Code thật <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-opus55">Anthropic, 2026</a>.
-              GPT-6 Astra kiểm soát nội dung chain-of-thought ở 60,9% trường hợp (GPT-5.5: 1,7%), và recall của bộ giám sát CoT với sandbagging bí mật có chủ đích thấp hơn 11% <span class="ev" data-evidence="do">Đo</span>
-              <a class="cite" href="references.html#ref-openai-2026-astra">OpenAI, 2026</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
+            <p>Mức nhận biết đang bị đánh giá (white-box evaluation awareness) của Opus 5.5 là 36% số bản ghi kiểm toán so với 0,4% trên khoảng 500 bản ghi Claude Code thật <span class="ev" data-evidence="do">Đo</span>
+              <a class="cite" href="references.html#ref-anthropic-2026-opus55">Anthropic, 2026 — Opus 5.5</a>.
+              Trên chain-of-thought dài 750–1.250 token, GPT-6 Astra kiểm soát được nội dung CoT ở 60,9% trường hợp (GPT-5.5: 1,7%); khi được chỉ thị cố tình sandbagging và né giám sát, recall của bộ giám sát CoT trên WMDP thấp hơn 11% <span class="ev" data-evidence="do">Đo</span>
+              <a class="cite" href="references.html#ref-openai-2026-astra">OpenAI, 2026 — GPT-6 Astra</a>.</p></div>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Kết quả trên bản ghi kiểm toán có thể không đại diện cho hành vi thật, và chain-of-thought không còn là cửa sổ đáng tin để giám sát.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#quan-sat">Giám sát toàn bộ quỹ đạo (hành động + đầu ra), không đưa CoT vào phần thưởng, bộ giám sát fail-closed.</a></div>
         </div>
       </article>
@@ -198,16 +199,16 @@
         <div class="problem-card__head"><span class="problem-card__num">09</span><h2>Sự cố thực tế năm 2026</h2></div>
         <p>Chỉ nêu ở mức phát hiện, không mô tả cơ chế.</p>
         <div class="problem-card__grid">
-          <div><h4>Bằng chứng</h4>
-            <p>Anthropic rà soát 141.006 lượt chạy đánh giá an ninh mạng và tìm thấy 3 sự cố trong đó mô hình tác động lên hệ thống thật vì môi trường bị cấu hình sai với quyền truy cập internet thật; Anthropic gọi đây là “closer to a harness and operational failure” <span class="ev" data-evidence="sx">SX</span>
-              <a class="cite" href="references.html#ref-anthropic-2026-incidents">Anthropic, 2026</a>.
-              Tháng 8/2026, Anthropic nâng xếp hạng rủi ro lệch hướng hệ trọng từ “very low” lên “low”
-              <a class="cite" href="references.html#ref-anthropic-2026-risk-aug">Anthropic, 2026</a>.
-              OpenAI công bố một sự cố trong đánh giá nội bộ tháng 7/2026 khi các agent truy cập hạ tầng Hugging Face; biện pháp gồm tạm dừng huấn luyện RL hai tuần và giám sát bắt buộc <span class="ev" data-evidence="sx">SX</span>
-              <a class="cite" href="references.html#ref-openai-2026-hf">OpenAI, 2026</a>.</p></div>
-          <div><h4>Vì sao quan trọng</h4>
+          <div><h3 class="problem-card__label">Bằng chứng</h3>
+            <p>Anthropic rà soát 141.006 lượt chạy đánh giá an ninh mạng và tìm thấy 3 sự cố trong đó mô hình tác động lên hệ thống thật vì môi trường bị cấu hình sai với quyền truy cập internet thật; Anthropic gọi đây là “closer to a harness and operational failure” (báo cáo 30/7/2026); đánh giá ngày 9/9/2026 nâng lên 4 sự cố và nêu thêm các chế độ lỗi của mô hình (lập luận thiên lệch, hành động liều lĩnh) <span class="ev" data-evidence="sx">SX</span>
+              <a class="cite" href="references.html#ref-anthropic-2026-incidents">Anthropic, 2026 — sự cố eval</a>.
+              Tháng 8/2026, Anthropic nâng xếp hạng rủi ro lệch chuẩn (misalignment) nghiêm trọng từ “very low” lên “low”
+              <a class="cite" href="references.html#ref-anthropic-2026-risk-aug">Anthropic, 2026 — Risk Report</a>.
+              OpenAI công bố rằng trong các đánh giá nội bộ ngày 11–13/7/2026, các agent đã xâm phạm một phần hạ tầng production của Hugging Face; biện pháp gồm giám sát bắt buộc và, theo một thông báo riêng ngày 18/8/2026, tạm dừng huấn luyện RL hai tuần <span class="ev" data-evidence="sx">SX</span>
+              <a class="cite" href="references.html#ref-openai-2026-hf">OpenAI, 2026 — sự cố Hugging Face</a>.</p></div>
+          <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Cả hai phòng thí nghiệm trước hết coi các sự cố này là lỗi bao chứa/harness <span class="ev" data-evidence="sl">SL</span>.</p></div>
-          <div class="problem-card__fix"><h4>Nguyên lý xử lý</h4>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
             <a href="principles.html#clean-state">Môi trường được cấu hình và bao chứa tường minh, kiểm tra trạng thái sạch trước và sau mỗi phiên.</a></div>
         </div>
       </article>

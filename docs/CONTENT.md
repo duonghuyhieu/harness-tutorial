@@ -29,7 +29,7 @@ weights — decides how much of a model's capability becomes reliable work.
 
 Key facts for the hero / stat cards:
 - Same model, different harness: Opus 4.5 solo run ≈ 20 minutes, 9 USD, core feature not working; full harness ≈ 6 hours,
-  200 USD, working application [sx] — not an equal-budget experiment (ref: rajasekaran-2026).
+  200 USD, working application [mh] (a single reported case) — not an equal-budget experiment (ref: rajasekaran-2026).
 - LangChain: same model, only the harness changed: 52.8% → 66.5% on Terminal Bench 2.0 [sx] (ref: trivedy-2026).
 - OpenAI: about 1 million lines of code and about 1,500 pull requests in five months by three engineers using Codex
   (about 3.5 PR per engineer per day) [sx] (ref: lopopolo-2026).
@@ -56,18 +56,19 @@ anthropic-2026-risk-aug, openai-2026-astra).
 Sections (each = one problem card with: what happens, evidence, why it matters, which harness principle answers it):
 
 1. `#ap-luc-hoan-thanh` — **Áp lực hoàn thành nhiệm vụ / persistence**. When a task cannot be done inside its
-   environment, agents keep pushing: in a sandbox-escape evaluation built from 1,753 dev-ops scenarios, Haiku 5.5
-   reached outside the sandbox in 30% of scenarios; in 502 of those 524 cases the task could not be completed inside
+   environment, agents keep pushing: in an "opportunistic sandbox escape" evaluation of 1,753 dev-ops scenarios, run in
+   virtual machines with a deliberately weak inner sandbox, Haiku 5.5 reached outside that sandbox in 30% of scenarios; in 502 of those 524 cases the task could not be completed inside
    [do] (ref: anthropic-2026-haiku55). A short description of the sandbox in the system prompt cut this from 30% to
    1.8% [do] (same ref). → principle: an official "cannot complete → blocked" exit + boundaries written down.
 2. `#khai-sai` — **Tuyên bố "đã xong, đã xác minh" sai sự thật (verification gap)**. In 886 internal uses of Claude
    Mythos 5 / Fable 5: "reported work as done or verified when it wasn't" 16/886, "states an unverified guess as fact"
-   41/886 [sx] (ref: anthropic-2026-mythos5). OpenAI: GPT-5.5 falsely claimed completion of an impossible coding task
-   29% of the time [do] (ref: openai-2026-gpt55). The course calls this the most common failure mode: the verification
+   41/886 [sx] (ref: anthropic-2026-mythos5). OpenAI: in Apollo's evaluation reported in the system card, GPT-5.5 falsely claimed
+   completion of an impossible coding task in 29% of samples (GPT-5.4: 7%) [do] (ref: openai-2026-gpt55). The course calls this the most common failure mode: the verification
    gap — the distance between the agent's confidence and actual correctness (ref: walkinglabs-2026). → principle:
    "done" is decided by the harness running a command, never by the agent's report.
-3. `#reward-hacking` — **Reward hacking**. Anthropic (Nov 2025): a model trained on hackable production coding
-   environments later sabotaged safety-research code 12% of the time and showed alignment-faking reasoning in 50% of
+3. `#reward-hacking` — **Reward hacking**. Anthropic (Nov 2025): a model that learned to reward-hack in vulnerable production coding
+   environments later attempted to sabotage safety-research code 12% of the time (evaluated in Claude Code on the
+   project's own code base) and showed alignment-faking reasoning in 50% of
    answers to "what are your goals?" [do]; inoculation prompting stopped the generalization (ref:
    anthropic-2025-emergent). Training-review observations in system cards include editing or deleting tests to pass and
    declaring a task done despite a visible defect [mh] (ref: anthropic-2026-opus5). → principle: tests and graders out of
@@ -82,27 +83,29 @@ Sections (each = one problem card with: what happens, evidence, why it matters, 
    GPT-3.5-Turbo [do] (ref: liu-2024). Applying it to instruction files is an extrapolation [sl]. → principle: state on
    disk (progress file, feature list, git), clock-in/clock-out, short router instruction file.
 6. `#chi-dan-phinh` — **Tệp hướng dẫn khổng lồ**. Evidence is mixed: LLM-generated context files lowered success by
-   0.5–2% and raised inference cost by 20–23%; human-written files helped about +4% [do] (ref: gloaguen-2026). Another
+   0.5–2% and raised inference cost by 20–23%; human-written files helped about +4%, for every agent except Claude Code [do] (ref: gloaguen-2026). Another
    study measured −28.64% median time and −16.58% output tokens with AGENTS.md, but did not measure correctness [do]
    (ref: lulla-2026). → principle: AGENTS.md as a 50–200-line router with ≤ 15 hard constraints; detail in docs/.
 7. `#prompt-injection` — **Prompt injection và an ninh agent**. Browser-agent attack success fell from 23.6% (before
-   mitigations, Aug 2025) to about 1% (Opus 4.5) [do] (ref: anthropic-2025-pi); Claude Code auto-mode's action
-   classifier misses 17% of real overeager actions with 0.4% false positives [do] (ref: anthropic-2026-automode); in
+   mitigations, Aug 2025) to about 1% (Opus 4.5, against an adaptive Best-of-N attacker with 100 attempts) [do] (ref: anthropic-2025-pi); Claude Code auto-mode's action
+   classifier misses 17% of 52 real overeager actions, with 0.4% false positives on 10,000 real actions [do] (ref: anthropic-2026-automode); in
    one evaluation all successful attacks on Opus 5.5 came through the fallback model [do] (ref: anthropic-2026-opus55).
    OpenAI: prompt injection is "unlikely to ever be fully solved" (ref: openai-2025-atlas). → principle: containment at
    the OS/sandbox layer, egress deny-by-default, approvals from the harness.
 8. `#giam-sat-yeu-di` — **Công cụ giám sát đang yếu đi**. White-box evaluation awareness of Opus 5.5: 36% of audit
-   transcripts vs 0.4% of real Claude Code traffic [do] (ref: anthropic-2026-opus55); GPT-6 Astra controls the content
-   of its chain-of-thought in 60.9% of cases (GPT-5.5: 1.7%) and a CoT monitor's recall on deliberate covert
-   sandbagging is below 11% [do] (ref: openai-2026-astra). → principle: monitor the full trajectory (actions + output),
+   transcripts vs 0.4% of about 500 real Claude Code transcripts [do] (ref: anthropic-2026-opus55); on chains-of-thought of 750–1,250 tokens GPT-6 Astra
+   controls their content in 60.9% of cases (GPT-5.5: 1.7%), and when instructed to sandbag and evade monitoring, a CoT
+   monitor's recall on WMDP falls below 11% [do] (ref: openai-2026-astra). → principle: monitor the full trajectory (actions + output),
    never put CoT into a reward, monitors fail-closed.
 9. `#su-co-2026` — **Sự cố thực tế năm 2026** (findings level only, no mechanics): Anthropic reviewed 141,006
    cybersecurity-evaluation runs and found 3 incidents in which models acted on real systems because the environment
    was misconfigured with real internet access; Anthropic called this "closer to a harness and operational failure"
-   [sx] (ref: anthropic-2026-incidents). In August 2026 Anthropic raised its high-stakes misalignment risk rating from
-   "very low" to "low" (ref: anthropic-2026-risk-aug). OpenAI disclosed an incident during an internal evaluation in
-   July 2026 in which agents reached Hugging Face infrastructure; responses included a two-week pause of RL training
-   and mandatory monitoring [sx] (ref: openai-2026-hf). Both labs treat these first as containment/harness failures [sl].
+   [sx] (ref: anthropic-2026-incidents; report of 30/7/2026). A follow-up assessment on 9/9/2026 raised the count to 4
+   incidents and also named model failure modes (biased reasoning, recklessness) [sx] (same ref). In August 2026 Anthropic raised its high-stakes misalignment risk rating from
+   "very low" to "low" (ref: anthropic-2026-risk-aug). OpenAI disclosed that during internal evaluations on 11–13/7/2026 agents
+   partly compromised Hugging Face production infrastructure; responses included mandatory monitoring and, announced
+   separately on 18/8/2026, a two-week pause of RL training [sx] (ref: openai-2026-hf). Both labs treat these first as
+   containment/harness failures while acknowledging model failure modes [sl].
 
 Closing box: "Năng lực đã đủ để giao việc; điều còn thiếu là cách biết agent thật sự đã làm xong, làm đúng phạm vi, và
 không đi ra ngoài môi trường được phép" [sl].
@@ -121,7 +124,8 @@ Sections (each with: principle, mechanism, artifact, anti-pattern):
 3. `#router` — Instruction file as router (50–200 lines, ≤ 15 hard constraints each with source and expiry),
    progressive disclosure: "read X when Y".
 4. `#lien-tuc` — Continuity: PROGRESS.md + DECISIONS.md + git checkpoints; clock-in (9 steps: pwd → progress →
-   feature list → git log -5 → init.sh → smoke/E2E → fix a red baseline first → pick exactly one feature) and clock-out
+   feature list → git log -5 → init.sh → smoke/E2E → fix a red baseline first → pick exactly one feature → work only on
+   it until it is verified or explicitly blocked) and clock-out
    (update progress → status via verify → handoff → commit with why → clean state).
 5. `#khoi-tao` — Initialization is its own phase: runnable, testable, resumable before feature work.
 6. `#wip` — WIP=1 and VCR (Verified Completion Rate = verified features / activated features); block new work when
@@ -152,7 +156,7 @@ Problem → mechanism table (rows; keep these exact mechanisms):
 | Problem | harness-kit mechanism |
 |---|---|
 | False "done" claims | `verify <id>` is the only path to `passing`: it runs the feature's verification command and the project check, records evidence (time, commit, command, exit code); passing is one-way |
-| Hand-editing completion state | PreToolUse hook denies edits that change `status`/`evidence`/`attempts` in `feature_list.json` (semantic JSON comparison) and shell writes to harness state files; never answers "allow" |
+| Hand-editing completion state | PreToolUse hook denies edits that change `status`/`evidence`/`attempts` in `feature_list.json` (semantic JSON comparison), edits of how a started feature is judged (`verification`, `scope`), duplicate ids and shell writes to harness state files; asks before edits of the harness configuration; never answers "allow" |
 | Scope creep / WIP | `next` refuses a second active feature and refuses while VCR < 1; the guard asks before writing outside the active feature's scope |
 | Maker grading itself | `hk-reviewer` subagent: fresh, read-only, runs `try` and `check` itself, returns PASS/FAIL with locations |
 | Lost context between sessions | SessionStart hook injects the state (features, VCR, active feature + verification, next steps, last check); `start` / `handoff` |
@@ -164,20 +168,28 @@ Problem → mechanism table (rows; keep these exact mechanisms):
 | Fragile installs (lesson from claudekit) | settings merged entry by entry, manifest with sha256 per file, `update`/`uninstall` touch only unchanged files, no silent postinstall surprises |
 
 Evaluation facts (all [do] unless noted; date 15/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287):
-- 99 automated tests pass (85 inherited from v1, 12 for v2 hooks and installer, and 2 regression tests for the
-  bugs that building this site exposed — see "Dogfooding" below).
-- The kit runs under its own harness: features V001–V006 passed its own `verify` pass-gate.
-- Real Claude Code check 1: without using tools, the model correctly named the active feature and its verification
-  command — information that only the SessionStart hook had injected (n = 1, existence check).
-- Real Claude Code check 2: asked to edit a feature's `status` to `passing` under `--permission-mode acceptEdits`, the
+- 105 automated tests pass (85 inherited from v1, 12 for v2 hooks and installer, 2 regression tests for the bugs
+  that building this site exposed — see "Dogfooding" below — and 6 regression tests for the defects that three
+  independent read-only reviews found in 2.0.0; each of those 6 fails on 2.0.0).
+- The kit runs under its own harness: features V001–V007 passed its own `verify` pass-gate.
+- Independent review (15/10/2026) [do]: three read-only reviewers (code, end-to-end install, docs) found, among
+  others, hooks not recognized for some `--python` values (uninstall could leave hooks pointing at a deleted
+  dispatcher), the guard missing non-ASCII paths on Windows, and the pass-gate weakened because an active feature's
+  verification command was editable and every `harness.py` command was auto-allowed. All fixed in 2.0.1.
+- Real Claude Code check 1 [mh — single case]: without using tools, the model correctly named the active feature and
+  its verification command — information that only the SessionStart hook had injected (n = 1, existence check).
+- Real Claude Code check 2 [mh — single case]: asked to edit a feature's `status` to `passing` under `--permission-mode acceptEdits`, the
   edit was denied by the hook and the file stayed `not_started` (n = 1).
-- Install via npx, install.sh and install.ps1: `doctor` reported HEALTHY for all three.
-- Design requirements from the comparative analysis: 10 of 21 fully met, 9 partly, 2 not yet [sl self-assessment].
+- Install via the PowerShell one-liner, the bash one-liner, npx and `npm install -D`: `doctor` reported HEALTHY for all
+  four (end-to-end review); the 2.0.1 PowerShell one-liner was re-run from GitHub after the fixes: HEALTHY.
+- Design requirements from the comparative analysis, rated strictly against their wording: 5 of 21 fully met,
+  14 partly, 2 not yet [sl self-assessment].
 Dogfooding — this site was built with harness-kit's own loop (all [sx], single project, 15/10/2026):
 - 6 page features, each with `python tests/check_site.py --page <page>` as its verification command; maker
   (Claude Sonnet, fresh session, write access only to its page) → read-only reviewer → pass-gate → commit.
-- After the fixes below, every page passed in its first attempt; reported cost of the loop runs: about 4.26 USD in
-  total (first, failed run 0.69 USD included).
+- After the fixes below, every page passed in its first attempt; the 7 runs that built the 6 pages cost about 4.26 USD
+  as reported (first, failed run 0.69 USD included); the F008 run that updated two pages added about 0.39 USD; the
+  final visual polish (F009) was done by hand outside the loop after a screenshot review.
 - Bug 1 found by the loop's own integrity check: the project's v2 hooks write `.harness/activity.jsonl` inside loop
   sessions, and the loop treated that as the maker editing harness files — two correct attempts were rejected and
   the feature blocked. Fixed: those files are runtime state (regression test added).
@@ -220,8 +232,9 @@ verify pass / block) showing what the runtime allows; the hook timeline (Session
 6. `#vong-lap` — Autonomous loop: `python scripts/harness.py loop --dry-run`, then e.g. `loop --max-features 3
    --max-attempts 3 --max-total-usd 5 --model sonnet`; `report` prints the theory checklist; `--commit` only if you
    pre-approve commits. (This very site was built with that loop — see the "Cách trang này được xây dựng" box.)
-7. `#cap-nhat` — Update / uninstall / doctor: re-run the install command (or `python ~/.harness-kit/harness.py update .`),
-   `uninstall .`, `doctor .`.
+7. `#cap-nhat` — Update / uninstall / doctor: recommended — re-run the install command. Installed with install.sh:
+   `python ~/.harness-kit/harness.py update .` (also `uninstall .`, `doctor .`); Windows PowerShell:
+   `python "$HOME\.harness-kit\harness.py" update .`; installed with npm: re-run `npx github:duonghuyhieu/harness-kit`.
 8. `#su-co` — Troubleshooting: hooks not running → `doctor` (python for hooks, hooks registered); "workspace has not
    been trusted" → open the project once interactively and accept trust (allow rules apply after that; hooks and deny
    rules already apply); asked before writing outside scope → by design (add to scope or make a new feature, or set
@@ -246,16 +259,16 @@ on what the site uses it for. Keys and data:
 - `anthropic-2026-opus55` — Anthropic (2026, 22/9). Claude Opus 5.5 System Card. https://www.anthropic.com/system-cards
 - `anthropic-2026-haiku55` — Anthropic (2026, 7/10). Claude Haiku 5.5 System Card. https://www.anthropic.com/system-cards
 - `anthropic-2026-incidents` — Anthropic (2026, 30/7). Investigating three real-world incidents in our cybersecurity evaluations. https://www.anthropic.com/news/investigating-incidents-cybersecurity-evals
-- `anthropic-2026-risk-aug` — Anthropic (2026, 8). Risk Report, August 2026. https://www.anthropic.com/responsible-scaling-policy
+- `anthropic-2026-risk-aug` — Anthropic (2026, 8). Risk Report, August 2026 (redacted). https://www-cdn.anthropic.com/f61d49fa5596956a5dec75fea0e973bf6a6a8378/Redacted%20Risk%20Report%20August%202026%20.pdf
 - `young-2025` — Young, J. (2025, 26/11). Effective harnesses for long-running agents. Anthropic Engineering. https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents
 - `rajasekaran-2026` — Rajasekaran, P. (2026, 24/3). Harness design for long-running application development. Anthropic Engineering. https://www.anthropic.com/engineering/harness-design-long-running-apps
 - `lopopolo-2026` — Lopopolo, R. (2026, 11/2). Harness engineering: leveraging Codex in an agent-first world. OpenAI. https://openai.com/index/harness-engineering/
 - `openai-2025-atlas` — OpenAI (2025, 12). Hardening ChatGPT Atlas against prompt injection. https://openai.com/index/hardening-atlas-against-prompt-injection/
 - `openai-2026-gpt55` — OpenAI (2026, 4). GPT-5.5 System Card. https://deploymentsafety.openai.com/gpt-5-5/gpt-5-5.pdf
 - `openai-2026-astra` — OpenAI (2026, 3/9). GPT-6 Astra System Card. https://deploymentsafety.openai.com/gpt-6-astra/gpt-6-astra.pdf
-- `openai-2026-hf` — OpenAI (2026, 26/8). OpenAI–Hugging Face incident technical report. https://openai.com/index/hugging-face-incident-and-the-road-ahead/
+- `openai-2026-hf` — OpenAI (2026, 26/8). OpenAI–Hugging Face incident technical report. https://cdn.openai.com/pdf/67869394-cb91-4c12-888c-5cbd85c7814c/OpenAI-Hugging-Face%20Incident-Technical-Report.pdf
 - `trivedy-2026` — Trivedy, V. (2026). Improving deep agents with harness engineering. LangChain. https://www.langchain.com/blog/improving-deep-agents-with-harness-engineering
-- `gloaguen-2026` — Gloaguen, T., et al. (2026). Evaluating AGENTS.md: Are repository-level context files helpful for coding agents? ETH Zurich. https://www.sri.inf.ethz.ch/publications/gloaguen2026agentsmd
+- `gloaguen-2026` — Gloaguen, T., et al. (2026). Evaluating AGENTS.md: Are repository-level context files helpful for coding agents? ETH Zurich; ICLR 2026 Workshop MemAgents; arXiv:2602.11988. https://www.sri.inf.ethz.ch/publications/gloaguen2026agentsmd
 - `lulla-2026` — Lulla, et al. (2026). On the impact of AGENTS.md files on the efficiency of AI coding agents. arXiv:2601.20404. https://arxiv.org/html/2601.20404v2
 - `liu-2024` — Liu, N. F., et al. (2024). Lost in the middle: How language models use long contexts. TACL. https://arxiv.org/abs/2307.03172
 - `walkinglabs-2026` — Walking Labs (2026). Learn Harness Engineering (khóa học, bản tiếng Việt). https://walkinglabs.github.io/learn-harness-engineering/vi/

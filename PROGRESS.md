@@ -5,13 +5,13 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-15T21:08:50+07:00_
-- Branch / commit: `main` @ `cbe3472 feat(F008): harness-kit.html and guide.html report the dogfooding result`
-- Last check: PASS (full, 2026-10-15T21:08:50+07:00, @cbe3472)
-- Features: 13/13 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-15T21:56:43+07:00_
+- Branch / commit: `main` @ `da223dc feat(F009, F007): visual polish after screenshot review; release gate and README`
+- Last check: PASS (quick, 2026-10-15T21:56:42+07:00, @da223dc)
+- Features: 14/14 passing, VCR 1.0
 - Active: none
 - Blocked: none
-- Uncommitted changes: 5 file(s)
+- Uncommitted changes: 12 file(s)
 <!-- harness:auto:end -->
 
 ## Done
@@ -21,6 +21,10 @@ _Auto-updated by `harness.py handoff` at 2026-10-15T21:08:50+07:00_
       every page passed in its first attempt after two harness-kit fixes (loop runtime state, unblock base) and one
       checker fix; about 4.26 USD for the build runs. F008 (dogfooding results) through the loop as well.
 - [x] 2026-10-15: F009 visual polish after a screenshot review (desktop and 390 px); F007 release gate.
+- [x] 2026-10-15: F010 fixes from an independent read-only review (30 findings): evidence framing and measurement
+      conditions, citation keys and labels, references, cost wording, PowerShell/npm update commands, contrast,
+      no-JS reveal, pause/play for animations, state machine mirroring the runtime, copy fallback; harness-kit 2.0.1
+      facts (105 tests, V001–V007, strict 5/14/2 rating, independent review note).
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 

@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <script src="assets/js/boot.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
 <body>
@@ -56,7 +57,7 @@
     <h1>Nguyên lý xử lý — harness engineering</h1>
     <p class="lead">Mười bốn bài giảng đọc như một lập luận duy nhất: mỗi nguyên lý chỉ trở thành thực tế khi có một artifact đọc được bằng máy hoặc một lệnh chạy được đứng sau nó <span class="ev" data-evidence="sl">SL</span> <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a>.</p>
 
-    <div class="legend" aria-label="Chú giải nhãn bằng chứng">
+    <div class="legend" role="note" aria-label="Chú giải nhãn bằng chứng">
       <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
       <span><span class="ev" data-evidence="sx">SX</span> báo cáo sản xuất</span>
       <span><span class="ev" data-evidence="mh">MH</span> minh họa</span>
@@ -71,7 +72,7 @@
       <div class="principle" id="nam-he-con">
         <div class="principle__num">1</div>
         <div class="principle__body"><h2>Năm hệ con và vòng chẩn đoán</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Harness gồm năm hệ con: Instructions, Tools, Environment, State, Feedback. Khi agent thất bại, sửa harness trước khi đổi mô hình. Vòng chẩn đoán: chạy → quan sát → quy lỗi về đúng một lớp → sửa lớp đó → chạy lại; mỗi lỗi được ghi theo lớp. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>fail --layer</code> ghi lỗi theo lớp; <code>failures</code> chỉ ra nút thắt theo lỗi quan sát được.</div><div><b>Chống mẫu</b>Đổ lỗi cho mô hình và thay mô hình mà không xác định lớp nào của harness đã hỏng.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Harness gồm năm hệ con: Instructions, Tools, Environment, State, Feedback. Khi agent thất bại, sửa harness trước khi đổi mô hình. Vòng chẩn đoán: chạy → quan sát → quy lỗi về đúng một lớp → sửa lớp đó → chạy lại; mỗi lỗi được ghi theo lớp. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>fail --layer</code> ghi lỗi theo lớp; <code>failures</code> chỉ ra nút thắt theo lỗi quan sát được.</div><div><b>Phản mẫu (anti-pattern)</b>Đổ lỗi cho mô hình và thay mô hình mà không xác định lớp nào của harness đã hỏng.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#khai-sai">Khai “đã xong” sai</a> · <a href="problems.html#giam-sat-yeu-di">Giám sát yếu đi</a>.</p>
         </div>
       </div>
@@ -79,7 +80,7 @@
       <div class="principle" id="he-thong-ghi-chep">
         <div class="principle__num">2</div>
         <div class="principle__body"><h2>Kho mã là hệ thống ghi chép</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Điều agent không nhìn thấy trong kho mã thì coi như không tồn tại. Kiểm tra bằng Fresh Session Test với năm câu hỏi: hệ thống này là gì, được tổ chức ra sao, chạy thế nào, xác minh thế nào, và hiện đang ở đâu. Tài liệu lỗi thời còn tệ hơn không có tài liệu. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>AGENTS.md, thư mục <code>docs/</code> và <code>DECISIONS.md</code>; lệnh <code>docs --strict</code> kiểm tra tính đầy đủ.</div><div><b>Chống mẫu</b>Để quyết định và quy ước chỉ nằm trong chat, Slack hoặc trong đầu người.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Điều agent không nhìn thấy trong kho mã thì coi như không tồn tại. Kiểm tra bằng Fresh Session Test với năm câu hỏi: hệ thống này là gì, được tổ chức ra sao, chạy thế nào, xác minh thế nào, và hiện đang ở đâu. Tài liệu lỗi thời còn tệ hơn không có tài liệu. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>AGENTS.md, thư mục <code>docs/</code> và <code>DECISIONS.md</code>; lệnh <code>docs --strict</code> kiểm tra tính đầy đủ.</div><div><b>Phản mẫu (anti-pattern)</b>Để quyết định và quy ước chỉ nằm trong chat, Slack hoặc trong đầu người.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#mat-ngu-canh">Mất ngữ cảnh giữa các phiên</a>.</p>
         </div>
       </div>
@@ -87,7 +88,7 @@
       <div class="principle" id="router">
         <div class="principle__num">3</div>
         <div class="principle__body"><h2>Tệp hướng dẫn là bộ định tuyến</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Tệp hướng dẫn dài 50–200 dòng, tối đa 15 ràng buộc cứng, mỗi ràng buộc ghi nguồn và hạn hiệu lực. Chi tiết nằm ở nơi khác theo kiểu progressive disclosure: “đọc X khi Y”. <a class="cite" href="references.html#ref-gloaguen-2026">Gloaguen và cộng sự, 2026</a></div><div><b>Artifact</b>AGENTS.md làm bản đồ, trỏ tới <code>docs/</code>; mỗi ràng buộc kèm “source” và “expires when”.</div><div><b>Chống mẫu</b>Một tệp hướng dẫn khổng lồ ôm mọi thứ, trong đó chỉ dẫn quan trọng chìm giữa văn bản.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Tệp hướng dẫn dài 50–200 dòng, tối đa 15 ràng buộc cứng, mỗi ràng buộc ghi nguồn và hạn hiệu lực. Chi tiết nằm ở nơi khác theo kiểu progressive disclosure: “đọc X khi Y”. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>AGENTS.md làm bản đồ, trỏ tới <code>docs/</code>; mỗi ràng buộc kèm “source” và “expires when”.</div><div><b>Phản mẫu (anti-pattern)</b>Một tệp hướng dẫn khổng lồ ôm mọi thứ, trong đó chỉ dẫn quan trọng chìm giữa văn bản.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#chi-dan-phinh">Tệp hướng dẫn khổng lồ</a> · <a href="problems.html#mat-ngu-canh">Mất ngữ cảnh</a>.</p>
         </div>
       </div>
@@ -95,7 +96,7 @@
       <div class="principle" id="lien-tuc">
         <div class="principle__num">4</div>
         <div class="principle__body"><h2>Tính liên tục giữa các phiên</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Trạng thái nằm trên đĩa: PROGRESS.md, DECISIONS.md và các điểm lưu git. Clock-in gồm 9 bước: pwd → progress → feature list → git log -5 → init.sh → smoke/E2E → sửa baseline đỏ trước → chọn đúng một feature. Clock-out: cập nhật progress → đổi trạng thái qua verify → handoff → commit kèm lý do → trạng thái sạch. <a class="cite" href="references.html#ref-young-2025">Young, 2025</a></div><div><b>Artifact</b>Lệnh <code>start</code> và <code>handoff</code>; hook SessionStart đưa trạng thái vào phiên mới.</div><div><b>Chống mẫu</b>Bắt đầu phiên mới bằng cách hỏi lại agent “ta đang ở đâu?” thay vì đọc trạng thái đã ghi.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Trạng thái nằm trên đĩa: PROGRESS.md, DECISIONS.md và các điểm lưu git. Clock-in gồm 9 bước: pwd → progress → feature list → git log -5 → init.sh → smoke/E2E → sửa baseline đỏ trước → chọn đúng một feature → chỉ làm feature đó cho tới khi được xác minh hoặc bị chặn rõ ràng. Clock-out: cập nhật progress → đổi trạng thái qua verify → handoff → commit kèm lý do → trạng thái sạch. <a class="cite" href="references.html#ref-young-2025">Young, 2025</a></div><div><b>Artifact</b>Lệnh <code>start</code> và <code>handoff</code>; hook SessionStart đưa trạng thái vào phiên mới.</div><div><b>Phản mẫu (anti-pattern)</b>Bắt đầu phiên mới bằng cách hỏi lại agent “ta đang ở đâu?” thay vì đọc trạng thái đã ghi.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#mat-ngu-canh">Mất ngữ cảnh giữa các phiên</a>.</p>
         </div>
       </div>
@@ -103,7 +104,7 @@
       <div class="principle" id="khoi-tao">
         <div class="principle__num">5</div>
         <div class="principle__body"><h2>Khởi tạo là một pha riêng</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Trước khi làm feature, dự án phải chạy được, kiểm thử được và tiếp tục được. Khởi tạo không thay đổi hành vi sản phẩm.</div><div><b>Artifact</b>Các feature nền H001–H006, <code>init.sh</code>/<code>init.ps1</code>, kiểm tra smoke.</div><div><b>Chống mẫu</b>Vừa dựng môi trường vừa viết feature đầu tiên, nên không biết lỗi đến từ đâu.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Trước khi làm feature, dự án phải chạy được, kiểm thử được và tiếp tục được. Khởi tạo không thay đổi hành vi sản phẩm.</div><div><b>Artifact</b>Các feature nền H001–H006, <code>init.sh</code>/<code>init.ps1</code>, kiểm tra smoke.</div><div><b>Phản mẫu (anti-pattern)</b>Vừa dựng môi trường vừa viết feature đầu tiên, nên không biết lỗi đến từ đâu.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#mat-ngu-canh">Mất ngữ cảnh giữa các phiên</a>.</p>
         </div>
       </div>
@@ -111,15 +112,15 @@
       <div class="principle" id="wip">
         <div class="principle__num">6</div>
         <div class="principle__body"><h2>WIP=1 và VCR</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Chỉ một feature active tại một thời điểm. VCR (Verified Completion Rate) = số feature đã xác minh / số feature đã kích hoạt; khi VCR &lt; 1 thì chặn việc mới. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>next</code> từ chối feature active thứ hai và từ chối khi VCR &lt; 1.</div><div><b>Chống mẫu</b>Mở nhiều việc cùng lúc, làm dở dang rồi để sai sót cộng dồn.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Chỉ một feature active tại một thời điểm. VCR (Verified Completion Rate) = số feature đã xác minh / số feature đã kích hoạt; khi VCR &lt; 1 thì chặn việc mới. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>next</code> từ chối feature active thứ hai và từ chối khi VCR &lt; 1.</div><div><b>Phản mẫu (anti-pattern)</b>Mở nhiều việc cùng lúc, làm dở dang rồi để sai sót cộng dồn.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#pham-vi">Vượt phạm vi và làm dở dang</a>.</p>
         </div>
       </div>
 
       <div class="principle" id="feature-list">
         <div class="principle__num">7</div>
-        <div class="principle__body"><h2>Feature list là nguyên thủy</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Mỗi feature gồm hành vi quan sát được, lệnh kiểm chứng và trạng thái. Trạng thái là một máy trạng thái do harness sở hữu: not_started → active → passing (một chiều), ngoài ra có blocked — lối thoát chính thức khi không hoàn thành được.</div><div><b>Artifact</b><code>feature_list.json</code>; chỉ <code>verify</code> mới chuyển sang passing; hook chặn sửa tay <code>status</code>.</div><div><b>Chống mẫu</b>Danh sách việc dạng văn xuôi, không có lệnh kiểm chứng, để agent tự đánh dấu hoàn thành.</div></div>
+        <div class="principle__body"><h2>Feature list là thành phần cơ bản (primitive)</h2>
+          <div class="mini-table"><div><b>Cơ chế</b>Mỗi feature gồm hành vi quan sát được, lệnh kiểm chứng và trạng thái. Trạng thái là một máy trạng thái do harness sở hữu: not_started → active → passing (một chiều), ngoài ra có blocked — lối thoát chính thức khi không hoàn thành được.</div><div><b>Artifact</b><code>feature_list.json</code>; chỉ <code>verify</code> mới chuyển sang passing; hook chặn sửa tay <code>status</code>.</div><div><b>Phản mẫu (anti-pattern)</b>Danh sách việc dạng văn xuôi, không có lệnh kiểm chứng, để agent tự đánh dấu hoàn thành.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#ap-luc-hoan-thanh">Áp lực hoàn thành nhiệm vụ</a> · <a href="problems.html#pham-vi">Vượt phạm vi</a>.</p>
         </div>
       </div>
@@ -127,7 +128,7 @@
       <div class="principle" id="maker-checker">
         <div class="principle__num">8</div>
         <div class="principle__body"><h2>Maker–checker và ba lớp xác minh</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Tuyên bố chiến thắng sớm được chặn bằng ba lớp: lệnh kiểm chứng riêng của feature, kiểm tra toàn dự án, và một reviewer độc lập trong phiên mới. Thông báo lỗi theo dạng ERROR / WHY / FIX để agent hành động được. <a class="cite" href="references.html#ref-rajasekaran-2026">Rajasekaran, 2026</a></div><div><b>Artifact</b>Subagent <code>hk-reviewer</code> chỉ đọc, tự chạy <code>try</code> và <code>check</code>, trả PASS/FAIL kèm vị trí.</div><div><b>Chống mẫu</b>Để chính agent viết mã chấm điểm công việc của mình, hoặc làm yếu test cho qua.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Tuyên bố chiến thắng sớm được chặn bằng ba lớp: lệnh kiểm chứng riêng của feature, kiểm tra toàn dự án, và một reviewer độc lập trong phiên mới. Thông báo lỗi theo dạng ERROR / WHY / FIX để agent hành động được. <a class="cite" href="references.html#ref-rajasekaran-2026">Rajasekaran, 2026</a></div><div><b>Artifact</b>Subagent <code>hk-reviewer</code> chỉ đọc, tự chạy <code>try</code> và <code>check</code>, trả PASS/FAIL kèm vị trí.</div><div><b>Phản mẫu (anti-pattern)</b>Để chính agent viết mã chấm điểm công việc của mình, hoặc làm yếu test cho qua.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#khai-sai">Khai “đã xong” sai</a> · <a href="problems.html#reward-hacking">Reward hacking</a>.</p>
         </div>
       </div>
@@ -135,7 +136,7 @@
       <div class="principle" id="e2e">
         <div class="principle__num">9</div>
         <div class="principle__body"><h2>Kiểm thử E2E và luật máy</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Kiểm thử E2E bắt lỗi ở ranh giới giữa các thành phần mà kiểm thử đơn vị bỏ sót. Nhận xét review lặp lại hai lần thì biến thành quy tắc máy kiểm được.</div><div><b>Artifact</b>Lệnh smoke và <code>tests/check_site.py</code>; mỗi quy tắc mới có WHY và FIX.</div><div><b>Chống mẫu</b>Lặp đi lặp lại cùng một nhận xét review bằng lời thay vì viết thành kiểm tra tự động.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Kiểm thử E2E bắt lỗi ở ranh giới giữa các thành phần mà kiểm thử đơn vị bỏ sót. Nhận xét review lặp lại thì biến thành quy tắc máy kiểm được.</div><div><b>Artifact</b>Lệnh smoke và <code>tests/check_site.py</code>; mỗi quy tắc mới có WHY và FIX.</div><div><b>Phản mẫu (anti-pattern)</b>Lặp đi lặp lại cùng một nhận xét review bằng lời thay vì viết thành kiểm tra tự động.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#khai-sai">Khai “đã xong” sai</a>.</p>
         </div>
       </div>
@@ -143,7 +144,7 @@
       <div class="principle" id="quan-sat">
         <div class="principle__num">10</div>
         <div class="principle__body"><h2>Khả năng quan sát trong harness</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Hai tầng tín hiệu: runtime (log có cấu trúc, trace) và quy trình (sprint contract, rubric, activity trace). Gỡ lỗi dựa trên bằng chứng, không đoán. <a class="cite" href="references.html#ref-openai-2026-astra">OpenAI, 2026</a></div><div><b>Artifact</b><code>.harness/trace.jsonl</code>, <code>.harness/activity.jsonl</code>, <code>last-check.json</code>, báo cáo của loop.</div><div><b>Chống mẫu</b>Chỉ biết kết quả cuối cùng, không biết agent đã làm gì để đạt được nó.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Hai tầng tín hiệu: runtime (log có cấu trúc, trace) và quy trình (sprint contract, rubric, activity trace). Gỡ lỗi dựa trên bằng chứng, không đoán. Không đưa chain-of-thought vào phần thưởng; bộ giám sát là biện pháp an ninh thì fail-closed. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a> <a class="cite" href="references.html#ref-rajasekaran-2026">Rajasekaran, 2026</a></div><div><b>Artifact</b><code>.harness/trace.jsonl</code>, <code>.harness/activity.jsonl</code>, <code>last-check.json</code>, báo cáo của loop.</div><div><b>Phản mẫu (anti-pattern)</b>Chỉ biết kết quả cuối cùng, không biết agent đã làm gì để đạt được nó.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#giam-sat-yeu-di">Giám sát yếu đi</a> · <a href="problems.html#su-co-2026">Sự cố thực tế năm 2026</a>.</p>
         </div>
       </div>
@@ -151,7 +152,7 @@
       <div class="principle" id="clean-state">
         <div class="principle__num">11</div>
         <div class="principle__body"><h2>Mỗi phiên để lại trạng thái sạch</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Cuối phiên: build và kiểm thử đạt, tiến độ đã ghi, không còn mã debug hay tệp rác, có thể khởi động lại. Định kỳ đơn giản hóa harness (ablation): bỏ thành phần không còn đáng giữ.</div><div><b>Artifact</b>Lệnh <code>exit-check</code> in CLEAN STATE; hook Stop chặn kết thúc khi còn mã debug hoặc tệp rác.</div><div><b>Chống mẫu</b>Kết thúc phiên giữa chừng, để lại thay đổi chưa ghi và mã gỡ lỗi.</div></div>
+          <div class="mini-table"><div><b>Cơ chế</b>Cuối phiên: build và kiểm thử đạt, tiến độ đã ghi, không còn mã debug hay tệp rác, có thể khởi động lại. Định kỳ đơn giản hóa harness (ablation): bỏ thành phần không còn đáng giữ.</div><div><b>Artifact</b>Lệnh <code>exit-check</code> in CLEAN STATE; hook Stop chặn kết thúc khi còn mã debug hoặc tệp rác.</div><div><b>Phản mẫu (anti-pattern)</b>Kết thúc phiên giữa chừng, để lại thay đổi chưa ghi và mã gỡ lỗi.</div></div>
           <p>Trả lời vấn đề: <a href="problems.html#pham-vi">Vượt phạm vi và làm dở dang</a> · <a href="problems.html#mat-ngu-canh">Mất ngữ cảnh</a>.</p>
         </div>
       </div>
@@ -159,17 +160,17 @@
       <div class="principle" id="loop">
         <div class="principle__num">12</div>
         <div class="principle__body"><h2>Loop engineering</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Một vòng lặp = mục tiêu + xác minh bằng máy + điều kiện dừng, với trạng thái trên đĩa. Có hai dạng: vòng maker–checker (maker → reviewer chỉ đọc → cổng kiểm thử → pass-gate) và vòng mục tiêu theo số đo (chỉ giữ thay đổi nếu một con số cải thiện). Cần cảnh giác Goodhart: khi số đo trở thành mục tiêu, nó thôi là số đo tốt. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>loop</code> với ngân sách và giới hạn số lần thử; <code>report</code> in danh sách kiểm lý thuyết.</div><div><b>Chống mẫu</b>Chạy vòng lặp không có điều kiện dừng, hoặc tối ưu một số đo mà không ai kiểm tra ý nghĩa của nó.</div></div>
-          <figure class="figure"><div class="loop-diagram" data-component="loop-diagram"></div><figcaption>Hình 1. Vòng lặp harness: mục tiêu → hành động → xác minh bằng máy → điều kiện dừng, trạng thái ghi trên đĩa.</figcaption></figure>
-          <p>Trả lời vấn đề: <a href="problems.html#ap-luc-hoan-thanh">Áp lực hoàn thành nhiệm vụ</a> · <a href="problems.html#prompt-injection">Prompt injection và an ninh agent</a>.</p>
+          <div class="mini-table"><div><b>Cơ chế</b>Một vòng lặp = mục tiêu + xác minh bằng máy + điều kiện dừng, với trạng thái trên đĩa. Có hai dạng: vòng maker–checker (maker → reviewer chỉ đọc → cổng kiểm thử → pass-gate) và vòng mục tiêu theo số đo (chỉ giữ thay đổi nếu một con số cải thiện). Cần cảnh giác Goodhart: khi số đo trở thành mục tiêu, nó thôi là số đo tốt. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>loop</code> với ngân sách và giới hạn số lần thử; <code>report</code> in danh sách kiểm lý thuyết.</div><div><b>Phản mẫu (anti-pattern)</b>Chạy vòng lặp không có điều kiện dừng, hoặc tối ưu một số đo mà không ai kiểm tra ý nghĩa của nó.</div></div>
+          <figure class="figure"><div class="loop-diagram" data-component="loop-diagram"></div><figcaption>Hình 1. Vòng lặp maker → reviewer → gate: mục tiêu đo được, xác minh bằng máy, điều kiện dừng (đạt, hết số lần thử, hết ngân sách); trạng thái ghi trên đĩa.</figcaption></figure>
+          <p>Trả lời vấn đề: <a href="problems.html#ap-luc-hoan-thanh">Áp lực hoàn thành nhiệm vụ</a> · <a href="problems.html#khai-sai">Khai sai “đã xong”</a>.</p>
         </div>
       </div>
 
       <div class="principle" id="graph">
         <div class="principle__num">13</div>
         <div class="principle__body"><h2>Graph engineering</h2>
-          <div class="mini-table"><div><b>Cơ chế</b>Mô tả quy trình bằng nút, cạnh, trạng thái chung và quy tắc định tuyến. Chỉ dùng graph khi thỏa ít nhất 3 trên 5 tiêu chí: tách được, có rẽ nhánh hoặc cạnh quay lui (tiêu chí quyết định), trạng thái trung gian có giá trị, chấp nhận được chi phí mỗi nút, lợi ích lớn hơn chi phí phối hợp. Đặt nút phê duyệt của con người trước bước không thể đảo ngược. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>/hk-graph</code> ghi lại nút, cạnh, trạng thái chung và quy tắc định tuyến.</div><div><b>Chống mẫu</b>Dựng đa agent phức tạp cho việc một vòng lặp đơn đã giải quyết được.</div></div>
-          <p>Trả lời vấn đề: <a href="problems.html#prompt-injection">Prompt injection và an ninh agent</a> · <a href="problems.html#su-co-2026">Sự cố thực tế năm 2026</a>.</p>
+          <div class="mini-table"><div><b>Cơ chế</b>Mô tả quy trình bằng nút, cạnh, trạng thái chung và quy tắc định tuyến. Chỉ dùng graph khi thỏa ít nhất 3 trên 5 tiêu chí: tách được, có rẽ nhánh hoặc cạnh quay lui (tiêu chí quyết định), trạng thái trung gian có giá trị, chấp nhận được chi phí mỗi nút, lợi ích lớn hơn chi phí phối hợp. Đặt nút phê duyệt của con người trước bước không thể đảo ngược. <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a></div><div><b>Artifact</b>Lệnh <code>/hk-graph</code> ghi lại nút, cạnh, trạng thái chung và quy tắc định tuyến.</div><div><b>Phản mẫu (anti-pattern)</b>Dựng đa agent phức tạp cho việc một vòng lặp đơn đã giải quyết được.</div></div>
+          <p>Trả lời vấn đề: <a href="problems.html#pham-vi">Vượt phạm vi</a> · <a href="problems.html#su-co-2026">Sự cố thực tế năm 2026</a> (nút phê duyệt của con người trước bước không đảo ngược được).</p>
         </div>
       </div>
     </section>

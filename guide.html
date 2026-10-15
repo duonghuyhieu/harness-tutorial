@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <script src="assets/js/boot.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
 <body>
@@ -52,7 +53,7 @@
     <h1>Hướng dẫn sử dụng</h1>
     <p class="lead">Từ một dòng lệnh cài đặt tới quy trình hằng ngày và vòng lặp tự động. Cơ chế đằng sau từng lệnh được giải thích ở trang <a href="harness-kit.html">harness-kit</a>. Mã nguồn: <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
 
-    <div class="legend" aria-label="Chú giải nhãn bằng chứng">
+    <div class="legend" role="note" aria-label="Chú giải nhãn bằng chứng">
       <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
       <span><span class="ev" data-evidence="sx">SX</span> báo cáo sản xuất</span>
       <span><span class="ev" data-evidence="mh">MH</span> minh họa</span>
@@ -72,13 +73,13 @@
         <div role="tabpanel" id="panel-unix" aria-labelledby="tab-unix"><pre><code>curl -fsSL https://raw.githubusercontent.com/duonghuyhieu/harness-kit/main/install.sh | bash</code></pre><p>Dùng được trong macOS, Linux và Git Bash.</p></div>
         <div role="tabpanel" id="panel-npm" aria-labelledby="tab-npm"><pre><code>npx github:duonghuyhieu/harness-kit
 # hoặc
-npm install -D github:duonghuyhieu/harness-kit</code></pre></div>
+npm install -D github:duonghuyhieu/harness-kit</code></pre><p>Cần Node ≥ 18 và Python ≥ 3.10. Với <code>npm install -D</code>, bước <code>postinstall</code> chỉ cài vào dự án ở lần đầu (khi chưa có <code>.claude/harness-kit.json</code>), và bỏ qua trong CI; nếu npm chặn install script, chạy <code>npx github:duonghuyhieu/harness-kit</code>.</p></div>
       </div>
       <p>Minh họa phiên cài đặt trên Windows <span class="ev" data-evidence="mh">MH</span>:</p>
-      <div data-component="terminal" aria-label="Minh họa terminal">
+      <div data-component="terminal" role="region" aria-label="Minh họa terminal">
         <span data-line="prompt">irm https://raw.githubusercontent.com/duonghuyhieu/harness-kit/main/install.ps1 | iex</span>
         <span data-line="out">Downloading harness-kit ...</span>
-        <span data-line="ok">DONE — harness-kit 2.0.0 is installed and active</span>
+        <span data-line="ok">DONE — harness-kit 2.0.1 is installed and active</span>
       </div>
     </section>
 
@@ -97,7 +98,7 @@ npm install -D github:duonghuyhieu/harness-kit</code></pre></div>
       <ol>
         <li><code>/hk-start</code> — vào ca.</li>
         <li><code>/hk-plan</code> — biến yêu cầu thành feature có lệnh kiểm chứng và phạm vi.</li>
-        <li><code>/hk-implement</code> — <code>next</code>, build trong phạm vi, <code>try</code>, hk-reviewer, <code>verify</code>.</li>
+        <li><code>/hk-implement</code> — <code>next</code>, xây dựng trong phạm vi, <code>try</code>, hk-reviewer, <code>verify</code>.</li>
         <li><code>/hk-handoff</code> — cập nhật PROGRESS.md, ghi quyết định, <code>exit-check</code>, commit.</li>
       </ol>
       <p>Lệnh runtime tương đương cho mọi agent: <code>python scripts/harness.py start</code>, <code>add</code>, <code>next</code>, <code>try &lt;id&gt;</code>, <code>verify &lt;id&gt;</code>, <code>handoff</code>, <code>exit-check</code>.</p>
@@ -110,7 +111,7 @@ npm install -D github:duonghuyhieu/harness-kit</code></pre></div>
         <tr><td><code>/hk-init</code></td><td>Khởi tạo tùy chọn: làm dự án chạy được, kiểm thử được, nối tiếp được.</td></tr>
         <tr><td><code>/hk-start</code></td><td>Vào ca: dựng lại ngữ cảnh từ kho mã, kiểm tra baseline, chọn một feature.</td></tr>
         <tr><td><code>/hk-plan</code></td><td>Biến yêu cầu thành feature có lệnh kiểm chứng và phạm vi.</td></tr>
-        <tr><td><code>/hk-implement</code></td><td>Làm trọn một feature: next, build trong phạm vi, try, reviewer, verify.</td></tr>
+        <tr><td><code>/hk-implement</code></td><td>Làm trọn một feature: next, xây dựng trong phạm vi, try, reviewer, verify.</td></tr>
         <tr><td><code>/hk-review</code></td><td>Đánh giá độc lập bằng subagent hk-reviewer chỉ đọc.</td></tr>
         <tr><td><code>/hk-verify</code></td><td>Chạy pass-gate cho một feature.</td></tr>
         <tr><td><code>/hk-handoff</code></td><td>Tan ca: cập nhật PROGRESS.md, ghi quyết định, exit-check.</td></tr>
@@ -137,11 +138,12 @@ npm install -D github:duonghuyhieu/harness-kit</code></pre></div>
       <h2>Ví dụ một feature</h2>
       <p>Minh họa <span class="ev" data-evidence="mh">MH</span>: thêm một feature kiểm chứng bằng pytest rồi đưa nó qua pass-gate.</p>
       <pre><code>python scripts/harness.py add --id F012 --behavior "POST /orders returns 201 and persists the order" --verify "pytest tests/test_orders.py -q" --scope "src/orders/*" "tests/test_orders.py"
-python scripts/harness.py next
-# implement trong phạm vi
+python scripts/harness.py next --id F012
+# hiện thực trong phạm vi
 python scripts/harness.py try F012
 # hk-reviewer kiểm độc lập
 python scripts/harness.py verify F012   # PASS, bằng chứng được ghi lại</code></pre>
+      <p>Trong dự án mới cài, danh sách feature đã có sẵn các feature nền của harness (H001…): làm cho lệnh setup/test chạy được, viết test đầu tiên… Lệnh <code>next</code> không kèm <code>--id</code> sẽ chọn chúng trước theo thứ tự ưu tiên; dùng <code>next --id F012</code> để làm feature của bạn ngay.</p>
     </section>
 
     <section id="vong-lap" class="reveal">
@@ -149,15 +151,15 @@ python scripts/harness.py verify F012   # PASS, bằng chứng được ghi lạ
       <pre><code>python scripts/harness.py loop --dry-run
 python scripts/harness.py loop --max-features 3 --max-attempts 3 --max-total-usd 5 --model sonnet
 python scripts/harness.py report</code></pre>
-      <p><code>report</code> in danh sách kiểm lý thuyết; chỉ thêm <code>--commit</code> nếu bạn đã chấp thuận trước việc commit. Chính trang web này được xây bằng vòng lặp ấy — xem hộp <a href="#cach-xay-dung">Cách trang này được xây dựng</a>.</p>
+      <p><code>report</code> in bảng kiểm đối chiếu lý thuyết; chỉ thêm <code>--commit</code> nếu bạn đã chấp thuận trước việc commit. Sáu trang nội dung của chính trang web này được dựng bằng vòng lặp ấy — xem hộp <a href="#cach-xay-dung">Cách trang này được xây dựng</a>.</p>
     </section>
 
     <section id="cap-nhat" class="reveal">
       <h2>Cập nhật, gỡ cài đặt, doctor</h2>
       <ul>
-        <li>Cập nhật: chạy lại lệnh cài đặt, hoặc <code>python ~/.harness-kit/harness.py update .</code>.</li>
-        <li>Gỡ: <code>python ~/.harness-kit/harness.py uninstall .</code>.</li>
-        <li>Kiểm tra sức khỏe: <code>python ~/.harness-kit/harness.py doctor .</code>.</li>
+        <li>Cập nhật — cách khuyến nghị: chạy lại lệnh cài đặt. Nếu đã cài bằng install.sh: <code>python ~/.harness-kit/harness.py update .</code>; trên Windows PowerShell: <code>python "$HOME\.harness-kit\harness.py" update .</code>; nếu cài bằng npm: chạy lại <code>npx github:duonghuyhieu/harness-kit</code>.</li>
+        <li>Gỡ: <code>python ~/.harness-kit/harness.py uninstall .</code> (PowerShell: <code>python "$HOME\.harness-kit\harness.py" uninstall .</code>).</li>
+        <li>Kiểm tra sức khỏe: <code>python ~/.harness-kit/harness.py doctor .</code> (PowerShell: <code>python "$HOME\.harness-kit\harness.py" doctor .</code>).</li>
       </ul>
     </section>
 
@@ -174,7 +176,7 @@ python scripts/harness.py report</code></pre>
     <section id="cach-xay-dung" class="reveal">
       <h2>Cách trang này được xây dựng</h2>
       <div class="callout callout--note"><p class="callout__title">Chính trang này dùng harness-kit</p>
-        <p>Mỗi trang là một feature có lệnh kiểm chứng (<code>python tests/check_site.py --page &lt;trang&gt;</code>), một phiên maker cho mỗi trang, một reviewer chỉ đọc và pass-gate. Kết quả: 6 page feature, sau các sửa lỗi đều đạt ngay lần thử đầu, tổng chi phí khoảng 4,26 USD; vòng lặp làm lộ hai lỗi của harness-kit (đã sửa, có kiểm thử hồi quy) và một vấn đề của trình kiểm tra trang này — chi tiết ở <a href="harness-kit.html#danh-gia">trang harness-kit</a>. Báo cáo của lần chạy nằm trong <code>.harness/runs/</code> (cục bộ) <span class="ev" data-evidence="sx">SX</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p></div>
+        <p>Mỗi trang là một feature có lệnh kiểm chứng (<code>python tests/check_site.py --page &lt;trang&gt;</code>), một phiên maker cho mỗi trang, một reviewer chỉ đọc và pass-gate. Kết quả: 6 feature (mỗi trang một feature), sau các sửa lỗi đều đạt ngay lần thử đầu; 7 lần chạy dựng 6 trang tốn khoảng 4,26 USD, lần chạy F008 cập nhật hai trang thêm khoảng 0,39 USD, còn phần tinh chỉnh giao diện cuối làm ngoài vòng lặp; vòng lặp làm lộ hai lỗi của harness-kit (đã sửa, có kiểm thử hồi quy) và một vấn đề của trình kiểm tra trang này — chi tiết ở <a href="harness-kit.html#danh-gia">trang harness-kit</a>. Báo cáo của lần chạy nằm trong <code>.harness/runs/</code> (cục bộ) <span class="ev" data-evidence="sx">SX</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p></div>
     </section>
 
     <section id="tom-tat" class="reveal">

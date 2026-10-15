@@ -15,7 +15,7 @@
   /* ---------- theme ---------- */
   function initTheme() {
     var saved = store.get("ht-theme");
-    if (saved) document.documentElement.setAttribute("data-theme", saved);
+    if (saved && !document.documentElement.getAttribute("data-theme")) document.documentElement.setAttribute("data-theme", saved);
     $$(".theme-toggle").forEach(function (btn) {
       var paint = function () {
         var dark = document.documentElement.getAttribute("data-theme") === "dark" ||
@@ -96,9 +96,18 @@
       var btn = document.createElement("button");
       btn.className = "copy-btn"; btn.type = "button"; btn.textContent = "Sao chép";
       btn.addEventListener("click", function () {
-        var text = pre.innerText.replace(/Sao chép$/, "").trim();
-        var done = function () { btn.textContent = "Đã chép"; setTimeout(function () { btn.textContent = "Sao chép"; }, 1500); };
-        if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, function () {});
+        var code = pre.querySelector("code");
+        var text = (code ? code.textContent : pre.textContent.replace(/Sao chép$/, "")).trim();
+        var say = function (t) { btn.textContent = t; setTimeout(function () { btn.textContent = "Sao chép"; }, 1500); };
+        var fallback = function () {
+          var range = document.createRange(), sel = window.getSelection();
+          range.selectNodeContents(code || pre); sel.removeAllRanges(); sel.addRange(range);
+          var ok = false;
+          try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+          sel.removeAllRanges(); say(ok ? "Đã chép" : "Hãy chép tay");
+        };
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(function () { say("Đã chép"); }, fallback);
+        else fallback();
       });
       pre.appendChild(btn);
     });
@@ -128,6 +137,33 @@
       });
       if (tabs.length) select(tabs[0]);
     });
+  }
+
+  /* ---------- play / pause control shared by the animated components ---------- */
+  function interval(step, ms) {
+    var t = null;
+    return { play: function () { if (!t) t = setInterval(step, ms); }, pause: function () { clearInterval(t); t = null; } };
+  }
+  function controls(host, api) {
+    var bar = document.createElement("div"), running = false;
+    bar.className = "player";
+    var toggle = document.createElement("button");
+    toggle.type = "button"; toggle.className = "player__btn";
+    var set = function (on) {
+      running = on;
+      if (on) api.play(); else api.pause();
+      toggle.textContent = on ? "⏸ Tạm dừng" : "▶ Chạy";
+    };
+    toggle.addEventListener("click", function () { set(!running); });
+    bar.appendChild(toggle);
+    if (api.step) {
+      var next = document.createElement("button");
+      next.type = "button"; next.className = "player__btn"; next.textContent = "Bước tiếp ›";
+      next.addEventListener("click", function () { if (running) set(false); api.step(); });
+      bar.appendChild(next);
+    }
+    host.insertAdjacentElement("afterend", bar);
+    set(!REDUCED);
   }
 
   /* ---------- loop diagram: goal → maker → reviewer → gate → passing, with back-edges ---------- */
@@ -166,7 +202,7 @@
       svg += '<circle class="token" r="7" cx="70" cy="40"/></svg>';
       box.insertAdjacentHTML("afterbegin", svg);
       var cap = document.createElement("p");
-      cap.className = "loop-diagram__text"; cap.setAttribute("aria-live", "polite");
+      cap.className = "loop-diagram__text";
       box.appendChild(cap);
       var nodes = $$(".node", box), token = $(".token", box), k = 0;
       var show = function () {
@@ -177,8 +213,9 @@
         k = (k + 1) % LOOP_STEPS.length;
       };
       show();
-      if (!REDUCED) setInterval(show, 2600);
-      else box.addEventListener("click", show);
+      var iv = interval(show, 2600);
+      // announce steps only when the reader drives them; an auto-advancing live region would talk over the page
+      controls(box, { play: iv.play, pause: iv.pause, step: function () { cap.setAttribute("aria-live", "polite"); show(); } });
     });
   }
 
@@ -189,14 +226,15 @@
       if (!steps.length) return;
       var tick = function () { steps.forEach(function (s, i) { s.classList.toggle("is-on", i === k); }); k = (k + 1) % steps.length; };
       tick();
-      if (!REDUCED) setInterval(tick, 1800);
+      var iv = interval(tick, 1800);
+      controls(box, { play: iv.play, pause: iv.pause, step: tick });
     });
   }
 
-  /* ---------- feature state machine: what the runtime allows ---------- */
+  /* ---------- feature state machine: mirrors the checks and messages of scripts/harness.py ---------- */
   function initMachine() {
     $$("[data-component='state-machine']").forEach(function (box) {
-      var S = { state: "not_started", attempts: 0 };
+      var S = { state: "not_started", attempts: 0, ok: false };
       box.classList.add("machine");
       box.innerHTML =
         '<div class="machine__states">' +
@@ -204,32 +242,41 @@
           return '<div class="machine__state" data-state="' + s + '">' + s + "</div>";
         }).join("") + "</div>" +
         '<div class="machine__actions">' +
+        '<button type="button" data-act="code" aria-pressed="false">mã đang sai</button>' +
         '<button type="button" data-act="next">next</button><button type="button" data-act="try">try F012</button>' +
-        '<button type="button" data-act="fail">verify F012 (lệnh fail)</button><button type="button" data-act="pass">verify F012 (lệnh pass)</button>' +
-        '<button type="button" data-act="edit">sửa tay status → passing</button><button type="button" data-act="block">block</button>' +
-        '<button type="button" data-act="unblock">unblock</button><button type="button" data-act="reset">đặt lại</button></div>' +
+        '<button type="button" data-act="verify">verify F012</button>' +
+        '<button type="button" data-act="edit">sửa tay status → passing</button><button type="button" data-act="block">block F012</button>' +
+        '<button type="button" data-act="unblock">unblock F012</button><button type="button" data-act="reset">đặt lại</button></div>' +
         '<div class="machine__log" aria-live="polite"></div>';
-      var log = $(".machine__log", box);
+      var log = $(".machine__log", box), codeBtn = $("[data-act='code']", box);
       var paint = function (msg) {
         $$(".machine__state", box).forEach(function (el) { el.classList.toggle("is-on", el.getAttribute("data-state") === S.state); });
+        codeBtn.textContent = S.ok ? "mã đã đúng (lệnh verify sẽ pass)" : "mã đang sai (lệnh verify sẽ fail)";
+        codeBtn.setAttribute("aria-pressed", S.ok ? "true" : "false");
         if (msg) log.textContent = msg;
       };
       var acts = {
+        code: function () { S.ok = !S.ok; return S.ok ? "Đã sửa mã: lệnh verification giờ thoát 0." : "Mã bị làm hỏng: lệnh verification giờ thoát khác 0."; },
         next: function () {
-          if (S.state === "active") return "A feature is already active (WIP=1): F012. Finish it (`verify F012`) or `block` it first.";
-          if (S.state !== "not_started") return "ERROR: F012 is " + S.state + "; only not_started features can be activated.";
-          S.state = "active"; return "ACTIVE: F012 — POST /orders returns 201 and persists the order\n  verify: pytest tests/test_orders.py -q";
+          if (S.state === "active") return "A feature is already active (WIP=1): F012 — POST /orders returns 201 and persists the order\n  verify: pytest tests/test_orders.py -q";
+          if (S.state === "blocked") return "BLOCKED: VCR = 0.0 < 1.0 (some features are blocked). Resolve the blockers or document them in PROGRESS.md, then run `next --force` if a blocker is outside your control.";
+          if (S.state !== "not_started") return "No eligible not_started feature left (all done or waiting on dependencies).";
+          S.state = "active"; S.attempts = 0;
+          return "ACTIVE: F012 — POST /orders returns 201 and persists the order\n  verify: pytest tests/test_orders.py -q\nWork on this feature only. When done, run `verify F012`.";
         },
-        try: function () { return S.state === "active" ? "[PASS] F012 verification exited 0 (no state changed)." : "try chỉ chạy lệnh verification; trạng thái không đổi."; },
-        fail: function () {
-          if (S.state !== "active") return "ERROR: F012 is " + S.state + ". Only an active feature can be verified.";
-          S.attempts++; return "[FAIL] F012 is still active (attempt " + S.attempts + "). Fix it and verify again." +
-            (S.attempts >= 3 ? " Tried ≥3 times: change your approach, or `block` it and record the reason." : "");
+        try: function () {
+          return "[" + (S.ok ? "PASS" : "FAIL") + "] F012 verification exited " + (S.ok ? 0 : 1) + " (no state changed). — try chạy được ở mọi trạng thái và không bao giờ đổi trạng thái.";
         },
-        pass: function () {
+        verify: function () {
           if (S.state === "passing") return "F012 is already passing (state transitions are one-way).";
           if (S.state !== "active") return "ERROR: F012 is " + S.state + ". Only an active feature can be verified.";
-          S.state = "passing"; return "== verification command passed; running the project-wide quick check ==\n[PASS] F012 → passing. Evidence: commit, command, exit code 0, duration.";
+          if (!S.ok) {
+            S.attempts++;
+            return "[FAIL] F012 is still active (attempt " + S.attempts + "). Fix it and verify again." +
+              (S.attempts >= 3 ? " Tried ≥3 times: change your approach, or `block` it and record the reason." : "");
+          }
+          S.state = "passing";
+          return "== verification command passed; running the project-wide quick check ==\n[PASS] F012 → passing. Evidence: commit, command, exit code 0, duration.";
         },
         edit: function () { return "PreToolUse hook → deny: `status` of F012 is harness state: change it with `python scripts/harness.py next/verify/block/unblock`, never by hand."; },
         block: function () {
@@ -240,12 +287,17 @@
           if (S.state !== "blocked") return "ERROR: F012 is not blocked.";
           S.state = "not_started"; return "F012 → not_started.";
         },
-        reset: function () { S.state = "not_started"; S.attempts = 0; return "Đặt lại: F012 = not_started."; }
+        reset: function () { S.state = "not_started"; S.attempts = 0; S.ok = false; return "Đặt lại: F012 = not_started, mã đang sai."; }
       };
       $$("button[data-act]", box).forEach(function (b) {
-        b.addEventListener("click", function () { paint("$ " + b.textContent + "\n" + acts[b.getAttribute("data-act")]()); });
+        b.addEventListener("click", function () {
+          var act = b.getAttribute("data-act");
+          var label = act === "code" ? "(sửa mã)" : act === "edit" ? "(agent sửa feature_list.json)" :
+            "$ python scripts/harness.py " + b.textContent;
+          paint(label + "\n" + acts[act]());
+        });
       });
-      paint("Bấm thử các nút: chỉ harness mới đổi được trạng thái, và passing không bao giờ quay lại.");
+      paint("Bấm thử các nút: chỉ harness mới đổi được trạng thái, verify chỉ pass khi mã thật sự đúng, và passing không bao giờ quay lại.");
     });
   }
 
@@ -253,7 +305,7 @@
   var HOOKS = [
     ["SessionStart", "Tiêm trạng thái harness vào ngữ cảnh: số feature, VCR, feature active + lệnh verify, bước tiếp, lần check gần nhất. Sau compaction: tiêm thêm snapshot."],
     ["UserPromptSubmit", "Nhắc một dòng khi có feature active (WIP=1, scope); chống lặp 10 phút."],
-    ["PreToolUse", "Từ chối sửa tay status/evidence và tệp trạng thái; hỏi trước khi ghi ngoài scope. Không bao giờ trả về \"allow\"."],
+    ["PreToolUse", "Từ chối sửa tay status/evidence, sửa lệnh verification của feature đã bắt đầu và tệp trạng thái; hỏi trước khi ghi ngoài scope. Không bao giờ trả về \"allow\"."],
     ["PostToolUse", "Ghi tệp/lệnh mà phiên đã chạm vào .harness/activity.jsonl."],
     ["PreCompact", "Ghi .harness/compact-snapshot.md trước khi nén ngữ cảnh."],
     ["Stop", "Chặn kết thúc lượt khi còn debug code, tệp rác hoặc feature list bị sửa tay (không chặn hai lần liên tiếp)."],
@@ -262,13 +314,16 @@
   function initTimeline() {
     $$("[data-component='hook-timeline']").forEach(function (ol) {
       ol.classList.add("timeline");
-      ol.innerHTML = HOOKS.map(function (h) {
-        return '<li><span class="timeline__dot" aria-hidden="true"></span><b>' + h[0] + "</b><br>" + h[1] + "</li>";
-      }).join("");
+      if (!$("li", ol)) {
+        ol.innerHTML = HOOKS.map(function (h) {
+          return '<li><span class="timeline__dot" aria-hidden="true"></span><b>' + h[0] + "</b><br>" + h[1] + "</li>";
+        }).join("");
+      }
       var items = $$("li", ol), k = 0;
       var tick = function () { items.forEach(function (li, i) { li.classList.toggle("is-on", i === k); }); k = (k + 1) % items.length; };
       tick();
-      if (!REDUCED) setInterval(tick, 2200);
+      var iv = interval(tick, 2200);
+      controls(ol, { play: iv.play, pause: iv.pause, step: tick });
     });
   }
 
@@ -285,15 +340,17 @@
           return '<div class="' + cls + '">' + (l.kind === "prompt" ? "$ " : "") + t.replace(/</g, "&lt;") + "</div>";
         }).join("");
       };
-      if (REDUCED) { render(lines.length); return; }
-      var i = 0, c = 0;
+      var i = 0, c = 0, timer = null;
       var tick = function () {
-        if (i >= lines.length) { setTimeout(function () { i = 0; c = 0; tick(); }, 3500); return; }
+        if (i >= lines.length) { timer = setTimeout(function () { i = 0; c = 0; tick(); }, 3500); return; }
         var l = lines[i];
-        if (l.kind === "prompt" && c < l.text.length) { c += 2; render(i + 1, c); setTimeout(tick, 28); return; }
-        render(i + 1); i++; c = 0; setTimeout(tick, l.kind === "prompt" ? 500 : 260);
+        if (l.kind === "prompt" && c < l.text.length) { c += 2; render(i + 1, c); timer = setTimeout(tick, 28); return; }
+        render(i + 1); i++; c = 0; timer = setTimeout(tick, l.kind === "prompt" ? 500 : 260);
       };
-      tick();
+      controls(box, {
+        play: function () { if (!timer) { i = 0; c = 0; tick(); } },
+        pause: function () { clearTimeout(timer); timer = null; render(lines.length); }
+      });
     });
   }
 

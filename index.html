@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <script src="assets/js/boot.js"></script>
   <script defer src="assets/js/main.js"></script>
 </head>
 <body>
@@ -49,7 +50,7 @@
       <p class="lead">Harness — mọi thứ nằm ngoài trọng số của mô hình — quyết định bao nhiêu năng lực của mô hình
         trở thành công việc đáng tin cậy. Trang này tóm tắt luận điểm, các số liệu nền tảng và lộ trình đọc.</p>
 
-      <div class="legend" aria-label="Chú giải nhãn bằng chứng">
+      <div class="legend" role="note" aria-label="Chú giải nhãn bằng chứng">
         <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
         <span><span class="ev" data-evidence="sx">SX</span> báo cáo sản xuất</span>
         <span><span class="ev" data-evidence="mh">MH</span> minh họa</span>
@@ -67,10 +68,10 @@
       <p>Cùng một mô hình có thể cho kết quả rất khác nhau khi harness thay đổi. Mỗi con số dưới đây giữ nhãn bằng chứng
         và nguồn của nó; các điều kiện được nêu ngay trong mô tả.</p>
       <div class="stat-grid">
-        <div class="stat" data-evidence="sx">
-          <span class="ev" data-evidence="sx">SX</span>
-          <span class="stat__value">20 phút → 6 giờ</span>
-          <span class="stat__label">Opus 4.5 chạy đơn lẻ: khoảng 20 phút, 9 USD, tính năng cốt lõi không hoạt động. Với harness đầy đủ: khoảng 6 giờ, 200 USD, ứng dụng chạy được. Không phải thí nghiệm cùng ngân sách.</span>
+        <div class="stat" data-evidence="mh">
+          <span class="ev" data-evidence="mh">SX</span>
+          <span class="stat__value">hỏng → chạy được</span>
+          <span class="stat__label">Opus 4.5 chạy đơn lẻ: khoảng 20 phút, 9 USD, tính năng cốt lõi không hoạt động. Với harness đầy đủ: khoảng 6 giờ, 200 USD, ứng dụng chạy được. Một ca được báo cáo, không phải thí nghiệm cùng ngân sách.</span>
           <span class="stat__source"><a class="cite" href="references.html#ref-rajasekaran-2026">Rajasekaran, 2026</a></span>
         </div>
         <div class="stat" data-evidence="sx">
@@ -81,7 +82,7 @@
         </div>
         <div class="stat" data-evidence="sx">
           <span class="ev" data-evidence="sx">SX</span>
-          <span class="stat__value">≈ 1 triệu dòng</span>
+          <span class="stat__value">≈ 1 triệu dòng mã</span>
           <span class="stat__label">Khoảng 1.500 pull request trong năm tháng bởi ba kỹ sư dùng Codex (khoảng 3,5 PR mỗi kỹ sư mỗi ngày).</span>
           <span class="stat__source"><a class="cite" href="references.html#ref-lopopolo-2026">Lopopolo, 2026</a></span>
         </div>
@@ -89,7 +90,7 @@
           <span class="ev" data-evidence="do">Đo</span>
           <span class="stat__value" data-count-to="77.2" data-decimals="1" data-suffix="%">77,2%</span>
           <span class="stat__label">Claude Sonnet 4.5 trên SWE-bench Verified: 500 tác vụ, 10 lượt thử, scaffold gồm bash và thay thế chuỗi. Benchmark chỉ áp dụng cho đúng mô hình, scaffold và điều kiện đã nêu.</span>
-          <span class="stat__source"><a class="cite" href="references.html#ref-anthropic-2025-sonnet45">Anthropic, 2025</a></span>
+          <span class="stat__source"><a class="cite" href="references.html#ref-anthropic-2025-sonnet45">Anthropic, 2025 — Sonnet 4.5</a></span>
         </div>
       </div>
     </section>
