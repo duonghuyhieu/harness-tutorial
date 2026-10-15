@@ -144,16 +144,21 @@
     $$("[data-component='loop-diagram']").forEach(function (box) {
       var names = ["Mục tiêu", "Maker", "Reviewer", "Gate", "passing"];
       var xs = [20, 150, 280, 410, 540];
-      var svg = '<svg viewBox="0 0 660 230" role="img" aria-label="Vòng lặp maker – reviewer – gate của harness">';
-      svg += '<defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">' +
-        '<path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>';
+      var svg = '<svg viewBox="0 0 660 240" role="img" aria-label="Vòng lặp maker – reviewer – gate của harness">';
+      // one marker per edge colour: a marker does not inherit the colour of the path that uses it
+      svg += '<defs>' +
+        '<marker id="arr-fwd" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">' +
+        '<path d="M0,0 L10,5 L0,10 z" style="fill:var(--muted)"/></marker>' +
+        '<marker id="arr-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">' +
+        '<path d="M0,0 L10,5 L0,10 z" style="fill:var(--amber)"/></marker></defs>';
       for (var i = 0; i < 4; i++) {
-        svg += '<path class="edge" style="color:var(--muted)" marker-end="url(#arr)" d="M' + (xs[i] + 100) + ',80 L' + (xs[i + 1] - 4) + ',80"/>';
+        svg += '<path class="edge" marker-end="url(#arr-fwd)" d="M' + (xs[i] + 100) + ',80 L' + (xs[i + 1] - 4) + ',80"/>';
       }
-      svg += '<path class="edge edge--back" style="color:var(--amber)" marker-end="url(#arr)" d="M330,110 C330,170 200,170 200,114"/>';
-      svg += '<text class="caption" x="265" y="182" text-anchor="middle">FAIL → sửa theo issue cụ thể</text>';
-      svg += '<path class="edge edge--back" style="color:var(--amber)" marker-end="url(#arr)" d="M460,110 C460,205 200,205 196,114"/>';
-      svg += '<text class="caption" x="330" y="222" text-anchor="middle">gate đỏ → quay lại (tối đa N lần, rồi blocked)</text>';
+      // reviewer FAIL -> maker (short arc, label under it); gate red -> maker (long arc, label under it)
+      svg += '<path class="edge edge--back" marker-end="url(#arr-back)" d="M315,112 C315,162 232,162 232,118"/>';
+      svg += '<text class="caption" x="300" y="174" text-anchor="middle">FAIL → sửa theo issue cụ thể</text>';
+      svg += '<path class="edge edge--back" marker-end="url(#arr-back)" d="M460,112 C460,232 168,232 168,118"/>';
+      svg += '<text class="caption" x="314" y="226" text-anchor="middle">gate đỏ → quay lại (tối đa N lần, rồi blocked)</text>';
       names.forEach(function (n, i) {
         svg += '<g class="node" data-i="' + i + '"><rect x="' + xs[i] + '" y="50" width="100" height="60" rx="12"/>' +
           '<text x="' + (xs[i] + 50) + '" y="85" text-anchor="middle">' + n + '</text></g>';

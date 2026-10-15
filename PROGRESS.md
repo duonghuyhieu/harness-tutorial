@@ -5,18 +5,22 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-15T21:05:33+07:00_
-- Branch / commit: `main` @ `fadf578 docs(content): dogfooding results; plan F008`
-- Last check: PASS (quick, 2026-10-15T21:05:33+07:00, @fadf578)
-- Features: 11/12 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-15T21:08:50+07:00_
+- Branch / commit: `main` @ `cbe3472 feat(F008): harness-kit.html and guide.html report the dogfooding result`
+- Last check: PASS (full, 2026-10-15T21:08:50+07:00, @cbe3472)
+- Features: 13/13 passing, VCR 1.0
 - Active: none
 - Blocked: none
-- Uncommitted changes: 3 file(s)
+- Uncommitted changes: 5 file(s)
 <!-- harness:auto:end -->
 
 ## Done
-- [x] 2026-10-15: Applied harness (retrofit) — created AGENTS.md, feature_list.json, docs/, scripts/harness.py.
-
+- [x] 2026-10-15: harness-kit installed; content brief, design system, components and checks written by the initializer;
+      H001–H004 baseline passed.
+- [x] 2026-10-15: pages F001–F006 built by `harness.py loop` (sonnet maker, read-only reviewer, pass-gate, commit);
+      every page passed in its first attempt after two harness-kit fixes (loop runtime state, unblock base) and one
+      checker fix; about 4.26 USD for the build runs. F008 (dogfooding results) through the loop as well.
+- [x] 2026-10-15: F009 visual polish after a screenshot review (desktop and 390 px); F007 release gate.
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 

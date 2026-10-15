@@ -417,17 +417,31 @@
       "category": "harness",
       "behavior": "Release gate: all six pages exist and pass together, every citation resolves, README explains how to view the site",
       "verification": "python tests/check_site.py --strict",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [
         "F006"
       ],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T21:08:50+07:00",
+        "commit": "cbe3472",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.2,
+        "project_check": "full",
+        "output_tail": "site check: PASS",
+        "out_of_scope_changes": [
+          "assets/css/style.css",
+          "assets/js/main.js"
+        ]
+      },
       "scope": [
         "README.md",
         "*.html"
       ],
       "verify_check": "full",
-      "priority": 16
+      "priority": 16,
+      "activated_at": "2026-10-15T21:08:47+07:00",
+      "activated_commit": "cbe347299ce5b905748b8df9da1a1b5aa15cd991"
     },
     {
       "id": "F008",
@@ -479,6 +493,31 @@
           "report_sha256": "7b8d2e4b3a598269d8000e81ff27c1db74014ef1288993ec8133510d3024b0f5"
         }
       ]
+    },
+    {
+      "id": "F009",
+      "category": "feature",
+      "behavior": "Visual polish after a screenshot review: loop diagram back-edges and labels no longer overlap and arrowheads take their edge colour; problem cards give the evidence column more width; the index figure caption describes the diagram it sits under",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-15T21:08:25+07:00",
+        "commit": "cbe3472",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.5,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "assets/css/style.css",
+        "assets/js/main.js",
+        "index.html"
+      ],
+      "priority": 20,
+      "activated_at": "2026-10-15T21:05:59+07:00",
+      "activated_commit": "cbe347299ce5b905748b8df9da1a1b5aa15cd991"
     }
   ]
 }
