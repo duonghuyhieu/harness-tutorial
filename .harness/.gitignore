@@ -1,0 +1,8 @@
+trace.jsonl
+last-check.json
+session.json
+loop/
+runs/
+activity.jsonl
+hook-state.json
+compact-snapshot.md

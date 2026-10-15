@@ -1,0 +1,4 @@
+# harness-kit: pin line endings of harness-owned scripts so they run regardless of core.autocrlf
+init.sh text eol=lf
+scripts/harness.py text eol=lf
+init.ps1 text eol=crlf

@@ -1,0 +1,59 @@
+{
+  "kit": "harness-kit",
+  "version": "2.0.0",
+  "kit_root": "D:/harness-kit",
+  "updated_at": "2026-10-15T20:39:48+07:00",
+  "files": {
+    ".claude/agents/hk-debugger.md": "0ebe5f52a1d6c893ae8cc13e7b2bf1a4deb4e25deeee37e59e55d2a4595b09cd",
+    ".claude/agents/hk-docs-keeper.md": "8ed53d47fbe8401c256167b78b140dccfa8fee4aa66e72e91f235674aaa3c761",
+    ".claude/agents/hk-initializer.md": "7cddc4f02ca14e92fd8c7f76ce464f62f7be6862f0d80c5731a1e27c95ba978e",
+    ".claude/agents/hk-maker.md": "5c98f64b478924915f5d0cf3458fe03aeb0099ceee59cc5446a5db224daeabb3",
+    ".claude/agents/hk-planner.md": "e769c2de35c5d6e3c4db8b209bd1bde56f188d4928152b6f187072980508fd7c",
+    ".claude/agents/hk-reviewer.md": "bb8bf8ebd9321f074684be681642909ae2cc650a19f13fc2ff40f70d7766b12c",
+    ".claude/hooks/harness_hook.py": "b42e574e293cc9041183218b033565d88451831663335937a147bda248301205",
+    ".claude/output-styles/hk-evidence.md": "427dfa2249e4fa8ae3d8e34298f2604fca110d288ff3fb920e5bac712bc907f0",
+    ".claude/skills/hk-audit/SKILL.md": "9836c10ab7040dcab2112c1ed73e991f0e184e3dffb5ff41fc60572ebb0256fa",
+    ".claude/skills/hk-clean/SKILL.md": "53ebacf586231fe17b1c4d9ebe632f13920aab4d19d1a4e5eb5147b9c1f0cb53",
+    ".claude/skills/hk-diagnose/SKILL.md": "60cc37b050c1313bd617dfc44009ff1c088cebd5bc85b311f9ca2f34d6e07865",
+    ".claude/skills/hk-docs/SKILL.md": "43166c726edd270b209a45f275d488839bef65d71dbb1bca552365b1ff8ded30",
+    ".claude/skills/hk-graph/SKILL.md": "51bb48ab28bd83d2b091aaf4669e14eff62a6e465272042b338c58e2001f790f",
+    ".claude/skills/hk-handoff/SKILL.md": "569f46d1a06606e58e5b0b8051e907e54b58ae26a8123f561f86fd1c4c695ca9",
+    ".claude/skills/hk-help/SKILL.md": "b5a4cc88bb9248ee2184aeeed37d0d10359b6fcc31d54682a76d344f72030897",
+    ".claude/skills/hk-implement/SKILL.md": "c7a5aecba838502b895177ecfc95b8fd3e06461beeb53d692dc49e6ba6bb81eb",
+    ".claude/skills/hk-init/SKILL.md": "7bf406670b10a54199ed4c73b9c372884995a1597dd8de2c258306045bd02432",
+    ".claude/skills/hk-loop/SKILL.md": "3821e7f281e90378425f50f04686986749aa077a31b0b202bdcfadce52968405",
+    ".claude/skills/hk-observe/SKILL.md": "4569d3128dfab440ec97ee648437c6476acacd7c68480469cee55d7b9c92bd2a",
+    ".claude/skills/hk-optimize/SKILL.md": "01529fdcba13f364a06752cadfcf66dfa8cf715fa32af5f19b556b989d1e00fc",
+    ".claude/skills/hk-plan/SKILL.md": "ea18a4bba108dec4dbf1d8bae6f37ad01a970881769205498f0d2a5dd581ef19",
+    ".claude/skills/hk-review/SKILL.md": "a3c8618a854c83aa13b6fa8a77ec31eea32499111d0c703da1d977b3b3393ed7",
+    ".claude/skills/hk-start/SKILL.md": "0256d9f0fb2acac8750744cb8ff73bb54832005a52959685d07a9d7a39633bb6",
+    ".claude/skills/hk-verify/SKILL.md": "bec7c3824718dd9210e7472800d59eb1abf0228aa240e8c8d6d8fa8d08caf486"
+  },
+  "settings_added": {
+    "allow": [
+      "Bash(python scripts/harness.py *)",
+      "Bash(python3 scripts/harness.py *)",
+      "Bash(py -3 scripts/harness.py *)",
+      "Bash(./init.sh)",
+      "Bash(git status *)",
+      "Bash(git diff *)",
+      "Bash(git log *)"
+    ],
+    "ask": [
+      "Bash(rm -rf *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean *)",
+      "Bash(git push *)"
+    ],
+    "deny": [
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Read(./.env.production)"
+    ]
+  },
+  "python": "python",
+  "level": "standard",
+  "installed_at": "2026-10-15T20:39:48+07:00"
+}

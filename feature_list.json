@@ -1,0 +1,212 @@
+{
+  "project": "harness-tutorial",
+  "last_updated": "2026-10-15",
+  "rules": {
+    "single_active_feature": true,
+    "passing_requires_evidence": true,
+    "status_changes_only_via": "python scripts/harness.py next|verify|block|unblock"
+  },
+  "status_legend": {
+    "not_started": "Not started.",
+    "active": "In progress (at most 1).",
+    "blocked": "Blocked, with a recorded reason.",
+    "passing": "Verification passed, with evidence."
+  },
+  "features": [
+    {
+      "id": "H001",
+      "priority": 1,
+      "category": "harness",
+      "behavior": "Verification baseline runs from a clean checkout: `./init.sh` completes setup and `check` passes (fix the commands in .harness/config.json if detection was wrong).",
+      "verification": "python scripts/harness.py check",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-15T20:41:39+07:00",
+        "commit": null,
+        "command": "python scripts/harness.py check",
+        "exit_code": 0,
+        "duration_s": 0.3,
+        "project_check": "quick",
+        "output_tail": "== harness check (quick) @ no-git ==\n[PASS] rules (0.0s)\n[PASS] docs (0.0s)\n[PASS] lint (0.1s)\n[SKIP] typecheck: not configured in .harness/config.json\n[PASS] test (0.1s)\n== RESULT: PASS =="
+      },
+      "activated_at": "2026-10-15T20:41:39+07:00",
+      "activated_commit": ""
+    },
+    {
+      "id": "H002",
+      "priority": 2,
+      "category": "harness",
+      "behavior": "The project has a real test command (commands.test) and at least one passing test.",
+      "verification": "python scripts/harness.py check --only test",
+      "status": "passing",
+      "depends_on": [
+        "H001"
+      ],
+      "evidence": {
+        "verified_at": "2026-10-15T20:41:40+07:00",
+        "commit": null,
+        "command": "python scripts/harness.py check --only test",
+        "exit_code": 0,
+        "duration_s": 0.2,
+        "project_check": "quick",
+        "output_tail": "== harness check (quick) @ no-git ==\n[PASS] test (0.1s)\n== RESULT: PASS =="
+      },
+      "activated_at": "2026-10-15T20:41:40+07:00",
+      "activated_commit": ""
+    },
+    {
+      "id": "H003",
+      "priority": 3,
+      "category": "harness",
+      "behavior": "A smoke check covers the startup path (commands.smoke: import app / build / call health) and passes.",
+      "verification": "python scripts/harness.py check --only smoke",
+      "status": "passing",
+      "depends_on": [
+        "H001"
+      ],
+      "evidence": {
+        "verified_at": "2026-10-15T20:41:40+07:00",
+        "commit": null,
+        "command": "python scripts/harness.py check --only smoke",
+        "exit_code": 0,
+        "duration_s": 0.2,
+        "project_check": "quick",
+        "output_tail": "== harness check (quick) @ no-git ==\n[PASS] smoke (0.1s)\n== RESULT: PASS =="
+      },
+      "activated_at": "2026-10-15T20:41:40+07:00",
+      "activated_commit": ""
+    },
+    {
+      "id": "H004",
+      "priority": 4,
+      "category": "harness",
+      "behavior": "Project knowledge lives in the repo: AGENTS.md and docs/ are fully filled in (no HARNESS:FILL left, no broken links, AGENTS.md ≤ 200 lines).",
+      "verification": "python scripts/harness.py docs --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-15T20:41:41+07:00",
+        "commit": null,
+        "command": "python scripts/harness.py docs --strict",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "docs: PASS"
+      },
+      "activated_at": "2026-10-15T20:41:41+07:00",
+      "activated_commit": ""
+    },
+    {
+      "id": "F001",
+      "category": "feature",
+      "behavior": "index.html (Tổng quan): thesis hero with the animated loop diagram, ≥4 sourced stat cards, the five-subsystem definition, the animated prompt→graph spectrum, reading-path cards — all facts from docs/CONTENT.md Page 1",
+      "verification": "python tests/check_site.py --page index",
+      "status": "not_started",
+      "depends_on": [],
+      "evidence": null,
+      "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
+      "scope": [
+        "index.html"
+      ],
+      "priority": 10
+    },
+    {
+      "id": "F002",
+      "category": "feature",
+      "behavior": "problems.html (Các vấn đề của AI agent ngày nay): nine problem cards (what happens, evidence with tags and citations, why it matters, link to the principle that answers it) exactly as in docs/CONTENT.md Page 2, plus a closing summary",
+      "verification": "python tests/check_site.py --page problems",
+      "status": "not_started",
+      "depends_on": [
+        "F001"
+      ],
+      "evidence": null,
+      "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
+      "scope": [
+        "problems.html"
+      ],
+      "priority": 11
+    },
+    {
+      "id": "F003",
+      "category": "feature",
+      "behavior": "principles.html (Nguyên lý xử lý): thirteen principle blocks (mechanism, artifact, anti-pattern) from docs/CONTENT.md Page 3, the loop diagram in the loop section, and links back to the problems they answer",
+      "verification": "python tests/check_site.py --page principles",
+      "status": "not_started",
+      "depends_on": [
+        "F002"
+      ],
+      "evidence": null,
+      "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
+      "scope": [
+        "principles.html"
+      ],
+      "priority": 12
+    },
+    {
+      "id": "F004",
+      "category": "feature",
+      "behavior": "harness-kit.html (harness-kit đã xử lý thế nào): three-layer architecture, the problem→mechanism table, the interactive feature state machine, the hook timeline, evaluation stat cards with evidence tags, and the stated limits — docs/CONTENT.md Page 4",
+      "verification": "python tests/check_site.py --page harness-kit",
+      "status": "not_started",
+      "depends_on": [
+        "F003"
+      ],
+      "evidence": null,
+      "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
+      "scope": [
+        "harness-kit.html"
+      ],
+      "priority": 13
+    },
+    {
+      "id": "F005",
+      "category": "feature",
+      "behavior": "guide.html (Hướng dẫn sử dụng): install tabs (Windows / macOS-Linux / npm) with the terminal replay, what gets installed, daily workflow, all 16 skills and 6 agents, worked example, autonomous loop, update/uninstall/doctor, troubleshooting FAQ, and the 'Cách trang này được xây dựng' box — docs/CONTENT.md Page 5",
+      "verification": "python tests/check_site.py --page guide",
+      "status": "not_started",
+      "depends_on": [
+        "F004"
+      ],
+      "evidence": null,
+      "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
+      "scope": [
+        "guide.html"
+      ],
+      "priority": 14
+    },
+    {
+      "id": "F006",
+      "category": "feature",
+      "behavior": "references.html (Tài liệu tham khảo): every reference key of docs/CONTENT.md as <li id=ref-key> with author/organization, date, title, external URL and one line on what the site uses it for",
+      "verification": "python tests/check_site.py --page references",
+      "status": "not_started",
+      "depends_on": [
+        "F005"
+      ],
+      "evidence": null,
+      "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
+      "scope": [
+        "references.html"
+      ],
+      "priority": 15
+    },
+    {
+      "id": "F007",
+      "category": "harness",
+      "behavior": "Release gate: all six pages exist and pass together, every citation resolves, README explains how to view the site",
+      "verification": "python tests/check_site.py --strict",
+      "status": "not_started",
+      "depends_on": [
+        "F006"
+      ],
+      "evidence": null,
+      "scope": [
+        "README.md",
+        "*.html"
+      ],
+      "verify_check": "full",
+      "priority": 16
+    }
+  ]
+}
