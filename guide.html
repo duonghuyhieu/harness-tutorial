@@ -174,7 +174,7 @@ python scripts/harness.py report</code></pre>
     <section id="cach-xay-dung" class="reveal">
       <h2>Cách trang này được xây dựng</h2>
       <div class="callout callout--note"><p class="callout__title">Chính trang này dùng harness-kit</p>
-        <p>Mỗi trang là một feature có lệnh kiểm chứng (<code>python tests/check_site.py --page &lt;trang&gt;</code>), một phiên maker cho mỗi trang, một reviewer chỉ đọc và pass-gate. Báo cáo của lần chạy nằm trong <code>.harness/runs/</code> (cục bộ) <span class="ev" data-evidence="sx">SX</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p></div>
+        <p>Mỗi trang là một feature có lệnh kiểm chứng (<code>python tests/check_site.py --page &lt;trang&gt;</code>), một phiên maker cho mỗi trang, một reviewer chỉ đọc và pass-gate. Kết quả: 6 page feature, sau các sửa lỗi đều đạt ngay lần thử đầu, tổng chi phí khoảng 4,26 USD; vòng lặp làm lộ hai lỗi của harness-kit (đã sửa, có kiểm thử hồi quy) và một vấn đề của trình kiểm tra trang này — chi tiết ở <a href="harness-kit.html#danh-gia">trang harness-kit</a>. Báo cáo của lần chạy nằm trong <code>.harness/runs/</code> (cục bộ) <span class="ev" data-evidence="sx">SX</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p></div>
     </section>
 
     <section id="tom-tat" class="reveal">

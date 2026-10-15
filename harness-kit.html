@@ -97,7 +97,7 @@
       <h2>Đánh giá</h2>
       <p>Số liệu đo ngày 15/10/2026 trên Windows 11, Python 3.12, Claude Code 2.1.287 <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
       <div class="stat-grid">
-        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="97" data-decimals="0" data-suffix="">97</span><span class="stat__label">kiểm thử tự động đạt (85 kế thừa từ v1, 12 cho hook và trình cài đặt v2)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="99" data-decimals="0" data-suffix="">99</span><span class="stat__label">kiểm thử tự động đạt (85 kế thừa từ v1, 12 cho hook và trình cài đặt v2, 2 kiểm thử hồi quy cho các lỗi tìm thấy khi tự dùng)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
         <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="6" data-decimals="0" data-suffix="">6</span><span class="stat__label">feature V001–V006 của kit qua pass-gate của chính nó</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
         <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="3" data-decimals="0" data-suffix="">3</span><span class="stat__label">cách cài (npx, install.sh, install.ps1); <code>doctor</code> đều báo HEALTHY</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
         <div class="stat" data-evidence="sl"><span class="ev" data-evidence="sl">SL</span><span class="stat__value" data-count-to="10" data-decimals="0" data-suffix=" / 21">10 / 21</span><span class="stat__label">yêu cầu thiết kế đáp ứng đầy đủ; 9 đáp ứng một phần, 2 chưa đáp ứng (tự đánh giá)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
@@ -106,6 +106,16 @@
       <ul>
         <li>Không dùng công cụ, mô hình nêu đúng feature đang active và lệnh kiểm chứng của nó — thông tin chỉ hook SessionStart đã đưa vào (n = 1, kiểm tra sự tồn tại) <span class="ev" data-evidence="do">Đo</span>.</li>
         <li>Khi được yêu cầu sửa <code>status</code> của một feature thành <code>passing</code> dưới <code>--permission-mode acceptEdits</code>, hook từ chối và tệp vẫn ở <code>not_started</code> (n = 1) <span class="ev" data-evidence="do">Đo</span>.</li>
+      </ul>
+      <h3>Dogfooding: trang này được xây bằng chính vòng lặp của kit</h3>
+      <p>Một dự án duy nhất, ngày 15/10/2026 <span class="ev" data-evidence="sx">SX</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <ul>
+        <li>6 page feature, mỗi feature có lệnh kiểm chứng <code>python tests/check_site.py --page &lt;trang&gt;</code>; maker (Claude Sonnet, phiên mới, chỉ ghi được vào trang của mình) → reviewer chỉ đọc → pass-gate → commit <span class="ev" data-evidence="sx">SX</span>.</li>
+        <li>Sau các sửa lỗi bên dưới, mọi trang đều đạt ngay lần thử đầu; chi phí báo cáo của các lần chạy khoảng 4,26 USD tổng cộng (đã gồm lần chạy đầu thất bại 0,69 USD) <span class="ev" data-evidence="sx">SX</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</li>
+        <li>Lỗi 1 do kiểm tra toàn vẹn của chính vòng lặp phát hiện: hook v2 của dự án ghi <code>.harness/activity.jsonl</code> trong phiên loop, và loop coi đó là maker sửa tệp harness — hai lần thử đúng bị loại và feature bị chặn. Đã sửa: các tệp đó là trạng thái runtime (thêm kiểm thử hồi quy) <span class="ev" data-evidence="sx">SX</span>.</li>
+        <li>Lỗi 2: sau <code>block</code> → <code>unblock</code>, feature giữ commit kích hoạt cũ, nên loop báo một bản sửa harness về sau là trôi phạm vi và từ chối chạy. Đã sửa: <code>unblock</code> đặt lại mốc gốc (thêm kiểm thử hồi quy) <span class="ev" data-evidence="sx">SX</span>.</li>
+        <li>Vấn đề thứ ba nằm ở trình kiểm tra của chính trang này: chế độ page coi liên kết tới trang chưa xây là lỗi; đã ghi bằng <code>fail --layer feedback</code> và sửa <span class="ev" data-evidence="sx">SX</span>.</li>
+        <li>Bài học: các lỗi nằm ở harness (các lớp tools, state, feedback), không ở mô hình — đúng như Bài 01 dự đoán; ghi lỗi theo lớp chỉ ra chỗ cần sửa <span class="ev" data-evidence="sl">SL</span>.</li>
       </ul>
     </section>
 

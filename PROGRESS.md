@@ -5,13 +5,13 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-15T21:03:35+07:00_
-- Branch / commit: `main` @ `b2e69d1 feat(F005): guide.html (Hướng dẫn sử dụng): install tabs (Windows / macO`
-- Last check: PASS (quick, 2026-10-15T21:03:35+07:00, @b2e69d1)
-- Features: 10/11 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-15T21:05:33+07:00_
+- Branch / commit: `main` @ `fadf578 docs(content): dogfooding results; plan F008`
+- Last check: PASS (quick, 2026-10-15T21:05:33+07:00, @fadf578)
+- Features: 11/12 passing, VCR 1.0
 - Active: none
 - Blocked: none
-- Uncommitted changes: 2 file(s)
+- Uncommitted changes: 3 file(s)
 <!-- harness:auto:end -->
 
 ## Done

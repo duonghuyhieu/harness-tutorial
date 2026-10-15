@@ -434,15 +434,51 @@
       "category": "feature",
       "behavior": "harness-kit.html and guide.html report the dogfooding results exactly as docs/CONTENT.md Page 4 states them: 99 tests (not 97), a 'Dogfooding' subsection in #danh-gia (6 page features, first-attempt passes after the fixes, about 4.26 USD, the two harness-kit bugs and the checker problem with their fixes, the layer lesson), and the guide's #cach-xay-dung box updated to match",
       "verification": "python tests/check_site.py --page harness-kit && python tests/check_site.py --page guide",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T21:05:33+07:00",
+        "commit": "fadf578",
+        "command": "python tests/check_site.py --page harness-kit && python tests/check_site.py --page guide",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "site check: PASS\nsite check: PASS",
+        "loop": {
+          "attempts": 1,
+          "cost_usd": 0.38717,
+          "runs": [
+            {
+              "role": "maker",
+              "subtype": "success",
+              "cost": 0.23992480000000002,
+              "turns": 11
+            },
+            {
+              "role": "reviewer",
+              "subtype": "success",
+              "cost": 0.1472456,
+              "turns": 6
+            }
+          ],
+          "reviewer_evidence": "Diff touches only harness-kit.html and guide.html (plus harness-managed feature_list.json). The stat changed 97 to 99, with the 2 regression tests added to the breakdown. A new \"Dogfooding\" h3 in #danh-gia has 6 page features, the maker→reviewer→pass-gate flow, the first-attempt passes after the fixes, about 4.26 USD (0.69 USD failed run included), Bug 1 (activity.jsonl), Bug 2 (unblock resets the base), the checker problem (fail --layer feedback) and the layer lesson. All of it matches docs/CON"
+        }
+      },
       "out_of_scope": "assets/, tests/, docs/, other pages",
       "scope": [
         "harness-kit.html",
         "guide.html"
       ],
-      "priority": 9
+      "priority": 9,
+      "activated_at": "2026-10-15T21:04:40+07:00",
+      "activated_commit": "fadf5785337eb208728c92a8a5a53df4cbce94ee",
+      "loop_runs": [
+        {
+          "run": "20261015-210440-F008",
+          "outcome": "passing",
+          "report_sha256": "7b8d2e4b3a598269d8000e81ff27c1db74014ef1288993ec8133510d3024b0f5"
+        }
+      ]
     }
   ]
 }
