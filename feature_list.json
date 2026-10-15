@@ -157,16 +157,52 @@
       "category": "feature",
       "behavior": "problems.html (Các vấn đề của AI agent ngày nay): nine problem cards (what happens, evidence with tags and citations, why it matters, link to the principle that answers it) exactly as in docs/CONTENT.md Page 2, plus a closing summary",
       "verification": "python tests/check_site.py --page problems",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [
         "F001"
       ],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T20:56:03+07:00",
+        "commit": "cebd819",
+        "command": "python tests/check_site.py --page problems",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "WARNING: problems.html: links to references.html, not built yet\nWARNING: problems.html: links to principles.html, not built yet\nWARNING: problems.html: links to references.html, not built yet\nWARNING: problems.html: links to references.html, not built yet\nWARNING: problems.html: links to references.html, not built yet\nWARNING: problems.html: links to principles.html, not built yet\nWARNING: problems.html: links to principles.html, not built yet\nsite check: PASS",
+        "loop": {
+          "attempts": 1,
+          "cost_usd": 0.655147,
+          "runs": [
+            {
+              "role": "maker",
+              "subtype": "success",
+              "cost": 0.4753968,
+              "turns": 9
+            },
+            {
+              "role": "reviewer",
+              "subtype": "success",
+              "cost": 0.1797498,
+              "turns": 6
+            }
+          ],
+          "reviewer_evidence": "`python scripts/harness.py try F002` printed \"site check: PASS\" and exit 0. `harness.py check` and `check --only test` both gave RESULT: PASS. The only changes are the untracked problems.html and the harness-owned feature_list.json, so nothing outside scope changed. No tests were added or loosened, and `tests/check_site.py` is untouched.\n\nI compared problems.html against docs/CONTENT.md Page 2 line by line. It has all nine cards with the specified ids, in order, each with what happens, evidence,"
+        }
+      },
       "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
       "scope": [
         "problems.html"
       ],
-      "priority": 11
+      "priority": 11,
+      "activated_at": "2026-10-15T20:53:52+07:00",
+      "activated_commit": "cebd8190c1a2da5561fc0f857ef96ec6e3590543",
+      "loop_runs": [
+        {
+          "run": "20261015-205352-F002",
+          "outcome": "passing",
+          "report_sha256": "0bfd1c15fd0e04a0c6e0037c96ca09266bc3e89d1666505c2e20a537e8231d06"
+        }
+      ]
     },
     {
       "id": "F003",
