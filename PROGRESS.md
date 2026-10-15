@@ -5,10 +5,10 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-15T21:02:13+07:00_
-- Branch / commit: `main` @ `0f07050 feat(F004): harness-kit.html (harness-kit đã xử lý thế nào): three-layer`
-- Last check: PASS (quick, 2026-10-15T21:02:13+07:00, @0f07050)
-- Features: 9/11 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-15T21:03:35+07:00_
+- Branch / commit: `main` @ `b2e69d1 feat(F005): guide.html (Hướng dẫn sử dụng): install tabs (Windows / macO`
+- Last check: PASS (quick, 2026-10-15T21:03:35+07:00, @b2e69d1)
+- Features: 10/11 passing, VCR 1.0
 - Active: none
 - Blocked: none
 - Uncommitted changes: 2 file(s)

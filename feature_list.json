@@ -365,16 +365,52 @@
       "category": "feature",
       "behavior": "references.html (Tài liệu tham khảo): every reference key of docs/CONTENT.md as <li id=ref-key> with author/organization, date, title, external URL and one line on what the site uses it for",
       "verification": "python tests/check_site.py --page references",
-      "status": "not_started",
+      "status": "passing",
       "depends_on": [
         "F005"
       ],
-      "evidence": null,
+      "evidence": {
+        "verified_at": "2026-10-15T21:03:35+07:00",
+        "commit": "b2e69d1",
+        "command": "python tests/check_site.py --page references",
+        "exit_code": 0,
+        "duration_s": 0.1,
+        "project_check": "quick",
+        "output_tail": "site check: PASS",
+        "loop": {
+          "attempts": 1,
+          "cost_usd": 0.507972,
+          "runs": [
+            {
+              "role": "maker",
+              "subtype": "success",
+              "cost": 0.337792,
+              "turns": 11
+            },
+            {
+              "role": "reviewer",
+              "subtype": "success",
+              "cost": 0.17018,
+              "turns": 10
+            }
+          ],
+          "reviewer_evidence": "`python scripts/harness.py try F006` printed \"site check: PASS\" and \"[PASS] F006 verification exited 0\". `python scripts/harness.py check` returned RESULT: PASS (rules, docs, lint, test all passed). `check --only test` passed too. No tests were added or changed. `git status` shows only references.html (new) and feature_list.json (changed by the harness itself), so nothing outside scope was touched. I compared references.html against the Page 6 list in docs/CONTENT.md (lines 224-246) entry by ent"
+        }
+      },
       "out_of_scope": "assets/, tests/, docs/CONTENT.md, other pages",
       "scope": [
         "references.html"
       ],
-      "priority": 15
+      "priority": 15,
+      "activated_at": "2026-10-15T21:02:13+07:00",
+      "activated_commit": "b2e69d123711c7a2242fb7347b5f0d2997a75008",
+      "loop_runs": [
+        {
+          "run": "20261015-210213-F006",
+          "outcome": "passing",
+          "report_sha256": "3d25b101ccfa02abfd75cde9018c9e49c49d054bd6b2d8636bd355bbd2189678"
+        }
+      ]
     },
     {
       "id": "F007",
