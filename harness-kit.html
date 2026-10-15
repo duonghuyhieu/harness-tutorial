@@ -104,10 +104,10 @@
 
     <section id="danh-gia" class="reveal">
       <h2>Đánh giá</h2>
-      <p>Số liệu đo ngày 15/10/2026 trên Windows 11, Python 3.12, Claude Code 2.1.287, với harness-kit 2.1.2 <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <p>Số liệu đo ngày 15/10/2026 trên Windows 11, Python 3.12, Claude Code 2.1.287, với harness-kit 2.1.3 <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
       <div class="stat-grid">
-        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="113" data-decimals="0" data-suffix="">113</span><span class="stat__label">kiểm thử tự động đạt, gồm các kiểm thử hồi quy cho lỗi do tự dùng và do rà soát độc lập tìm ra; CI trên Ubuntu, Windows, macOS với Python 3.10 và 3.12 đều qua</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
-        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="10" data-decimals="0" data-suffix="">10</span><span class="stat__label">feature V001–V010 của kit qua pass-gate của chính nó</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="114" data-decimals="0" data-suffix="">114</span><span class="stat__label">kiểm thử tự động đạt, gồm các kiểm thử hồi quy cho lỗi do tự dùng và do rà soát độc lập tìm ra; CI trên Ubuntu, Windows, macOS với Python 3.10 và 3.12 đều qua</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
+        <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="11" data-decimals="0" data-suffix="">11</span><span class="stat__label">feature V001–V011 của kit qua pass-gate của chính nó</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
         <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="4" data-decimals="0" data-suffix="">4</span><span class="stat__label">cách cài (one-liner PowerShell, one-liner bash, npx, <code>npm install -D</code>); <code>doctor</code> đều báo HEALTHY</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
         <div class="stat" data-evidence="sl"><span class="ev" data-evidence="sl">SL</span><span class="stat__value" data-count-to="10" data-decimals="0" data-suffix=" / 21">10 / 21</span><span class="stat__label">yêu cầu thiết kế đáp ứng đầy đủ khi chấm chặt theo câu chữ; 11 đáp ứng một phần, 0 chưa đáp ứng (tự đánh giá, sau bản 2.1.x)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
       </div>
@@ -123,6 +123,21 @@
         <tr><td>Sonnet, chi phí trung vị</td><td>0,11 USD</td><td>0,21 USD</td></tr>
       </tbody></table></div>
       <p>Khác biệt về độ đúng không có ý nghĩa thống kê (Fisher p = 1,00). Lỗi chủ đạo — số lượng không nguyên phải bị từ chối — là quy tắc mà lệnh kiểm chứng không kiểm, nên harness không thể bắt được: harness không tốt hơn lệnh kiểm chứng của nó. Lợi ích mà harness nhắm tới (trạng thái qua nhiều phiên, WIP, scope trong công việc dài) không được tác vụ một phiên này thử thách <span class="ev" data-evidence="sl">SL</span>.</p>
+      <h3>Thí nghiệm 2: nhiều phiên, nhiều feature</h3>
+      <p>Thiết kế 2 × 2: có / không harness-kit × lệnh kiểm chứng yếu (một test cơ bản mỗi phần) / mạnh (test theo từng quy tắc do người lập kế hoạch viết trước). Tác vụ ba phần của một hệ thống đặt vé; mỗi lần chạy gồm ba phiên <code>claude -p</code> mới, cùng prompt “làm phần chưa xong tiếp theo, đúng một phần”; 24 test ẩn chạy sau mỗi phiên; Haiku, 6 lần mỗi nhóm <span class="ev" data-evidence="do">Đo</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
+      <div class="table-wrap"><table><caption>Bảng 3. Thí nghiệm 2 (ngày 16/10/2026).</caption><thead><tr><th>Chỉ số</th><th>Không harness, yếu</th><th>Không harness, mạnh</th><th>harness-kit, yếu</th><th>harness-kit, mạnh</th></tr></thead><tbody>
+        <tr><td>Cả 3 phần đúng</td><td>3/6</td><td>6/6</td><td>2/6</td><td>5/6</td></tr>
+        <tr><td>Khai “xong” nhưng sai</td><td>4/18</td><td>0/18</td><td>3/18</td><td>1/18</td></tr>
+        <tr><td>Feature qua <code>verify</code></td><td>—</td><td>—</td><td>3/3 ở 6/6 lần</td><td>3/3 ở 6/6 lần</td></tr>
+        <tr><td>Hồi quy</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+      </tbody></table></div>
+      <p>Độ mạnh của lệnh kiểm chứng tạo khác biệt có ý nghĩa thống kê (11/12 so với 5/12, Fisher p = 0,027); riêng harness thì không (7/12 so với 9/12, p = 0,67). Harness bảo đảm lệnh kiểm chứng được chạy và ghi lại cho mọi feature (36 lần <code>verify</code>), mỗi lúc một feature, không hồi quy <span class="ev" data-evidence="do">Đo</span>.</p>
+      <h4>Ba ví dụ nguyên văn từ transcript</h4>
+      <ul>
+        <li><b>Pass-gate chỉ chặn được điều mà lệnh kiểm chứng kiểm.</b> Một lần chạy có harness qua <code>verify F003</code> với test yếu và trả lời “All 3 features are now passing … STATUS: DONE PART 3”, trong khi test ẩn về làm tròn half-up vẫn hỏng <span class="ev" data-evidence="mh">MH</span>.</li>
+        <li><b>Không harness, khai quá lời.</b> Một lần chạy viết cả ba phần ngay phiên đầu, rồi ở phiên sau trả lời “STATUS: ALL PARTS COMPLETE (1, 2, AND 3)” dù phần 1 vẫn chấp nhận số ghế “+3” <span class="ev" data-evidence="mh">MH</span>.</li>
+        <li><b>Harness tự khóa mình.</b> Ở lần chạy thử đầu tiên, test của cả ba phần có sẵn trong bộ test nên check toàn dự án luôn đỏ: F001 không bao giờ qua được; guard từ chối sửa phần tiếp theo — “outside the active feature F001's scope … (WIP=1)”; <code>next --force</code> trả lời “No eligible not_started feature left”; phần 3 không bao giờ được bắt đầu. harness-kit 2.1.3 giải thích tình huống này ngay trong <code>verify</code>; thí nghiệm dùng test “pending” (tự bỏ qua cho tới khi phần đó tồn tại) <span class="ev" data-evidence="mh">MH</span>.</li>
+      </ul>
       <h3>Hai kiểm tra trên Claude Code thật</h3>
       <ul>
         <li>Không dùng công cụ, mô hình nêu đúng feature đang active và lệnh kiểm chứng của nó — thông tin chỉ hook SessionStart đã đưa vào (n = 1, kiểm tra sự tồn tại) <span class="ev" data-evidence="mh">MH</span>.</li>
@@ -145,7 +160,7 @@
     <section id="gioi-han" class="reveal">
       <h2>Giới hạn</h2>
       <div class="callout callout--note"><p class="callout__title">Cần nói rõ</p>
-        <p>Hook là hàng rào bên trong tiến trình của agent, không phải sandbox; hãy bật sandboxing của Claude Code để cô lập hệ thống tệp và mạng. Bằng chứng ở trên cho thấy các cơ chế hoạt động; thử nghiệm có đối chứng duy nhất (một tác vụ ngắn, mẫu nhỏ) chưa thấy tác động lên độ đúng — cần thí nghiệm nhiều phiên, nhiều feature, nhiều lần chạy hơn.</p></div>
+        <p>Hook là hàng rào bên trong tiến trình của agent, không phải sandbox; hãy bật sandboxing của Claude Code để cô lập hệ thống tệp và mạng. Bằng chứng ở trên cho thấy các cơ chế hoạt động; hai thí nghiệm có đối chứng nhỏ không thấy tác động của riêng harness lên độ đúng, nhưng thấy tác động rõ của độ mạnh lệnh kiểm chứng — còn cần thời gian dài hơn, mô hình khác và người viết test độc lập.</p></div>
     </section>
 
     <section id="tom-tat" class="reveal">

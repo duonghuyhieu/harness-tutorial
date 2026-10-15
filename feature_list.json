@@ -1,6 +1,6 @@
 {
   "project": "harness-tutorial",
-  "last_updated": "2026-10-15",
+  "last_updated": "2026-10-16",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -571,6 +571,30 @@
       "priority": 22,
       "activated_at": "2026-10-15T23:52:52+07:00",
       "activated_commit": "59564d9308902ef4165fb13e33c33d9f0c0721aa"
+    },
+    {
+      "id": "F012",
+      "category": "content",
+      "behavior": "Experiment 2 (multi-session, harness x verification strength) with verbatim transcript examples: Bảng 3 on harness-kit.html, evidence boxes in principles #wip and #feature-list; kit 2.1.3 facts",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-16T00:52:15+07:00",
+        "commit": "bc464ec",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.2,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md"
+      ],
+      "priority": 23,
+      "activated_at": "2026-10-16T00:52:14+07:00",
+      "activated_commit": "bc464ecd34077b5ef4a2f74a2c7bb9e501892738"
     }
   ]
 }
