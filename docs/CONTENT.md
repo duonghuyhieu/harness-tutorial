@@ -133,7 +133,8 @@ Sections (each with: principle, mechanism, artifact, anti-pattern):
    green, tests of features not started yet pending.
 7. `#feature-list` — Feature list as primitive: behavior + verification command + status; a state machine owned by the
    harness: not_started → active → passing (one-way), blocked. Evidence box: in experiment 2 the strength of each
-   feature's verification decided correctness (11/12 vs 5/12, p = 0.027), the harness alone did not [do].
+   feature's verification decided correctness (11/12 vs 5/12, p = 0.027); enforced wrong tests lowered it
+   (experiment 3) — the harness amplifies its verification in both directions [do].
 8. `#maker-checker` — Premature victory and three verification layers: the feature's own command, the project-wide
    check, an independent reviewer in a fresh session; error messages in ERROR / WHY / FIX form.
 9. `#e2e` — E2E testing catches boundary bugs; recurring review comments become machine rules.
@@ -169,12 +170,12 @@ Problem → mechanism table (rows; keep these exact mechanisms):
 | Unsafe autonomous runs | `loop`: maker → read-only reviewer → test gate → pass-gate, budgets and attempt limits, integrity restore of harness files after every session |
 | Fragile installs (lesson from claudekit) | settings merged entry by entry, manifest with sha256 per file, `update`/`uninstall` touch only unchanged files, no silent postinstall surprises |
 
-Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287; kit 2.1.3):
-- 114 automated tests pass, including 6 regression tests for the defects that three independent read-only reviews
+Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287; kit 2.1.5):
+- 117 automated tests pass, including 6 regression tests for the defects that three independent read-only reviews
   found in 2.0.0 (each of those 6 fails on 2.0.0) and the regression tests for the bugs building this site exposed.
 - CI on GitHub Actions (Ubuntu, Windows, macOS × Python 3.10 and 3.12) passes. Its first run found a real defect:
   on Python 3.10, the documented minimum, the kit silently skipped pyproject.toml (no tomllib); 2.1.2 fixes it.
-- The kit runs under its own harness: features V001–V011 passed its own `verify` pass-gate.
+- The kit runs under its own harness: features V001–V013 passed its own `verify` pass-gate.
 - Independent review (15/10/2026) [do]: three read-only reviewers (code, end-to-end install, docs) found, among
   others, hooks not recognized for some `--python` values (uninstall could leave hooks pointing at a deleted
   dispatcher), the guard missing non-ASCII paths on Windows, and the pass-gate weakened because an active feature's
@@ -205,7 +206,8 @@ Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Cl
   three fresh `claude -p` sessions per run with the same prompt ("implement the next unfinished part, exactly one"),
   24 hidden tests run after every session; haiku, 6 runs per arm. All parts correct: 3/6 (no harness, weak),
   6/6 (no harness, strong), 2/6 (harness, weak), 5/6 (harness, strong). Verification strength: 11/12 vs 5/12,
-  Fisher p = 0.027; hidden tests passed 99.3% vs 94.8%. Harness: 7/12 vs 9/12, p = 0.67 — no detectable effect.
+  Fisher p = 0.027; hidden tests passed 99.3% vs 94.8%. Harness installed vs not: 7/12 vs 9/12, p = 0.67 — not
+  detectable at this n (the agents decided how to work; the independent reviewer was never used).
   False "done" claims: 4/18, 0/18, 3/18, 1/18. Every harness run took all three features through `verify`
   (36 calls), one active feature at a time, with no regression.
 - Examples from the transcripts [mh — single cases, verbatim]: (1) a harness run passed `verify F003` with the weak
@@ -219,6 +221,25 @@ Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Cl
 - Reading [sl]: correctness was decided by the verification each feature carries, not by the harness; the harness
   guaranteed that this verification ran and was recorded for every feature; a harness can also create its own
   failure mode (red baseline + WIP=1 + a global green gate).
+- Experiment 3 (16/10/2026) [do — small n]: acceptance tests written by a planner agent before coding. Mutation
+  analysis (15 mutants, one broken rule each): hidden tests 15/15, human per-rule tests 13/15, weak tests 4/15, planner
+  suites 15/15 — but all 12 planner suites contained 1–7 tests that fail on a correct implementation (35 in all:
+  miscomputed expectations, invented rules, a divergent reading of one ambiguous spec sentence). Hidden tests passed:
+  harness + human tests 97.2%, planner tests not enforced 96.5%, harness + weak tests 92.4%, harness + planner tests
+  86.8% (false "done" 6/16, cost × 2.5) — makers bent code to the wrong tests.
+- Experiment 4 (16/10/2026) [do — small n]: the harness operated as designed — `harness.py loop` (fresh maker → fresh
+  read-only reviewer → test gate → `verify`) vs plain sessions, weak tests, haiku, 3 batches of 6 per arm. Batch 1:
+  4/6 vs 1/6; batch 2: 3/6 vs 6/6 (two loop defects stopped dependent features); batch 3, defects fixed: 5/6 vs 5/6;
+  all 18 vs 18: 12/18 vs 12/18, Fisher p = 1.00; loop cost about × 2.7. Of the features the loop marked passing,
+  8.7% were wrong on the hidden tests; of the plain agents' "done" claims, 11.1%.
+- Follow-up (sonnet): in 3 of 4 harness runs the agent never entered the workflow and redid finished work; with
+  harness-kit 2.1.4 (a Stop gate for work on a feature nobody activated) it entered the workflow in 4/4 runs and
+  features passing rose from 0.75/3 to 2.75/3 [do — small n].
+- Synthesis [sl]: the harness changes quality through the verification it enforces, in both directions (correct
+  per-rule tests raised correctness significantly, wrong tests lowered it below every other arm); on short tasks the
+  model already self-checks, its mechanics did not change final correctness and cost 2–3 × more; it changes behaviour
+  when it reaches the agent; it has failure modes of its own (four defects found by the experiments, all fixed in
+  2.1.3–2.1.5); variance is large (the same plain arm scored 1/6 and 6/6 in two batches).
 Dogfooding — this site was built with harness-kit's own loop (all [sx], single project, 15/10/2026):
 - 6 page features, each with `python tests/check_site.py --page <page>` as its verification command; maker
   (Claude Sonnet, fresh session, write access only to its page) → read-only reviewer → pass-gate → commit.
@@ -236,9 +257,9 @@ Dogfooding — this site was built with harness-kit's own loop (all [sx], single
   Lesson 01 predicts; logging them by layer pointed to the fix.
 
 Limits (must be stated): hooks are guardrails inside the agent's process, not a sandbox; turn on Claude Code's own
-sandboxing for filesystem/network isolation; the evidence shows the mechanisms work; two small controlled
-experiments found no effect of the harness alone on correctness, and a significant effect of verification
-strength — longer horizons, other models and independent test authors remain.
+sandboxing for filesystem/network isolation; four small controlled experiments show the harness acting through
+its verification (for better or worse), equal final correctness on short self-checked tasks at 2–3 × cost, and
+large run-to-run variance — longer, interdependent tasks, other models and independent test authors remain.
 
 Interactive pieces expected on this page: the feature state machine stepper (buttons: next / try / verify fail /
 verify pass / block) showing what the runtime allows; the hook timeline (SessionStart → UserPromptSubmit → PreToolUse

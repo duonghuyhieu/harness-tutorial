@@ -595,6 +595,30 @@
       "priority": 23,
       "activated_at": "2026-10-16T00:52:14+07:00",
       "activated_commit": "bc464ecd34077b5ef4a2f74a2c7bb9e501892738"
+    },
+    {
+      "id": "F013",
+      "category": "content",
+      "behavior": "Experiments 3-4 and the corrected reading: the harness affects quality through the verification it enforces (both directions); equal correctness on short self-checked tasks at 2-3x cost; behaviour change when it reaches the agent; its own defects; variance. Kit 2.1.5 facts",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-16T11:15:44+07:00",
+        "commit": "6fd6ec3",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.8,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md"
+      ],
+      "priority": 24,
+      "activated_at": "2026-10-16T11:15:41+07:00",
+      "activated_commit": "6fd6ec31ddfcf662eaec3d645eef3acf997c6af6"
     }
   ]
 }

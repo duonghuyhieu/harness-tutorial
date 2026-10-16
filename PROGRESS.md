@@ -5,10 +5,10 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-16T00:52:15+07:00_
-- Branch / commit: `main` @ `bc464ec fix(content): pilot and 2.1.x dates are 15/10/2026`
-- Last check: PASS (quick, 2026-10-16T00:52:15+07:00, @bc464ec)
-- Features: 16/16 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-16T11:15:44+07:00_
+- Branch / commit: `main` @ `6fd6ec3 content: experiment 2 (multi-session, harness x verification strength) with transcript examples (F012)`
+- Last check: PASS (quick, 2026-10-16T11:15:44+07:00, @6fd6ec3)
+- Features: 17/17 passing, VCR 1.0
 - Active: none
 - Blocked: none
 - Uncommitted changes: 5 file(s)
@@ -28,6 +28,7 @@ _Auto-updated by `harness.py handoff` at 2026-10-16T00:52:15+07:00_
 - [x] 2026-10-15: F011 harness-kit 2.1.2 facts and the controlled pilot (baseline vs harness-kit, Bảng 2 on
       harness-kit.html); limits restated.
 - [x] 2026-10-16: F012 experiment 2 (multi-session, harness × verification) with verbatim examples; kit 2.1.3.
+- [x] 2026-10-16: F013 experiments 3–4 and the corrected reading of all experiments; kit 2.1.5.
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 
