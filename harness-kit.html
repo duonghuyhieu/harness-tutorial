@@ -155,7 +155,7 @@
         <tr><td>3 (kit 2.1.5, đã sửa lỗi)</td><td>5/6</td><td>5/6</td></tr>
         <tr><td>Tổng</td><td>12/18</td><td>12/18</td></tr>
       </tbody></table></div>
-      <p>Trên tác vụ ngắn mà mô hình tự chạy test ở mọi phiên, cơ chế của harness không đổi độ đúng cuối cùng và tốn khoảng 2,7 lần chi phí; 8,7% feature vòng lặp ghi <code>passing</code> vẫn sai, so với 11,1% lời khai “xong” của nhóm thường. Đợt 2 cho thấy harness có lỗi của riêng nó: <code>__pycache__</code> bị commit rồi bị tính là “sửa ngoài phạm vi”, chặn feature đúng; reviewer không được chạy lệnh kiểm chứng — cả hai đã sửa trong 2.1.4–2.1.5. Cùng một nhóm thường đạt 1/6 ở đợt này và 6/6 ở đợt khác: nhiễu lớn hơn nhiều khác biệt cần đo <span class="ev" data-evidence="do">Đo</span>.</p>
+      <p>Trên tác vụ ngắn mà mô hình tự chạy test ở mọi phiên, cơ chế của harness không đổi độ đúng cuối cùng và tốn khoảng 2,7 lần chi phí ở đợt 3 (khoảng 3,1 lần khi gộp ba đợt); 8,7% feature vòng lặp ghi <code>passing</code> vẫn sai, so với 11,1% lời khai “xong” của nhóm thường. Đợt 2 cho thấy harness có lỗi của riêng nó: <code>__pycache__</code> bị commit rồi bị tính là “sửa ngoài phạm vi”, chặn feature đúng; reviewer không được chạy lệnh kiểm chứng — cả hai đã sửa trong 2.1.4–2.1.5. Cùng một nhóm thường đạt 1/6 ở đợt này và 6/6 ở đợt khác: nhiễu lớn hơn nhiều khác biệt cần đo <span class="ev" data-evidence="do">Đo</span>.</p>
       <h3>Tổng hợp: harness có ảnh hưởng tới chất lượng không?</h3>
       <ul>
         <li><b>Có — qua lệnh kiểm chứng mà nó ép, theo cả hai chiều.</b> Test đúng theo từng quy tắc nâng độ đúng có ý nghĩa thống kê; test sai được ép buộc hạ độ đúng xuống thấp nhất <span class="ev" data-evidence="do">Đo</span>.</li>

@@ -230,7 +230,7 @@ Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Cl
 - Experiment 4 (16/10/2026) [do — small n]: the harness operated as designed — `harness.py loop` (fresh maker → fresh
   read-only reviewer → test gate → `verify`) vs plain sessions, weak tests, haiku, 3 batches of 6 per arm. Batch 1:
   4/6 vs 1/6; batch 2: 3/6 vs 6/6 (two loop defects stopped dependent features); batch 3, defects fixed: 5/6 vs 5/6;
-  all 18 vs 18: 12/18 vs 12/18, Fisher p = 1.00; loop cost about × 2.7. Of the features the loop marked passing,
+  all 18 vs 18: 12/18 vs 12/18, Fisher p = 1.00; loop cost (median per run) × 2.7 in batch 3, about × 3.1 pooled. Of the features the loop marked passing,
   8.7% were wrong on the hidden tests; of the plain agents' "done" claims, 11.1%.
 - Follow-up (sonnet): in 3 of 4 harness runs the agent never entered the workflow and redid finished work; with
   harness-kit 2.1.4 (a Stop gate for work on a feature nobody activated) it entered the workflow in 4/4 runs and
