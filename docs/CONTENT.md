@@ -235,11 +235,27 @@ Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Cl
 - Follow-up (sonnet): in 3 of 4 harness runs the agent never entered the workflow and redid finished work; with
   harness-kit 2.1.4 (a Stop gate for work on a feature nobody activated) it entered the workflow in 4/4 runs and
   features passing rose from 0.75/3 to 2.75/3 [do — small n].
-- Synthesis [sl]: the harness changes quality through the verification it enforces, in both directions (correct
-  per-rule tests raised correctness significantly, wrong tests lowered it below every other arm); on short tasks the
-  model already self-checks, its mechanics did not change final correctness and cost 2–3 × more; it changes behaviour
-  when it reaches the agent; it has failure modes of its own (four defects found by the experiments, all fixed in
-  2.1.3–2.1.5); variance is large (the same plain arm scored 1/6 and 6/6 in two batches).
+- Pre-registered experiments (16/10/2026) [do]: plan fixed before each batch (PREREG.md), an A-vs-A noise floor
+  (two identical plain arms differed by up to 33 points at n ≈ 10), kits pinned, strict containment checks, 95%
+  intervals. Checkout
+  task, haiku: kit 2.1.5 (Stop gate broken) +1% [−29%, +29%] fully correct; **kit 2.2.0 (gate fixed), n ≈ 40 per
+  arm: 26/39 vs 14/38 fully correct, +30% [+8%, +48%], Fisher p = 0.012; verification gap 12/39 vs 24/38, −32%
+  [−51%, −10%]**; cost per run about ×1.5 but lower per fully correct run (0.265 vs 0.293 USD). Limits: one task,
+  one model, one OS, one Claude Code version; mechanism not identified; batches on different days.
+- Stop-gate defect [do]: up to kit 2.1.5 a one-file change was invisible to the Stop gate (the first `git status`
+  line lost its leading space); fixed in 2.2.0. Every harness arm of experiments 2–5 below ran with it.
+- Experiment 5 [do — small n]: a long task (one class, five parts, later parts change earlier ones) over 8 or 10
+  fresh sessions. With 20-turn sessions both arms finished everything in 2–3 sessions (all parts correct 0/6 vs
+  0/6); harness sessions then repeated "DONE PART 5", citing features marked passing, while part 5 failed hidden
+  tests — a weak verification's verdict carried forward. With 8-turn sessions on frozen kits: hidden tests 45.2%
+  (plain), 47.6% (2.2.0), 50.0% (2.2.0 + a "next action" line), p ≈ 0.77; the line cut clock-in ceremony from 24%
+  to 16% of tool calls and raised code edits per session from 0.42 to 0.60 (plain 0.53). An earlier 8-turn batch
+  that looked much worse for the harness ran on a kit being edited at the time and did not replicate — retracted.
+- Synthesis [sl]: with its gate working and enough runs, the harness improved correctness and halved the
+  verification gap; it acts through the verification it enforces, in both directions (correct per-rule tests
+  raised correctness, enforced wrong tests lowered it below every other arm); gates, not instructions, change
+  behaviour, and only when they reach the agent; it has costs (1.5–3 × per run, per-session ceremony) and failure
+  modes of its own (defects found by the experiments, all fixed); variance is large, so small effects stay open.
 Dogfooding — this site was built with harness-kit's own loop (all [sx], single project, 15/10/2026):
 - 6 page features, each with `python tests/check_site.py --page <page>` as its verification command; maker
   (Claude Sonnet, fresh session, write access only to its page) → read-only reviewer → pass-gate → commit.
@@ -257,9 +273,9 @@ Dogfooding — this site was built with harness-kit's own loop (all [sx], single
   Lesson 01 predicts; logging them by layer pointed to the fix.
 
 Limits (must be stated): hooks are guardrails inside the agent's process, not a sandbox; turn on Claude Code's own
-sandboxing for filesystem/network isolation; four small controlled experiments show the harness acting through
-its verification (for better or worse), equal final correctness on short self-checked tasks at 2–3 × cost, and
-large run-to-run variance — longer, interdependent tasks, other models and independent test authors remain.
+sandboxing for filesystem/network isolation; the pre-registered result covers one task and one model, and its
+mechanism is not identified — other models, harder tasks, independent test authors and an ablation of
+instructions, hooks and the gate remain.
 
 Interactive pieces expected on this page: the feature state machine stepper (buttons: next / try / verify fail /
 verify pass / block) showing what the runtime allows; the hook timeline (SessionStart → UserPromptSubmit → PreToolUse

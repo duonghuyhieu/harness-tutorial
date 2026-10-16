@@ -619,6 +619,30 @@
       "priority": 24,
       "activated_at": "2026-10-16T11:15:41+07:00",
       "activated_commit": "6fd6ec31ddfcf662eaec3d645eef3acf997c6af6"
+    },
+    {
+      "id": "F014",
+      "category": "content",
+      "behavior": "The pre-registered result (+30% [+8%, +48%] on kit 2.2.0) leads the synthesis; Stop-gate defect <=2.1.5 disclosed; experiment 5/5c; 5b retracted; limits restated",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-16T17:01:53+07:00",
+        "commit": "766f052",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.8,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md"
+      ],
+      "priority": 25,
+      "activated_at": "2026-10-16T17:01:51+07:00",
+      "activated_commit": "766f0526c901faa2d23c1b2efd36cedb30f6d1ba"
     }
   ]
 }

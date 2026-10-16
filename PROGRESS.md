@@ -5,13 +5,13 @@
 
 ## Current State
 <!-- harness:auto:start -->
-_Auto-updated by `harness.py handoff` at 2026-10-16T11:15:44+07:00_
-- Branch / commit: `main` @ `6fd6ec3 content: experiment 2 (multi-session, harness x verification strength) with transcript examples (F012)`
-- Last check: PASS (quick, 2026-10-16T11:15:44+07:00, @6fd6ec3)
-- Features: 17/17 passing, VCR 1.0
+_Auto-updated by `harness.py handoff` at 2026-10-16T17:01:54+07:00_
+- Branch / commit: `main` @ `766f052 content: loop cost factor per batch and pooled`
+- Last check: PASS (quick, 2026-10-16T17:01:53+07:00, @766f052)
+- Features: 18/18 passing, VCR 1.0
 - Active: none
 - Blocked: none
-- Uncommitted changes: 5 file(s)
+- Uncommitted changes: 3 file(s)
 <!-- harness:auto:end -->
 
 ## Done
@@ -29,6 +29,7 @@ _Auto-updated by `harness.py handoff` at 2026-10-16T11:15:44+07:00_
       harness-kit.html); limits restated.
 - [x] 2026-10-16: F012 experiment 2 (multi-session, harness × verification) with verbatim examples; kit 2.1.3.
 - [x] 2026-10-16: F013 experiments 3–4 and the corrected reading of all experiments; kit 2.1.5.
+- [x] 2026-10-16: F014 pre-registered result leads the synthesis; Stop-gate defect disclosed; experiment 5/5c; 5b retracted.
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 

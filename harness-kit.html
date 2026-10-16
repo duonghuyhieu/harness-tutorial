@@ -156,13 +156,25 @@
         <tr><td>Tổng</td><td>12/18</td><td>12/18</td></tr>
       </tbody></table></div>
       <p>Trên tác vụ ngắn mà mô hình tự chạy test ở mọi phiên, cơ chế của harness không đổi độ đúng cuối cùng và tốn khoảng 2,7 lần chi phí ở đợt 3 (khoảng 3,1 lần khi gộp ba đợt); 8,7% feature vòng lặp ghi <code>passing</code> vẫn sai, so với 11,1% lời khai “xong” của nhóm thường. Đợt 2 cho thấy harness có lỗi của riêng nó: <code>__pycache__</code> bị commit rồi bị tính là “sửa ngoài phạm vi”, chặn feature đúng; reviewer không được chạy lệnh kiểm chứng — cả hai đã sửa trong 2.1.4–2.1.5. Cùng một nhóm thường đạt 1/6 ở đợt này và 6/6 ở đợt khác: nhiễu lớn hơn nhiều khác biệt cần đo <span class="ev" data-evidence="do">Đo</span>.</p>
+      <h3>Thí nghiệm đăng ký trước: kết quả chặt chẽ nhất</h3>
+      <p>Kế hoạch phân tích được viết trước mỗi đợt chạy; có một cặp nhóm giống hệt nhau để đo sàn nhiễu (chênh tới 33 điểm khi n ≈ 10); phiên bản kit được ghim; kiểm tra nghiêm agent không đọc ra ngoài thư mục chạy <span class="ev" data-evidence="do">Đo</span>.</p>
+      <div class="table-wrap"><table><caption>Bảng 6. Tác vụ checkout, Haiku (ngày 16/10/2026).</caption><thead><tr><th>Đợt</th><th>Số lần mỗi nhóm</th><th>Đúng hoàn toàn: harness − không harness (95%)</th></tr></thead><tbody>
+        <tr><td>Hai nhóm giống hệt nhau (sàn nhiễu)</td><td>≈ 10</td><td>chênh tới 33 điểm</td></tr>
+        <tr><td>harness-kit 2.1.5 (Stop gate lỗi)</td><td>20</td><td>+1% [−29%, +29%]</td></tr>
+        <tr><td><b>harness-kit 2.2.0 (gate đã sửa), gộp hai đợt</b></td><td>≈ 40</td><td><b>+30% [+8%, +48%]</b>, p = 0,012</td></tr>
+      </tbody></table></div>
+      <p>Với kit 2.2.0, nhóm có harness đúng hoàn toàn gấp đôi (26/39 so với 14/38), khoảng cách “khai xong nhưng sai” giảm một nửa (12/39 so với 24/38), chi phí mỗi lần chạy cao hơn khoảng 1,5 lần nhưng chi phí cho mỗi lần chạy đúng lại thấp hơn. Giới hạn: một tác vụ, một mô hình, một hệ điều hành; cơ chế chưa được xác định; hai đợt chạy ở hai thời điểm khác nhau <span class="ev" data-evidence="do">Đo</span>.</p>
+      <p>Lỗi do thí nghiệm này tìm ra: tới bản 2.1.5, Stop gate không thấy thay đổi khi chỉ có một tệp bị sửa (dòng đầu của <code>git status</code> mất khoảng trắng đầu dòng) — mọi nhóm có harness ở các thí nghiệm 2–5 phía trên đều chạy với gate bị hỏng này; đã sửa ở 2.2.0 <span class="ev" data-evidence="do">Đo</span>.</p>
+      <h3>Thí nghiệm 5: tác vụ dài, các phần phụ thuộc nhau</h3>
+      <p>Một lớp năm phần, phần sau đổi cách phần trước hoạt động, qua 8–10 phiên mới. Với phiên 20 lượt, cả hai nhóm làm xong mọi phần trong 2–3 phiên và đều còn lỗi ở các quy tắc test yếu không kiểm (đúng hoàn toàn 0/6 so với 0/6). Ở nhóm có harness, mọi phiên sau đó lặp lại “DONE PART 5”, viện dẫn các feature đã <code>passing</code>, trong khi phần 5 vẫn hỏng test ẩn — trạng thái một chiều mang theo phán quyết của một lệnh kiểm chứng yếu <span class="ev" data-evidence="mh">MH</span>. Với phiên chỉ 8 lượt trên kit đóng băng: 45,2% / 47,6% / 50,0% test ẩn (không harness / 2.2.0 / 2.2.0 có dòng “next action”), không khác biệt; dòng “next action” giảm nghi thức vào ca từ 24% xuống 16% số lệnh và tăng số lần sửa mã mỗi phiên từ 0,42 lên 0,60. Một đợt trước đó trông xấu hẳn cho harness đã chạy trên kit đang bị sửa dở và không lặp lại được — đã rút lại <span class="ev" data-evidence="do">Đo</span>.</p>
       <h3>Tổng hợp: harness có ảnh hưởng tới chất lượng không?</h3>
       <ul>
-        <li><b>Có — qua lệnh kiểm chứng mà nó ép, theo cả hai chiều.</b> Test đúng theo từng quy tắc nâng độ đúng có ý nghĩa thống kê; test sai được ép buộc hạ độ đúng xuống thấp nhất <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Không đổi độ đúng cuối cùng trên tác vụ ngắn mô hình đã tự kiểm</b>, với chi phí gấp 2–3 lần <span class="ev" data-evidence="do">Đo</span>.</li>
+        <li><b>Có, khi gate hoạt động và đủ số lần chạy:</b> đúng hoàn toàn +30 điểm [+8, +48], khoảng cách “khai xong nhưng sai” giảm một nửa (thí nghiệm đăng ký trước) <span class="ev" data-evidence="do">Đo</span>.</li>
+        <li><b>Qua lệnh kiểm chứng mà nó ép, theo cả hai chiều.</b> Test đúng theo từng quy tắc nâng độ đúng có ý nghĩa thống kê; test sai được ép buộc hạ độ đúng xuống thấp nhất <span class="ev" data-evidence="do">Đo</span>.</li>
+        <li><b>Có chi phí riêng:</b> 1,5–3 lần chi phí mỗi lần chạy, nghi thức vào ca mỗi phiên; trên các tác vụ ngắn mô hình đã tự kiểm, vòng lặp của harness không thêm độ đúng <span class="ev" data-evidence="do">Đo</span>.</li>
         <li><b>Đổi hành vi khi chạm tới agent:</b> một thay đổi ở Stop hook (2.1.4) đưa Sonnet từ 1/4 lên 4/4 lần chạy đi đúng quy trình <span class="ev" data-evidence="do">Đo</span>.</li>
         <li><b>Là phần mềm có lỗi riêng:</b> bốn lỗi chỉ lộ ra khi thí nghiệm có kiểm soát, đều đã sửa kèm test hồi quy <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Giới hạn:</b> một họ tác vụ, chủ yếu một mô hình, mẫu nhỏ; tác động nhỏ của harness chưa thể khẳng định hay loại trừ <span class="ev" data-evidence="sl">SL</span>.</li>
+        <li><b>Giới hạn:</b> chủ yếu một mô hình (Haiku), hai họ tác vụ do cùng một người viết, một máy; kết quả đăng ký trước chỉ cho một tác vụ và chưa rõ cơ chế <span class="ev" data-evidence="sl">SL</span>.</li>
       </ul>
       <h3>Hai kiểm tra trên Claude Code thật</h3>
       <ul>
@@ -186,7 +198,7 @@
     <section id="gioi-han" class="reveal">
       <h2>Giới hạn</h2>
       <div class="callout callout--note"><p class="callout__title">Cần nói rõ</p>
-        <p>Hook là hàng rào bên trong tiến trình của agent, không phải sandbox; hãy bật sandboxing của Claude Code để cô lập hệ thống tệp và mạng. Bốn thí nghiệm có đối chứng nhỏ cho thấy harness tác động qua lệnh kiểm chứng (tốt hay xấu tùy kiểm chứng), độ đúng ngang nhau trên tác vụ ngắn mô hình đã tự kiểm với chi phí cao hơn, và nhiễu giữa các lần chạy rất lớn — còn cần tác vụ dài, phụ thuộc lẫn nhau, mô hình khác và người viết test độc lập.</p></div>
+        <p>Hook là hàng rào bên trong tiến trình của agent, không phải sandbox; hãy bật sandboxing của Claude Code để cô lập hệ thống tệp và mạng. Kết quả đăng ký trước (harness tốt hơn +30 điểm) chỉ cho một tác vụ, một mô hình, và chưa xác định được cơ chế; các thí nghiệm khác là thử nghiệm nhỏ — còn cần mô hình khác, tác vụ khó và dài hơn, người viết test độc lập, và một ablation tách chỉ dẫn, hook và gate.</p></div>
     </section>
 
     <section id="tom-tat" class="reveal">
