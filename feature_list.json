@@ -643,6 +643,30 @@
       "priority": 25,
       "activated_at": "2026-10-16T17:01:51+07:00",
       "activated_commit": "766f0526c901faa2d23c1b2efd36cedb30f6d1ba"
+    },
+    {
+      "id": "F015",
+      "category": "feature",
+      "behavior": "E3a ablation (instructions/context carry the effect, gates alone do not) and the corrected synthesis; kit facts updated to the published 2.3.1 (168 tests, V001-V026, review gate and its threat model); install demo line 2.3.1",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-16T23:36:16+07:00",
+        "commit": "8f69519",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.7,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md"
+      ],
+      "priority": 26,
+      "activated_at": "2026-10-16T23:35:24+07:00",
+      "activated_commit": "8f695192159a1eb03cd8057d00baa5c024cc82a8"
     }
   ]
 }

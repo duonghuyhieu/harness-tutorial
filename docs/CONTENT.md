@@ -170,12 +170,20 @@ Problem → mechanism table (rows; keep these exact mechanisms):
 | Unsafe autonomous runs | `loop`: maker → read-only reviewer → test gate → pass-gate, budgets and attempt limits, integrity restore of harness files after every session |
 | Fragile installs (lesson from claudekit) | settings merged entry by entry, manifest with sha256 per file, `update`/`uninstall` touch only unchanged files, no silent postinstall surprises |
 
-Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287; kit 2.1.5):
+Evaluation facts (all [do] unless noted; 15–16/10/2026, Windows 11, Python 3.12, Claude Code 2.1.287; kit 2.1.5
+unless noted; the current public release is 2.3.1):
+- Release 2.3.1 (16/10/2026, commit c91c183): 168 automated tests; CI (Ubuntu, Windows, macOS × Python 3.10 and
+  3.12) passes; features V001–V026 passed the kit's own pass-gate. It adds a review gate (`verify` needs an
+  hk-reviewer APPROVE of the current change, read at SubagentStop and authenticated against the subagent's
+  transcript), an incident ledger and a handoff gate, after an independent reviewer found, among others, a way to
+  forge an APPROVE. Threat model, stated in the kit: the review record is evidence against skipping a review, not a
+  security boundary against an agent that writes code to forge it; that boundary is the OS sandbox and a human
+  reading the diff. No experiment has evaluated 2.3.x.
 - 117 automated tests pass, including 6 regression tests for the defects that three independent read-only reviews
   found in 2.0.0 (each of those 6 fails on 2.0.0) and the regression tests for the bugs building this site exposed.
 - CI on GitHub Actions (Ubuntu, Windows, macOS × Python 3.10 and 3.12) passes. Its first run found a real defect:
   on Python 3.10, the documented minimum, the kit silently skipped pyproject.toml (no tomllib); 2.1.2 fixes it.
-- The kit runs under its own harness: features V001–V013 passed its own `verify` pass-gate.
+- The kit runs under its own harness: features V001–V013 (2.1.5), V001–V026 (2.3.1) passed its own `verify` pass-gate.
 - Independent review (15/10/2026) [do]: three read-only reviewers (code, end-to-end install, docs) found, among
   others, hooks not recognized for some `--python` values (uninstall could leave hooks pointing at a deleted
   dispatcher), the guard missing non-ASCII paths on Windows, and the pass-gate weakened because an active feature's
@@ -242,6 +250,14 @@ Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Cl
   arm: 26/39 vs 14/38 fully correct, +30% [+8%, +48%], Fisher p = 0.012; verification gap 12/39 vs 24/38, −32%
   [−51%, −10%]**; cost per run about ×1.5 but lower per fully correct run (0.265 vs 0.293 USD). Limits: one task,
   one model, one OS, one Claude Code version; mechanism not identified; batches on different days.
+- Pre-registered ablation E3a (16/10/2026) [do]: same task, haiku, kit 2.2.1, about 40 runs per arm. Fully correct:
+  plain 12/40 (30%); full kit 25/37 (68%), +38% [+15%, +55%]; instructions/context only (guard and Stop gate off)
+  29/39 (74%), +44% [+23%, +61%]; gates only (no injected context, instruction files deleted) 15/36 (42%), +12%
+  [−10%, +32%]. Reading fixed in advance: the instruction/context channel carries the effect. Without instructions
+  the Stop gate blocked 36/36 runs but only 4/36 found `verify`, at about twice the turns and cost; with instructions
+  and no gate, 32/39 ran `verify` on their own. Deviations: spend 34.35 USD against a registered cap of 20 USD; 18
+  runs stopped by chunk caps were run later as a top-up. Limits: one task, one model, one OS; the context channel is
+  not split further.
 - Stop-gate defect [do]: up to kit 2.1.5 a one-file change was invisible to the Stop gate (the first `git status`
   line lost its leading space); fixed in 2.2.0. Every harness arm of experiments 2–5 below ran with it.
 - Experiment 5 [do — small n]: a long task (one class, five parts, later parts change earlier ones) over 8 or 10
@@ -251,10 +267,11 @@ Evaluation facts (all [do] unless noted; 15/10/2026, Windows 11, Python 3.12, Cl
   (plain), 47.6% (2.2.0), 50.0% (2.2.0 + a "next action" line), p ≈ 0.77; the line cut clock-in ceremony from 24%
   to 16% of tool calls and raised code edits per session from 0.42 to 0.60 (plain 0.53). An earlier 8-turn batch
   that looked much worse for the harness ran on a kit being edited at the time and did not replicate — retracted.
-- Synthesis [sl]: with its gate working and enough runs, the harness improved correctness and halved the
-  verification gap; it acts through the verification it enforces, in both directions (correct per-rule tests
-  raised correctness, enforced wrong tests lowered it below every other arm); gates, not instructions, change
-  behaviour, and only when they reach the agent; it has costs (1.5–3 × per run, per-session ceremony) and failure
+- Synthesis [sl]: with enough runs, the harness improved correctness and about halved the verification gap
+  (+30 points on 2.2.0, +38 on 2.2.1); it acts through the verification it enforces, in both directions (correct
+  per-rule tests raised correctness, enforced wrong tests lowered it below every other arm); on that task the
+  instructions and injected context carried the effect and gates alone were mostly cost — this corrects an earlier
+  reading "gates, not instructions"; a gate helps when it points the agent back to a workflow it already has; it has costs (1.5–3 × per run, per-session ceremony) and failure
   modes of its own (defects found by the experiments, all fixed); variance is large, so small effects stay open.
 Dogfooding — this site was built with harness-kit's own loop (all [sx], single project, 15/10/2026):
 - 6 page features, each with `python tests/check_site.py --page <page>` as its verification command; maker
@@ -273,9 +290,10 @@ Dogfooding — this site was built with harness-kit's own loop (all [sx], single
   Lesson 01 predicts; logging them by layer pointed to the fix.
 
 Limits (must be stated): hooks are guardrails inside the agent's process, not a sandbox; turn on Claude Code's own
-sandboxing for filesystem/network isolation; the pre-registered result covers one task and one model, and its
-mechanism is not identified — other models, harder tasks, independent test authors and an ablation of
-instructions, hooks and the gate remain.
+sandboxing for filesystem/network isolation; the pre-registered results cover one task and one model; the ablation
+locates the effect in the instructions and injected context but does not split that channel — other models,
+harder tasks, independent test authors, an ablation inside the context channel and an evaluation of the 2.3.x
+gates remain.
 
 Interactive pieces expected on this page: the feature state machine stepper (buttons: next / try / verify fail /
 verify pass / block) showing what the runtime allows; the hook timeline (SessionStart → UserPromptSubmit → PreToolUse
