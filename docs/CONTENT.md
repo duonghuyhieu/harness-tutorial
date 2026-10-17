@@ -271,6 +271,16 @@ unless noted; the current public release is 2.3.1):
   failed a spec rule in 4 of 9 runs.
   Deviations: account session limits (one top-up each), E4 stopped at its cost cap after 57/90 runs, E5's first batch
   invalid (experimenter's runner bug, caught by the kit owner's reviewer).
+- Root cause [do, exploratory]: every E1–E5b run used Claude Haiku 4.5 (claude-haiku-4-5-20251001), the same
+  snapshot throughout. No saved solution accepted the invalid input of the deciding rule; every failure rejected it
+  with the wrong exception (TypeError/AttributeError instead of ValueError) — one missing explicit type check decided
+  "fully correct" (checkout 86/210 plain vs 62/110 instructions-only solutions; invoice 16/19 vs 7/20).
+- E6 with Claude Opus 5.5 [do] (pre-registered, kit 2.2.1): light tasks 8/8 vs 8/8 (checkout) and 4/4 vs 6/6
+  analysed (invoice), cost per run about 3.3–4 ×; a new ten-part spreadsheet task (78 hidden tests, later parts
+  change earlier ones), 6 sessions × 25 turns, 4 runs per arm: 78/78 in every run of both arms, finished within the
+  first session, no regressions; first-session cost 0.87 vs 2.54 USD, turns 10–12 vs 25–44. The user's hypothesis
+  (a harness pays off only on complex tasks): first half supported, second half untested — the task was not complex
+  for Opus 5.5.
 - Checkout batches together [sl, exploratory]: within each randomized batch harness − plain was +23%, +37%, +38%,
   +13%, +2%; a Mantel–Haenszel estimate stratified by batch gives +25% [+13%, +37%]. The harness arms stayed within
   57% to 75% fully correct, the plain arm ranged from 30% to 67% between batches with identical recorded conditions.

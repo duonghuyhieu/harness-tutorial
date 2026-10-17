@@ -72,7 +72,7 @@
         <a class="flow__step" href="problems.html"><b>1 · Vấn đề</b><small>Agent khai xong khi chưa xong, vượt phạm vi, mất ngữ cảnh, tự chấm bài.</small></a>
         <a class="flow__step" href="principles.html"><b>2 · Giải pháp</b><small>Harness engineering: “xong” do lệnh quyết định, trạng thái trên đĩa, tách người làm và người kiểm.</small></a>
         <a class="flow__step" href="harness-kit.html"><b>3 · harness-kit</b><small>Biến nguyên lý thành cơ chế: <code>verify</code>, hook, khối trạng thái, cổng review.</small></a>
-        <a class="flow__step" href="results.html"><b>4 · Kết quả</b><small>9 đợt thí nghiệm đăng ký trước, với test ẩn mà agent không thấy.</small></a>
+        <a class="flow__step" href="results.html"><b>4 · Kết quả</b><small>10 đợt thí nghiệm đăng ký trước, hai mô hình, test ẩn mà agent không thấy.</small></a>
       </div>
       <div class="table-wrap"><table class="matrix"><caption>Bảng 1. Mỗi vấn đề, giải pháp, cơ chế trong harness-kit và kết quả thí nghiệm.</caption><thead><tr><th>Vấn đề</th><th>Giải pháp</th><th>Cơ chế trong harness-kit</th><th>Thí nghiệm cho thấy</th></tr></thead><tbody>
         <tr><td><a href="problems.html#ap-luc-hoan-thanh">Áp lực hoàn thành nhiệm vụ</a></td><td><a href="principles.html#feature-list">Lối thoát chính thức “blocked”</a></td><td><code>block</code>, cổng Stop, sổ sự cố</td><td><a href="results.html#ban-phat-hanh">Chưa có thí nghiệm riêng</a></td></tr>
@@ -86,7 +86,7 @@
         <tr><td><a href="problems.html#su-co-2026">Sự cố thực tế năm 2026</a></td><td><a href="principles.html#clean-state">Phòng thủ nhiều lớp</a></td><td>Guard, cổng, sổ sự cố; ranh giới là sandbox</td><td><a href="results.html#gioi-han">Ngoài phạm vi đo</a></td></tr>
       </tbody></table></div>
       <div class="callout callout--note"><p class="callout__title">Câu trả lời ngắn</p>
-        <p>harness-kit thay đổi rõ <b>hành vi</b> của agent: khối trạng thái được tiêm lúc mở phiên khiến agent chạy lệnh kiểm chứng, và mọi lần bỏ qua cổng đều để lại dấu vết <span class="ev" data-evidence="do">Đo</span>. Tác động lên <b>độ đúng</b> của mã thì phụ thuộc vào tác vụ: tốt hơn trên tác vụ checkout ở cả năm đợt (gộp +25 điểm), nhưng kém hơn 49 điểm trên một tác vụ thứ hai cùng dạng <span class="ev" data-evidence="do">Đo</span>. Chi tiết ở <a href="results.html">trang Kết quả</a>.</p></div>
+        <p>harness-kit thay đổi rõ <b>hành vi</b> của agent: khối trạng thái được tiêm lúc mở phiên khiến agent chạy lệnh kiểm chứng, và mọi lần bỏ qua cổng đều để lại dấu vết <span class="ev" data-evidence="do">Đo</span>. Tác động lên <b>độ đúng</b> thì không ổn định: với Claude Haiku 4.5, tốt hơn trên checkout nhưng kém hơn trên tác vụ hóa đơn, và khác biệt đó hóa ra chỉ là một dòng kiểm tra kiểu <span class="ev" data-evidence="do">Đo</span>. Với Claude Opus 5.5, cả hai nhóm đều đúng hoàn toàn trên mọi tác vụ, kể cả một tác vụ 10 phần, và harness chỉ tốn thêm khoảng gấp ba <span class="ev" data-evidence="do">Đo</span>. Chi tiết ở <a href="results.html">trang Kết quả</a>.</p></div>
     </section>
 
     <section id="so-lieu" class="reveal">

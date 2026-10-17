@@ -1,6 +1,6 @@
 {
   "project": "harness-tutorial",
-  "last_updated": "2026-10-17",
+  "last_updated": "2026-10-18",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -717,6 +717,31 @@
       "priority": 28,
       "activated_at": "2026-10-17T20:55:49+07:00",
       "activated_commit": "8d3ea324be66c7184f0d03eea1d64d5572eab775"
+    },
+    {
+      "id": "F018",
+      "category": "feature",
+      "behavior": "Root cause of the unstable correctness results and E6 with Claude Opus 5.5 (light and heavy tasks); model names stated",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-18T01:22:41+07:00",
+        "commit": "2b1d55a",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.8,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md",
+        "tests/check_site.py"
+      ],
+      "priority": 29,
+      "activated_at": "2026-10-18T01:22:27+07:00",
+      "activated_commit": "2b1d55a3e0706679fc0c1738d0ec8e9cdd3b5c04"
     }
   ]
 }

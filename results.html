@@ -41,6 +41,8 @@
       <li><a href="#hanh-vi">Thứ gì đổi hành vi agent?</a></li>
       <li><a href="#tac-vu-khac">Trên một tác vụ khác</a></li>
       <li><a href="#ban-phat-hanh">Bản phát hành 2.3.1</a></li>
+      <li><a href="#vi-sao">Vì sao kết quả chao đảo</a></li>
+      <li><a href="#mo-hinh-manh">Với Opus 5.5</a></li>
       <li><a href="#tham-do">Thí nghiệm thăm dò</a></li>
       <li><a href="#loi-harness">Lỗi của harness</a></li>
       <li><a href="#gioi-han">Giới hạn</a></li>
@@ -50,7 +52,7 @@
   <main id="main" class="content">
     <p class="eyebrow">KẾT QUẢ</p>
     <h1>Kết quả thí nghiệm: harness-kit thay đổi gì, và không thay đổi gì</h1>
-    <p class="lead">Các trang trước nêu <a href="problems.html">vấn đề</a>, <a href="principles.html">giải pháp</a> và <a href="harness-kit.html">cách harness-kit áp dụng giải pháp</a>. Trang này trả lời câu hỏi còn lại: khi đặt agent vào cùng một tác vụ, có và không có harness-kit, thì điều gì khác đi? Mọi con số dưới đây đến từ các thí nghiệm của dự án, ngày 15–17/10/2026 <a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a>.</p>
+    <p class="lead">Các trang trước nêu <a href="problems.html">vấn đề</a>, <a href="principles.html">giải pháp</a> và <a href="harness-kit.html">cách harness-kit áp dụng giải pháp</a>. Trang này trả lời câu hỏi còn lại: khi đặt agent vào cùng một tác vụ, có và không có harness-kit, thì điều gì khác đi? Mọi con số dưới đây đến từ các thí nghiệm của dự án, ngày 15–18/10/2026, với Claude Haiku 4.5 (E1–E5b) và Claude Opus 5.5 (E6) <a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a>.</p>
 
     <div class="legend" role="note" aria-label="Chú giải nhãn bằng chứng">
       <span><span class="ev" data-evidence="do">Đo</span> số liệu đo được</span>
@@ -63,12 +65,13 @@
       <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value">24/26 · 1/27</span><span class="stat__label">số agent chạy lệnh kiểm chứng khi chỉ có khối trạng thái tiêm lúc mở phiên, so với khi chỉ có tệp chỉ dẫn</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a></span></div>
       <div class="stat" data-evidence="sl"><span class="ev" data-evidence="sl">SL</span><span class="stat__value">+25 điểm</span><span class="stat__label">tỷ lệ chạy đúng hoàn toàn trên tác vụ checkout, gộp năm đợt [+13, +37] (phép gộp thăm dò)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a></span></div>
       <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value">−49 điểm</span><span class="stat__label">trên tác vụ hóa đơn, nhóm có harness đúng hoàn toàn ít hơn [−70, −15]</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a></span></div>
+      <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value">78/78 · ×3</span><span class="stat__label">Claude Opus 5.5 làm đúng hoàn toàn tác vụ bảng tính 10 phần ở mọi lần chạy, có hay không có harness; harness tốn khoảng gấp ba</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a></span></div>
       <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value">8 lỗi</span><span class="stat__label">của chính harness do thí nghiệm tìm ra, đều đã sửa kèm test hồi quy</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a></span></div>
     </div>
 
     <section id="cach-do" class="reveal">
       <h2>Cách đo</h2>
-      <p>Mỗi thí nghiệm giao cho agent (Claude Haiku, qua <code>claude -p</code>) một tác vụ có đặc tả viết rõ các quy tắc, kèm một test nhìn thấy được nhưng yếu. Sau khi agent kết thúc, một bộ <b>test ẩn</b> mà agent không bao giờ thấy chấm kết quả: một lần chạy là “đúng hoàn toàn” khi qua mọi test ẩn. Nhóm không harness và nhóm có harness chạy xen kẽ ngẫu nhiên trong cùng một đợt.</p>
+      <p>Mỗi thí nghiệm giao cho agent (Claude Haiku 4.5 ở các đợt E1–E5b, Claude Opus 5.5 ở đợt E6, qua <code>claude -p</code>) một tác vụ có đặc tả viết rõ các quy tắc, kèm một test nhìn thấy được nhưng yếu. Sau khi agent kết thúc, một bộ <b>test ẩn</b> mà agent không bao giờ thấy chấm kết quả: một lần chạy là “đúng hoàn toàn” khi qua mọi test ẩn. Nhóm không harness và nhóm có harness chạy xen kẽ ngẫu nhiên trong cùng một đợt.</p>
       <ul>
         <li><b>Viết kế hoạch trước khi chạy:</b> kết cục chính, cách phân tích và cách đọc kết quả được ghi vào kế hoạch đăng ký trước, trước mỗi đợt. Mọi sai lệch, kể cả vượt trần chi phí, đều được ghi lại <span class="ev" data-evidence="do">Đo</span>.</li>
         <li><b>Đo nhiễu trước:</b> hai nhóm giống hệt nhau, cùng không harness, đã chênh nhau tới 33 điểm khi mỗi nhóm có khoảng 10 lần chạy. Vì vậy mỗi kết quả đều kèm khoảng tin cậy 95%.</li>
@@ -80,7 +83,7 @@
     <section id="cau-tra-loi" class="reveal">
       <h2>Harness có làm mã đúng hơn không?</h2>
       <p>Bảng 1 gom mọi đợt đăng ký trước. Cột cuối là chênh lệch về tỷ lệ chạy đúng hoàn toàn giữa nhóm có harness và nhóm không harness, tính bằng điểm phần trăm, kèm khoảng tin cậy 95%.</p>
-      <div class="table-wrap"><table><caption>Bảng 1. Các đợt thí nghiệm đăng ký trước (Haiku).</caption><thead><tr><th>Đợt</th><th>Tác vụ, bản kit</th><th>Không harness</th><th>Có harness</th><th>Chênh lệch, điểm (95%)</th></tr></thead><tbody>
+      <div class="table-wrap"><table><caption>Bảng 1. Các đợt thí nghiệm đăng ký trước (Claude Haiku 4.5, trừ E6 là Claude Opus 5.5).</caption><thead><tr><th>Đợt</th><th>Tác vụ, bản kit</th><th>Không harness</th><th>Có harness</th><th>Chênh lệch, điểm (95%)</th></tr></thead><tbody>
         <tr><td>E1</td><td>checkout, hai nhóm cùng không harness (đo nhiễu)</td><td>6/9</td><td>3/9</td><td>−33 [−63, +11]</td></tr>
         <tr><td>E2</td><td>checkout, kit 2.1.5 (Stop gate lỗi)</td><td>8/18</td><td>9/20</td><td>+1 [−29, +29]</td></tr>
         <tr><td><b>E2b + E2c</b></td><td>checkout, kit 2.2.0</td><td>14/38</td><td>26/39</td><td><b>+30 [+8, +48]</b></td></tr>
@@ -90,9 +93,12 @@
         <tr><td>E5b</td><td>checkout, kit 2.3.1, cổng review hoạt động</td><td>4/13</td><td>5/9</td><td>+25 [−15, +56]</td></tr>
         <tr><td><b>E4</b></td><td><b>hóa đơn</b>, kit 2.2.1 đầy đủ</td><td>14/17</td><td>5/15</td><td><b>−49 [−70, −15]</b></td></tr>
         <tr><td>Gộp</td><td>checkout, kit 2.2.x, năm đợt (thăm dò)</td><td colspan="2"></td><td>+25 [+13, +37]</td></tr>
+        <tr><td><b>E6</b></td><td>checkout, Opus 5.5, kit 2.2.1</td><td>8/8</td><td>8/8</td><td>+0 [−32, +32]</td></tr>
+        <tr><td><b>E6</b></td><td>hóa đơn, Opus 5.5, kit 2.2.1</td><td>4/4</td><td>6/6</td><td>+0 [−39, +49]</td></tr>
+        <tr><td><b>E6</b></td><td>bảng tính 10 phần, Opus 5.5, kit 2.2.1</td><td>4/4</td><td>4/4</td><td>+0</td></tr>
       </tbody></table></div>
       <p><b>Trên tác vụ checkout</b>, cả năm đợt đều nghiêng về harness; hai ước lượng đăng ký trước đủ chắc chắn (E2b + E2c gộp, và E3a), các đợt sau thì không. Nhóm có harness khá ổn định (57% đến 75% chạy đúng hoàn toàn), còn nhóm không harness dao động từ 30% đến 67% giữa các đợt, dù mọi điều kiện ghi nhận được đều như nhau. Ở các đợt chính, số lần “khai xong nhưng sai” giảm khoảng một nửa (24/38 xuống 12/39) <span class="ev" data-evidence="do">Đo</span>.</p>
-      <p><b>Trên tác vụ hóa đơn</b>, kết quả ngược lại: nhóm có harness đúng hoàn toàn ít hơn hẳn (xem <a href="#tac-vu-khac">phía dưới</a>). Vì vậy câu trả lời trung thực là: harness-kit có thể làm mã đúng hơn, nhưng điều đó phụ thuộc vào tác vụ, kể cả về chiều <span class="ev" data-evidence="sl">SL</span>.</p>
+      <p><b>Trên tác vụ hóa đơn</b>, kết quả ngược lại: nhóm có harness đúng hoàn toàn ít hơn hẳn (xem <a href="#tac-vu-khac">phía dưới</a>). Vì vậy câu trả lời trung thực là: harness-kit có thể làm mã đúng hơn, nhưng điều đó phụ thuộc vào tác vụ, kể cả về chiều <span class="ev" data-evidence="sl">SL</span>. Với Claude Opus 5.5, cả hai nhóm đều đúng hoàn toàn trên mọi tác vụ, nên không còn gì để harness cải thiện (xem <a href="#mo-hinh-manh">phía dưới</a>).</p>
     </section>
 
     <section id="hanh-vi" class="reveal">
@@ -144,10 +150,34 @@
       </ul>
     </section>
 
+    <section id="vi-sao" class="reveal">
+      <h2>Vì sao kết quả về độ đúng chao đảo</h2>
+      <p>Mọi lời giải đã lưu (621 trên checkout, 57 trên tác vụ hóa đơn) được chạy lại với đúng đầu vào của quy tắc gây gần như mọi thất bại <a class="cite" href="references.html#ref-harness-v2-experiments">Dương Huy Hiếu, 2026 — thí nghiệm</a>.</p>
+      <ul>
+        <li><b>Không lời giải nào chấp nhận đầu vào sai.</b> Mọi lần “trượt” đều có từ chối, chỉ là ném sai loại lỗi: <code>TypeError</code> hoặc <code>AttributeError</code> thay vì <code>ValueError</code> như đặc tả yêu cầu <span class="ev" data-evidence="do">Đo</span>.</li>
+        <li><b>Điều quyết định là một dòng mã:</b> có hay không bước kiểm tra kiểu tường minh. Trên checkout, bước đó có trong 86/210 lời giải không harness và 62/110 lời giải chỉ có chỉ dẫn; trên tác vụ hóa đơn, 16/19 so với 7/20 <span class="ev" data-evidence="do">Đo</span>.</li>
+        <li><b>Mô hình không đổi:</b> mọi lần chạy E1–E5b đều là Claude Haiku 4.5 (<code>claude-haiku-4-5-20251001</code>), nên sự dao động của nhóm không harness không đến từ việc đổi mô hình <span class="ev" data-evidence="do">Đo</span>.</li>
+      </ul>
+      <p>Vậy “tác động lên độ đúng” trên hai tác vụ này là tác động lên một lựa chọn viết mã gần như ngẫu nhiên, không phải lên việc agent hiểu hay làm đúng các quy tắc. Hai tác vụ này quá dễ cho câu hỏi đặt ra <span class="ev" data-evidence="sl">SL</span>.</p>
+    </section>
+
+    <section id="mo-hinh-manh" class="reveal">
+      <h2>Với mô hình mạnh: Claude Opus 5.5</h2>
+      <p>Đợt E6 chuyển sang Claude Opus 5.5 và thêm một tác vụ nặng viết riêng: một engine bảng tính 10 phần (công thức, tham chiếu, lan truyền lỗi, phát hiện vòng lặp, hàm, <code>IF</code>, nối chuỗi, một phần đổi luật cũ, chèn và xóa dòng) với 78 test ẩn, chạy qua 6 phiên mới.</p>
+      <div class="table-wrap"><table><caption>Bảng 5. E6: Claude Opus 5.5, không harness so với kit 2.2.1.</caption><thead><tr><th>Tác vụ</th><th>Không harness</th><th>Có harness</th><th>Chi phí: không harness → có harness</th></tr></thead><tbody>
+        <tr><td>checkout, 8 lần mỗi nhóm</td><td>8/8 đúng hoàn toàn</td><td>8/8</td><td>0,195 → 0,643 USD mỗi lần chạy</td></tr>
+        <tr><td>hóa đơn, 8 lần mỗi nhóm</td><td>8/8</td><td>7/7</td><td>0,194 → 0,770 USD mỗi lần chạy</td></tr>
+        <tr><td>bảng tính 10 phần, 4 lần mỗi nhóm</td><td>78/78 ở cả 4 lần</td><td>78/78 ở cả 4 lần</td><td>phiên đầu: 0,87 → 2,54 USD; 10–12 → 25–44 lượt</td></tr>
+      </tbody></table></div>
+      <p>Opus 5.5 làm đúng hoàn toàn ở mọi lần chạy, có hay không có harness, và hoàn thành cả 10 phần của tác vụ bảng tính <b>ngay trong phiên đầu</b>, không hỏng phần nào. Harness khiến cùng công việc tốn khoảng 3 lần chi phí và 2,5–4 lần số lượt <span class="ev" data-evidence="do">Đo</span>. (Ở tác vụ hóa đơn, một số lần chạy bị loại theo quy tắc giữ phép đo sạch vì ghi tệp nháp; tất cả các lần đó cũng đúng hoàn toàn, bảng tính cả chúng.)</p>
+      <div class="callout callout--note"><p class="callout__title">Giả thuyết “harness chỉ đáng dùng cho tác vụ phức tạp”</p>
+        <p>Vế đầu được ủng hộ: trên tác vụ đơn giản, harness không thêm độ đúng mà tốn khoảng gấp ba. Vế sau chưa kiểm được: tác vụ “nặng” mà dự án dựng được lại không nặng với Opus 5.5. Muốn kiểm, cần công việc không vừa một phiên hay một cửa sổ ngữ cảnh — dự án nhiều ngày, một codebase lạ, nhiều agent phối hợp. Một harness “thích ứng”, nhẹ hoặc tắt ở tác vụ đơn giản và chỉ bật đầy đủ khi công việc vượt quá một phiên, khớp với mọi số liệu ở đây <span class="ev" data-evidence="sl">SL</span>.</p></div>
+    </section>
+
     <section id="tham-do" class="reveal">
       <h2>Các thí nghiệm thăm dò</h2>
-      <p>Trước các đợt đăng ký trước, năm thí nghiệm nhỏ (4–18 lần chạy mỗi nhóm) tìm cơ chế và lỗi. Chúng không đủ để kết luận về độ đúng, nhưng cho thấy những điều Bảng 5 tóm tắt.</p>
-      <div class="table-wrap"><table><caption>Bảng 5. Thí nghiệm thăm dò.</caption><thead><tr><th>Thí nghiệm</th><th>Kết quả</th><th>Cho thấy</th></tr></thead><tbody>
+      <p>Trước các đợt đăng ký trước, năm thí nghiệm nhỏ (4–18 lần chạy mỗi nhóm) tìm cơ chế và lỗi. Chúng không đủ để kết luận về độ đúng, nhưng cho thấy những điều Bảng 6 tóm tắt.</p>
+      <div class="table-wrap"><table><caption>Bảng 6. Thí nghiệm thăm dò.</caption><thead><tr><th>Thí nghiệm</th><th>Kết quả</th><th>Cho thấy</th></tr></thead><tbody>
         <tr><td>1 · checkout, một phiên</td><td>4/10 so với 3/10 (Haiku); 5/5 so với 5/5 (Sonnet)</td><td>nằm trong vùng nhiễu</td></tr>
         <tr><td>2 · ba phần qua ba phiên, test yếu / mạnh</td><td>test mạnh 11/12 so với test yếu 5/12 đúng cả ba phần (p = 0,027); Sonnet đi đúng quy trình 1/4 lên 4/4 sau một sửa ở Stop gate</td><td>độ mạnh của lệnh kiểm chứng quyết định độ đúng</td></tr>
         <tr><td>3 · test do agent lập kế hoạch viết</td><td>harness ép test sai: 86,8% test ẩn qua, thấp nhất bốn nhóm</td><td>cổng khuếch đại cả lỗi lẫn điểm mạnh của thứ nó kiểm</td></tr>
@@ -160,7 +190,7 @@
     <section id="loi-harness" class="reveal">
       <h2>Lỗi của chính harness do thí nghiệm tìm ra</h2>
       <p>Harness cũng là phần mềm. Tám lỗi chỉ lộ ra khi chạy agent thật trong thí nghiệm có kiểm soát; mỗi lỗi được sửa kèm test hồi quy <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
-      <div class="table-wrap"><table><caption>Bảng 6. Lỗi của harness-kit do thí nghiệm tìm ra.</caption><thead><tr><th>Bản sửa</th><th>Lỗi</th><th>Tác động</th></tr></thead><tbody>
+      <div class="table-wrap"><table><caption>Bảng 7. Lỗi của harness-kit do thí nghiệm tìm ra.</caption><thead><tr><th>Bản sửa</th><th>Lỗi</th><th>Tác động</th></tr></thead><tbody>
         <tr><td>2.1.3</td><td>test viết trước + WIP = 1 + guard phạm vi khóa lẫn nhau</td><td>feature đầu tiên không bao giờ qua</td></tr>
         <tr><td>2.1.4</td><td>không gì nhắc agent chưa từng chạy <code>next</code></td><td>việc đã xong bị làm lại</td></tr>
         <tr><td>2.1.4</td><td>reviewer của vòng lặp bị từ chối chính lệnh kiểm chứng</td><td>trả FAIL cho việc làm đúng</td></tr>
@@ -175,7 +205,7 @@
     <section id="gioi-han" class="reveal">
       <h2>Giới hạn</h2>
       <div class="callout callout--warn"><p class="callout__title">Đọc kết quả với các giới hạn này</p>
-        <p>Chỉ hai tác vụ, cả hai do cùng một người viết; chủ yếu một mô hình (Haiku); một máy Windows, một phiên bản Claude Code. Nhóm không harness dao động mạnh giữa các đợt, nên một chênh lệch 20–40 điểm trong một đợt cần được đọc cùng độ dao động đó. Các đợt sau bị hụt lần chạy vì giới hạn tài khoản, quá tải máy và trần chi phí, và một đợt bị vô hiệu vì lỗi trong bộ chạy của tác giả. Các vấn đề prompt injection và sự cố an ninh chưa được thí nghiệm nào đo. Lời khuyên thực tế: hãy đo trên chính tác vụ của bạn trước khi tin rằng harness làm mã đúng hơn <span class="ev" data-evidence="sl">SL</span>.</p></div>
+        <p>Ba tác vụ, đều do cùng một người viết; hai mô hình (Claude Haiku 4.5 ở hầu hết các đợt, Claude Opus 5.5 ở E6); một máy Windows, một phiên bản Claude Code. Chưa có tác vụ nào vượt quá khả năng của Opus 5.5 trong một phiên, nên chưa đo được harness có giúp mô hình mạnh trên công việc dài hay không. Nhóm không harness dao động mạnh giữa các đợt, nên một chênh lệch 20–40 điểm trong một đợt cần được đọc cùng độ dao động đó. Các đợt sau bị hụt lần chạy vì giới hạn tài khoản, quá tải máy và trần chi phí, và một đợt bị vô hiệu vì lỗi trong bộ chạy của tác giả. Các vấn đề prompt injection và sự cố an ninh chưa được thí nghiệm nào đo. Lời khuyên thực tế: hãy đo trên chính tác vụ của bạn trước khi tin rằng harness làm mã đúng hơn <span class="ev" data-evidence="sl">SL</span>.</p></div>
     </section>
   </main>
 </div>

@@ -37,6 +37,8 @@ _Auto-updated by `harness.py handoff` at 2026-10-16T17:01:54+07:00_
 - [x] 2026-10-17: F017 restructure: problem → solution → mechanism → result — index journey matrix (Bảng 1), every
       problem card gains "Trong harness-kit" and "Thí nghiệm cho thấy", new results.html (all experiments by question),
       harness-kit.html keeps mechanisms; nav gains "Kết quả".
+- [x] 2026-10-18: F018 root cause (every light-task failure was one missing type check) and E6 with Claude Opus 5.5
+      (light and heavy tasks: fully correct in every run of both arms, harness about 3x cost); model names stated.
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 
