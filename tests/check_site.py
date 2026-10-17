@@ -18,9 +18,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 CONTENT = ROOT / "docs" / "CONTENT.md"
 EVIDENCE = {"do", "sx", "mh", "sl"}
-NAV = ["index.html", "problems.html", "principles.html", "harness-kit.html", "guide.html", "references.html"]
+NAV = ["index.html", "problems.html", "principles.html", "harness-kit.html", "results.html", "guide.html", "references.html"]
 PAGES = {
-    "index": {"file": "index.html", "ids": ["luan-diem", "so-lieu", "dinh-nghia", "pho-tien-hoa", "lo-trinh"],
+    "index": {"file": "index.html", "ids": ["luan-diem", "hanh-trinh", "so-lieu", "dinh-nghia", "pho-tien-hoa", "lo-trinh"],
               "components": ["loop-diagram", "spectrum"], "min_cites": 4, "min_stats": 4},
     "problems": {"file": "problems.html",
                  "ids": ["ap-luc-hoan-thanh", "khai-sai", "reward-hacking", "pham-vi", "mat-ngu-canh", "chi-dan-phinh",
@@ -33,6 +33,10 @@ PAGES = {
     "harness-kit": {"file": "harness-kit.html",
                     "ids": ["kien-truc", "bang-anh-xa", "may-trang-thai", "hook", "danh-gia", "gioi-han"],
                     "components": ["state-machine", "hook-timeline"], "min_cites": 2, "min_stats": 3},
+    "results": {"file": "results.html",
+                "ids": ["cach-do", "cau-tra-loi", "hanh-vi", "tac-vu-khac", "ban-phat-hanh", "tham-do", "loi-harness",
+                        "gioi-han"],
+                "components": [], "min_cites": 2, "min_stats": 4},
     "guide": {"file": "guide.html",
               "ids": ["cai-dat", "cai-gi", "quy-trinh", "lenh", "vi-du", "vong-lap", "cap-nhat", "su-co", "cach-xay-dung"],
               "components": ["tabs", "terminal"], "min_cites": 1, "min_stats": 0},

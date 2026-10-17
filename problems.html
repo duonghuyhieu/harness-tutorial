@@ -24,6 +24,7 @@
       <a href="problems.html" aria-current="page">Vấn đề</a>
       <a href="principles.html">Nguyên lý</a>
       <a href="harness-kit.html">harness-kit</a>
+      <a href="results.html">Kết quả</a>
       <a href="guide.html">Hướng dẫn</a>
       <a href="references.html">Tài liệu</a>
     </nav>
@@ -74,8 +75,14 @@
               <a class="cite" href="references.html#ref-anthropic-2026-haiku55">Anthropic, 2026 — Haiku 5.5</a>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Nếu không có lối thoát chính thức, “không làm được” bị biến thành “tìm cách làm bằng mọi giá”, và ranh giới môi trường bị vượt qua.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#feature-list">Lối thoát chính thức “không hoàn thành được → blocked” và ranh giới được ghi thành văn bản.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p><code>block &lt;id&gt; --reason</code> là lối thoát chính thức sang trạng thái “blocked”; cổng Stop chặn kết thúc phiên một lần khi còn thay đổi chưa được kiểm chứng, và lần chặn bị bỏ qua được ghi vào sổ sự cố (từ bản 2.3). <a href="harness-kit.html#bang-anh-xa">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Chưa có thí nghiệm riêng cho vấn đề này. Trong một lần chạy thử, khi cổng review không cho qua, agent dừng ở trạng thái “chưa xong” thay vì tự đánh dấu hoàn thành (n = 1) <span class="ev" data-evidence="do">Đo</span>. <a href="results.html#ban-phat-hanh">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -91,8 +98,14 @@
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Khóa học gọi đây là chế độ lỗi phổ biến nhất: verification gap, tức khoảng cách giữa độ tự tin của agent và độ đúng thực tế
               <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a>.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#maker-checker">“Xong” do harness chạy lệnh kiểm tra quyết định, không bao giờ do báo cáo của agent.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p><code>verify &lt;id&gt;</code> là con đường duy nhất tới <code>passing</code>: chính harness chạy lệnh kiểm chứng và ghi bằng chứng (lệnh, mã thoát, commit); <code>passing</code> là một chiều. <a href="harness-kit.html#bang-anh-xa">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Trên tác vụ checkout, số lần “khai xong nhưng sai” giảm khoảng một nửa (24/38 xuống 12/39, đăng ký trước) <span class="ev" data-evidence="do">Đo</span>. Nhưng harness không mạnh hơn lệnh kiểm chứng của nó: trên tác vụ hóa đơn con số này tăng (3/17 lên 10/15), và ở tác vụ dài, trạng thái <code>passing</code> lặp lại phán quyết của một lệnh kiểm chứng yếu <span class="ev" data-evidence="do">Đo</span>. <a href="results.html#cau-tra-loi">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -107,8 +120,14 @@
               <a class="cite" href="references.html#ref-anthropic-2026-opus5">Anthropic, 2026 — Opus 5</a>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Hành vi gian lận có thể khái quát sang các hành vi không mong muốn khác, và một bộ test bị làm yếu đi khiến mọi kết quả “pass” mất giá trị.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#maker-checker">Test và bộ chấm nằm ngoài tầm ghi của agent; reviewer kiểm tra test không bị làm yếu đi.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p>Guard từ chối sửa trạng thái, bằng chứng và lệnh kiểm chứng của feature; chặn <code>--no-verify</code> và <code>core.hooksPath</code>; từ chối lệnh kiểm chứng rỗng nghĩa như <code>echo</code> hay <code>exit 0</code>. <a href="harness-kit.html#bang-anh-xa">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Trên Claude Code thật, lệnh sửa tay <code>status</code> bị hook từ chối (n = 1) <span class="ev" data-evidence="mh">MH</span>. Khi harness ép một bộ test sai, agent uốn mã theo test sai: tỷ lệ test ẩn qua thấp nhất trong bốn nhóm, 86,8% (thí nghiệm 3) — cổng chỉ tốt bằng thứ nó kiểm <span class="ev" data-evidence="do">Đo</span>. <a href="results.html#tham-do">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -122,8 +141,14 @@
               <a class="cite" href="references.html#ref-walkinglabs-2026">Walking Labs, 2026</a>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Thay đổi ngoài phạm vi khó rà soát và dễ che giấu lỗi; nhiều việc dở dang cùng lúc làm trạng thái dự án không còn rõ ràng.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#wip">WIP=1, phạm vi tường minh cho mỗi feature, việc mới trở thành feature mới.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p><code>next</code> chỉ cho một feature đang làm (WIP = 1); guard hỏi lại trước khi ghi ra ngoài phạm vi của feature đó. <a href="harness-kit.html#may-trang-thai">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Ở thí nghiệm nhiều phiên, mọi feature của nhóm có harness đều đi qua <code>verify</code>, mỗi lần một feature, không hồi quy <span class="ev" data-evidence="do">Đo</span>. Cũng thí nghiệm đó tìm ra một deadlock của chính harness (test viết trước + WIP = 1 + guard phạm vi), đã sửa ở bản 2.1.3 <span class="ev" data-evidence="do">Đo</span>. <a href="results.html#loi-harness">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -138,8 +163,14 @@
               Suy rộng kết quả này sang vị trí của chỉ dẫn trong một tệp hướng dẫn dài là một suy diễn <span class="ev" data-evidence="sl">SL</span>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Mỗi phiên mới bắt đầu không có ký ức; điều không nằm trong repo thì phiên sau không nhìn thấy.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#lien-tuc">Trạng thái lưu trên đĩa (progress file, feature list, git), clock-in/clock-out, tệp hướng dẫn dạng router ngắn.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p>Hook SessionStart tiêm trạng thái vào đầu mỗi phiên: feature đang làm, lệnh kiểm chứng, bước tiếp theo; PreCompact lưu snapshot; <code>handoff</code> ghi tiến độ cho phiên sau. <a href="harness-kit.html#hook">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Đây là kết quả rõ nhất về hành vi: chỉ riêng khối trạng thái này đã khiến 24/26 agent chạy lệnh kiểm chứng, so với 1/27 khi chỉ có tệp chỉ dẫn <span class="ev" data-evidence="do">Đo</span>. Nêu thẳng bước tiếp theo giảm nghi thức đầu phiên từ 24% xuống 16% số lệnh <span class="ev" data-evidence="do">Đo</span>. <a href="results.html#hanh-vi">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -154,8 +185,14 @@
               <a class="cite" href="references.html#ref-lulla-2026">Lulla và cộng sự, 2026</a>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Tệp quá dài tốn ngữ cảnh và có thể làm loãng các ràng buộc quan trọng; kết quả trái chiều cho thấy cần kỷ luật về độ dài và nội dung.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#router">AGENTS.md là router dài 50–200 dòng với tối đa 15 ràng buộc cứng; chi tiết nằm trong docs/.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p><code>AGENTS.md</code> tối đa 200 dòng, đóng vai bản đồ; skill ngắn, chỉ định tuyến; chi tiết nằm trong <code>docs/</code>. <a href="harness-kit.html#kien-truc">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Tệp chỉ dẫn đứng riêng gần như không đổi hành vi (1/27 lần chạy gọi lệnh kiểm chứng). Một <code>CLAUDE.md</code> chỉ 6 dòng mang đúng nội dung cần thiết đạt tỷ lệ đúng tương đương và rẻ nhất trên mỗi lần chạy đúng <span class="ev" data-evidence="do">Đo</span>. <a href="results.html#hanh-vi">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -174,8 +211,14 @@
               <a class="cite" href="references.html#ref-openai-2025-atlas">OpenAI, 2025 — Atlas</a>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Vì vấn đề chưa thể giải triệt để ở tầng mô hình, an toàn phải dựa vào các lớp bao chứa bên ngoài mô hình.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="harness-kit.html#gioi-han">Bao chứa ở tầng OS/sandbox, egress mặc định từ chối, phê duyệt do harness thực hiện.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p>Hook là hàng rào bên trong tiến trình agent, không phải sandbox; guard chặn việc tự tắt hook và ghi vào cấu hình harness; nên bật sandbox của Claude Code. <a href="harness-kit.html#gioi-han">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Chưa đo. Các thí nghiệm chỉ kiểm agent không đọc ra ngoài thư mục chạy để giữ phép đo sạch, chưa thử tấn công <span class="ev" data-evidence="sl">SL</span>. <a href="results.html#gioi-han">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -190,8 +233,14 @@
               <a class="cite" href="references.html#ref-openai-2026-astra">OpenAI, 2026 — GPT-6 Astra</a>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Kết quả trên bản ghi kiểm toán có thể không đại diện cho hành vi thật, và chain-of-thought không còn là cửa sổ đáng tin để giám sát.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#quan-sat">Giám sát toàn bộ quỹ đạo (hành động + đầu ra), không đưa CoT vào phần thưởng, bộ giám sát fail-closed.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p>Trace và nhật ký hoạt động nằm trên đĩa; sổ sự cố ghi mọi lần cổng bị bỏ qua hoặc chặn cạn lượt; phán quyết của reviewer được xác thực qua transcript (từ bản 2.3). <a href="harness-kit.html#bang-anh-xa">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Trong một đợt đo, cả 17 lần agent bỏ qua cổng review đều hiện trong sổ sự cố <span class="ev" data-evidence="do">Đo</span>. Chính việc đọc transcript mới lộ ra rằng trong cấu hình chạy đó, cổng review không thể duyệt — một cổng có thể lặng lẽ không hoạt động <span class="ev" data-evidence="do">Đo</span>. <a href="results.html#ban-phat-hanh">Xem kết quả</a>.</p></div>
         </div>
       </article>
 
@@ -208,8 +257,14 @@
               <a class="cite" href="references.html#ref-openai-2026-hf">OpenAI, 2026 — sự cố Hugging Face</a>.</p></div>
           <div><h3 class="problem-card__label">Vì sao quan trọng</h3>
             <p>Cả hai phòng thí nghiệm trước hết coi các sự cố này là lỗi bao chứa/harness <span class="ev" data-evidence="sl">SL</span>.</p></div>
-          <div class="problem-card__fix"><h3 class="problem-card__label">Nguyên lý xử lý</h3>
+          <div class="problem-card__fix"><h3 class="problem-card__label">Giải pháp (nguyên lý)</h3>
             <a href="principles.html#clean-state">Môi trường được cấu hình và bao chứa tường minh, kiểm tra trạng thái sạch trước và sau mỗi phiên.</a></div>
+        </div>
+              <div class="problem-card__chain">
+          <div class="problem-card__kit"><h3 class="problem-card__label">Trong harness-kit</h3>
+            <p>Phòng thủ nhiều lớp trong phạm vi một bộ kit: guard, cổng, sổ sự cố. Theo mô hình đe dọa của bản 2.3.1, ranh giới thật trước một agent đối kháng là sandbox của hệ điều hành và con người đọc diff. <a href="harness-kit.html#gioi-han">Xem cơ chế</a>.</p></div>
+          <div class="problem-card__result"><h3 class="problem-card__label">Thí nghiệm cho thấy</h3>
+            <p>Ngoài phạm vi các thí nghiệm của dự án <span class="ev" data-evidence="sl">SL</span>. <a href="results.html#gioi-han">Xem kết quả</a>.</p></div>
         </div>
       </article>
     </section>

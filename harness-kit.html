@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>harness-kit đã xử lý thế nào — harness-kit</title>
-  <meta name="description" content="Kiến trúc ba lớp của harness-kit, bảng ánh xạ vấn đề sang cơ chế, máy trạng thái, hook, số liệu đánh giá và giới hạn.">
+  <meta name="description" content="Kiến trúc ba lớp của harness-kit, bảng ánh xạ vấn đề sang cơ chế, máy trạng thái, hook, kiểm chứng phần mềm và giới hạn.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700&family=Noto+Serif:wght@600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -24,6 +24,7 @@
       <a href="problems.html">Vấn đề</a>
       <a href="principles.html">Nguyên lý</a>
       <a href="harness-kit.html" aria-current="page">harness-kit</a>
+      <a href="results.html">Kết quả</a>
       <a href="guide.html">Hướng dẫn</a>
       <a href="references.html">Tài liệu</a>
     </nav>
@@ -111,112 +112,9 @@
         <div class="stat" data-evidence="do"><span class="ev" data-evidence="do">Đo</span><span class="stat__value" data-count-to="4" data-decimals="0" data-suffix="">4</span><span class="stat__label">cách cài (one-liner PowerShell, one-liner bash, npx, <code>npm install -D</code>); <code>doctor</code> đều báo HEALTHY</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
         <div class="stat" data-evidence="sl"><span class="ev" data-evidence="sl">SL</span><span class="stat__value" data-count-to="10" data-decimals="0" data-suffix=" / 21">10 / 21</span><span class="stat__label">yêu cầu thiết kế đáp ứng đầy đủ khi chấm chặt theo câu chữ; 11 đáp ứng một phần, 0 chưa đáp ứng (tự đánh giá, sau bản 2.1.x)</span><span class="stat__source"><a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a></span></div>
       </div>
-      <p>Bản 2.3.1 thêm một cổng review: <code>verify</code> cần phán quyết APPROVE của reviewer <code>hk-reviewer</code> cho đúng nội dung hiện tại, đọc ở hook SubagentStop và đối chiếu với transcript của subagent; cùng một sổ sự cố và một cổng bàn giao. Một reviewer độc lập đã tìm ra cách giả một APPROVE ở bản 2.3.0, và bản 2.3.1 sửa lỗi đó. Kit nói rõ mô hình đe dọa: bản ghi review là bằng chứng chống việc bỏ qua review, không phải ranh giới bảo mật trước một agent viết mã để giả nó — ranh giới đó là sandbox của hệ điều hành và con người đọc diff. Bản 2.3.1 mới được đo trong một đợt nhỏ (E5, phía dưới) <span class="ev" data-evidence="sl">SL</span>.</p>
-      <h3>Thí nghiệm thử nghiệm có đối chứng</h3>
-      <p>Cùng một tác vụ (viết <code>checkout()</code> theo đặc tả 7 quy tắc, chấm bằng 26 test ẩn agent không thấy), cùng prompt, cùng mô hình: repo thường (A) so với cùng repo đã cài harness-kit, tác vụ là feature đang active với lệnh kiểm chứng là chính các test hiển thị (B) — B không có thêm thông tin nào <span class="ev" data-evidence="do">Đo</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
-      <div class="table-wrap"><table><caption>Bảng 2. Kết quả thử nghiệm (thử nghiệm nhỏ, ngày 15/10/2026).</caption><thead><tr><th>Chỉ số</th><th>A: không harness</th><th>B: harness-kit</th></tr></thead><tbody>
-        <tr><td>Haiku, đúng hoàn toàn (26/26)</td><td>3/10</td><td>4/10</td></tr>
-        <tr><td>Haiku, tỷ lệ test ẩn đạt trung bình</td><td>97,3%</td><td>97,7%</td></tr>
-        <tr><td>Haiku, khai “xong” nhưng test ẩn hỏng</td><td>7/10</td><td>6/10</td></tr>
-        <tr><td>Haiku, chi phí trung vị</td><td>0,19 USD</td><td>0,12 USD</td></tr>
-        <tr><td>Sonnet, đúng hoàn toàn</td><td>5/5</td><td>5/5</td></tr>
-        <tr><td>Sonnet, có thêm test / chạy <code>verify</code></td><td>0/5 / —</td><td>4/5 / 4/5</td></tr>
-        <tr><td>Sonnet, chi phí trung vị</td><td>0,11 USD</td><td>0,21 USD</td></tr>
-      </tbody></table></div>
-      <p>Khác biệt về độ đúng không có ý nghĩa thống kê (Fisher p = 1,00). Lỗi chủ đạo — số lượng không nguyên phải bị từ chối — là quy tắc mà lệnh kiểm chứng không kiểm, nên harness không thể bắt được: harness không tốt hơn lệnh kiểm chứng của nó. Lợi ích mà harness nhắm tới (trạng thái qua nhiều phiên, WIP, scope trong công việc dài) không được tác vụ một phiên này thử thách <span class="ev" data-evidence="sl">SL</span>.</p>
-      <h3>Thí nghiệm 2: nhiều phiên, nhiều feature</h3>
-      <p>Thiết kế 2 × 2: có / không harness-kit × lệnh kiểm chứng yếu (một test cơ bản mỗi phần) / mạnh (test theo từng quy tắc do người lập kế hoạch viết trước). Tác vụ ba phần của một hệ thống đặt vé; mỗi lần chạy gồm ba phiên <code>claude -p</code> mới, cùng prompt “làm phần chưa xong tiếp theo, đúng một phần”; 24 test ẩn chạy sau mỗi phiên; Haiku, 6 lần mỗi nhóm <span class="ev" data-evidence="do">Đo</span> <a class="cite" href="references.html#ref-harness-kit">Dương Huy Hiếu, 2026</a>.</p>
-      <div class="table-wrap"><table><caption>Bảng 3. Thí nghiệm 2 (ngày 16/10/2026).</caption><thead><tr><th>Chỉ số</th><th>Không harness, yếu</th><th>Không harness, mạnh</th><th>harness-kit, yếu</th><th>harness-kit, mạnh</th></tr></thead><tbody>
-        <tr><td>Cả 3 phần đúng</td><td>3/6</td><td>6/6</td><td>2/6</td><td>5/6</td></tr>
-        <tr><td>Khai “xong” nhưng sai</td><td>4/18</td><td>0/18</td><td>3/18</td><td>1/18</td></tr>
-        <tr><td>Feature qua <code>verify</code></td><td>—</td><td>—</td><td>3/3 ở 6/6 lần</td><td>3/3 ở 6/6 lần</td></tr>
-        <tr><td>Hồi quy</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-      </tbody></table></div>
-      <p>Độ mạnh của lệnh kiểm chứng tạo khác biệt có ý nghĩa thống kê (11/12 so với 5/12, Fisher p = 0,027). Chỉ cài harness thì chưa thấy khác biệt ở cỡ mẫu này (7/12 so với 9/12, p = 0,67) — nhưng ở đây agent tự quyết cách làm và reviewer độc lập chưa từng được dùng; hai thí nghiệm sau kiểm tra đúng điều đó. Harness bảo đảm lệnh kiểm chứng được chạy và ghi lại cho mọi feature (36 lần <code>verify</code>), mỗi lúc một feature, không hồi quy <span class="ev" data-evidence="do">Đo</span>.</p>
-      <h4>Ba ví dụ nguyên văn từ transcript</h4>
-      <ul>
-        <li><b>Pass-gate chỉ chặn được điều mà lệnh kiểm chứng kiểm.</b> Một lần chạy có harness qua <code>verify F003</code> với test yếu và trả lời “All 3 features are now passing … STATUS: DONE PART 3”, trong khi test ẩn về làm tròn half-up vẫn hỏng <span class="ev" data-evidence="mh">MH</span>.</li>
-        <li><b>Không harness, khai quá lời.</b> Một lần chạy viết cả ba phần ngay phiên đầu, rồi ở phiên sau trả lời “STATUS: ALL PARTS COMPLETE (1, 2, AND 3)” dù phần 1 vẫn chấp nhận số ghế “+3” <span class="ev" data-evidence="mh">MH</span>.</li>
-        <li><b>Harness tự khóa mình.</b> Ở lần chạy thử đầu tiên, test của cả ba phần có sẵn trong bộ test nên check toàn dự án luôn đỏ: F001 không bao giờ qua được; guard từ chối sửa phần tiếp theo — “outside the active feature F001's scope … (WIP=1)”; <code>next --force</code> trả lời “No eligible not_started feature left”; phần 3 không bao giờ được bắt đầu. harness-kit 2.1.3 giải thích tình huống này ngay trong <code>verify</code>; thí nghiệm dùng test “pending” (tự bỏ qua cho tới khi phần đó tồn tại) <span class="ev" data-evidence="mh">MH</span>.</li>
-      </ul>
-      <h3>Thí nghiệm 3: test do agent lập kế hoạch viết</h3>
-      <p>Một agent lập kế hoạch viết test cho từng quy tắc trước khi có mã. Chấm độ mạnh của bộ test bằng 15 mutant (mỗi mutant làm sai một quy tắc): test ẩn bắt 15/15, test do người viết 13/15, test yếu 4/15, test của agent lập kế hoạch 15/15 — nhưng cả 12/12 bộ đều có 1–7 test sai trên chính bản cài đặt đúng (tổng 35: tính sai kỳ vọng, tự thêm quy tắc, hiểu khác một câu mơ hồ của đặc tả) <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 4. Thí nghiệm 3 (ngày 16/10/2026, Haiku, 6 lần mỗi nhóm).</caption><thead><tr><th>Nhóm</th><th>Test ẩn đạt</th><th>Khai “xong” nhưng sai</th><th>Chi phí trung vị</th></tr></thead><tbody>
-        <tr><td>harness-kit + test do người viết</td><td>97,2%</td><td>2/18</td><td>0,45 USD</td></tr>
-        <tr><td>Test của agent lập kế hoạch, không bị ép</td><td>96,5%</td><td>2/18</td><td>0,68 USD</td></tr>
-        <tr><td>harness-kit + test yếu</td><td>92,4%</td><td>3/18</td><td>0,45 USD</td></tr>
-        <tr><td>harness-kit + test của agent lập kế hoạch</td><td>86,8%</td><td>6/16</td><td>1,13 USD</td></tr>
-      </tbody></table></div>
-      <p>Cổng của harness ép mã khớp với lệnh kiểm chứng: test đúng kéo chất lượng lên, test sai kéo xuống — dưới cả nhóm không bị ép; ở 3 lần chạy maker đã bẻ mã theo cách hiểu sai của agent lập kế hoạch. Một ví dụ ngược lại: một maker thấy 3 test đòi điều vô lý (2 + 2 ghế vừa sức chứa 3), không bẻ mã mà <code>block</code> feature kèm lý do; phiên sau đọc lý do, sửa kỳ vọng của test rồi mới <code>verify</code> <span class="ev" data-evidence="mh">MH</span>.</p>
-      <h3>Thí nghiệm 4: harness vận hành đúng quy trình</h3>
-      <p><code>harness.py loop</code> (maker phiên mới → reviewer phiên mới, chỉ đọc → cổng test → <code>verify</code>) so với ba phiên thường, cùng test yếu, Haiku, ba đợt × 6 lần mỗi nhóm <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 5. Thí nghiệm 4 (ngày 16/10/2026): số lần chạy đúng cả ba phần.</caption><thead><tr><th>Đợt</th><th>Vòng lặp harness</th><th>Không harness</th></tr></thead><tbody>
-        <tr><td>1 (kit 2.1.3)</td><td>4/6</td><td>1/6</td></tr>
-        <tr><td>2 (kit 2.1.4 — hai lỗi của vòng lặp)</td><td>3/6</td><td>6/6</td></tr>
-        <tr><td>3 (kit 2.1.5, đã sửa lỗi)</td><td>5/6</td><td>5/6</td></tr>
-        <tr><td>Tổng</td><td>12/18</td><td>12/18</td></tr>
-      </tbody></table></div>
-      <p>Trên tác vụ ngắn mà mô hình tự chạy test ở mọi phiên, cơ chế của harness không đổi độ đúng cuối cùng và tốn khoảng 2,7 lần chi phí ở đợt 3 (khoảng 3,1 lần khi gộp ba đợt); 8,7% feature vòng lặp ghi <code>passing</code> vẫn sai, so với 11,1% lời khai “xong” của nhóm thường. Đợt 2 cho thấy harness có lỗi của riêng nó: <code>__pycache__</code> bị commit rồi bị tính là “sửa ngoài phạm vi”, chặn feature đúng; reviewer không được chạy lệnh kiểm chứng — cả hai đã sửa trong 2.1.4–2.1.5. Cùng một nhóm thường đạt 1/6 ở đợt này và 6/6 ở đợt khác: nhiễu lớn hơn nhiều khác biệt cần đo <span class="ev" data-evidence="do">Đo</span>.</p>
-      <h3>Thí nghiệm đăng ký trước: kết quả chặt chẽ nhất</h3>
-      <p>Kế hoạch phân tích được viết trước mỗi đợt chạy; có một cặp nhóm giống hệt nhau để đo sàn nhiễu (chênh tới 33 điểm khi n ≈ 10); phiên bản kit được ghim; kiểm tra nghiêm agent không đọc ra ngoài thư mục chạy <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 6. Tác vụ checkout, Haiku (ngày 16/10/2026).</caption><thead><tr><th>Đợt</th><th>Số lần mỗi nhóm</th><th>Đúng hoàn toàn: harness − không harness (95%)</th></tr></thead><tbody>
-        <tr><td>Hai nhóm giống hệt nhau (sàn nhiễu)</td><td>≈ 10</td><td>chênh tới 33 điểm</td></tr>
-        <tr><td>harness-kit 2.1.5 (Stop gate lỗi)</td><td>20</td><td>+1% [−29%, +29%]</td></tr>
-        <tr><td><b>harness-kit 2.2.0 (gate đã sửa), gộp hai đợt</b></td><td>≈ 40</td><td><b>+30% [+8%, +48%]</b>, p = 0,012</td></tr>
-      </tbody></table></div>
-      <p>Với kit 2.2.0, nhóm có harness đúng hoàn toàn gấp đôi (26/39 so với 14/38), khoảng cách “khai xong nhưng sai” giảm một nửa (12/39 so với 24/38), chi phí mỗi lần chạy cao hơn khoảng 1,5 lần nhưng chi phí cho mỗi lần chạy đúng lại thấp hơn. Giới hạn: một tác vụ, một mô hình, một hệ điều hành; cơ chế chưa được xác định; hai đợt chạy ở hai thời điểm khác nhau <span class="ev" data-evidence="do">Đo</span>.</p>
-      <p>Lỗi do thí nghiệm này tìm ra: tới bản 2.1.5, Stop gate không thấy thay đổi khi chỉ có một tệp bị sửa (dòng đầu của <code>git status</code> mất khoảng trắng đầu dòng) — mọi nhóm có harness ở các thí nghiệm 2–5 phía trên đều chạy với gate bị hỏng này; đã sửa ở 2.2.0 <span class="ev" data-evidence="do">Đo</span>.</p>
-      <h3>Ablation đăng ký trước: phần nào của harness mang tác dụng?</h3>
-      <p>Cùng tác vụ, Haiku, kit 2.2.1, khoảng 40 lần chạy mỗi nhóm. Hai nhóm tách harness thành hai kênh: chỉ chỉ dẫn và ngữ cảnh (tắt guard và Stop gate), và chỉ gate (tắt phần tiêm ngữ cảnh, xóa các tệp chỉ dẫn) <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 7. Ablation E3a (ngày 16/10/2026): đúng hoàn toàn so với không harness.</caption><thead><tr><th>Nhóm</th><th>Đúng hoàn toàn</th><th>So với không harness (95%)</th><th>Chạy <code>verify</code></th></tr></thead><tbody>
-        <tr><td>Không harness</td><td>12/40 (30%)</td><td>—</td><td>—</td></tr>
-        <tr><td>Kit đầy đủ</td><td>25/37 (68%)</td><td><b>+38% [+15%, +55%]</b></td><td>31/37</td></tr>
-        <tr><td>Chỉ chỉ dẫn và ngữ cảnh</td><td>29/39 (74%)</td><td><b>+44% [+23%, +61%]</b></td><td>32/39</td></tr>
-        <tr><td>Chỉ gate</td><td>15/36 (42%)</td><td>+12% [−10%, +32%]</td><td>4/36</td></tr>
-      </tbody></table></div>
-      <p>Theo cách đọc viết trước, <b>kênh chỉ dẫn và ngữ cảnh mang tác dụng</b>. Không có gate nào, 32/39 lần chạy vẫn tự chạy <code>verify</code>. Ngược lại, khi không có chỉ dẫn, Stop gate chặn ở 36/36 lần chạy nhưng chỉ 4/36 lần tìm được tới <code>verify</code>, với số lượt và chi phí khoảng gấp đôi. Thí nghiệm có hai sai lệch so với kế hoạch: chi phí 34,35 USD vượt trần 20 USD đã đăng ký, và 18 lần chạy bị dừng vì trần được chạy bù sau. Giới hạn: một tác vụ, một mô hình, một hệ điều hành; chưa tách được phần nào trong kênh ngữ cảnh mang tác dụng <span class="ev" data-evidence="do">Đo</span>.</p>
-      <h3>Ba thí nghiệm đăng ký trước tiếp theo (17/10/2026)</h3>
-      <p>Ba câu hỏi còn lại sau ablation: phần nào trong kênh ngữ cảnh tạo ra tác dụng, kết quả có lặp lại trên một tác vụ khác không, và bản kit đang phát hành có giúp không. Tất cả chạy với Haiku. Mỗi đợt đều bị hụt một số lần chạy, vì tài khoản chạm giới hạn phiên, vì chạm trần chi phí, và vì một lỗi trong bộ chạy của tác giả làm đợt đầu của E5 vô hiệu; mọi sai lệch đều được ghi vào kế hoạch đăng ký trước <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 8. E3b: tách kênh ngữ cảnh (tác vụ checkout, kit 2.2.1).</caption><thead><tr><th>Nhóm</th><th>Đúng hoàn toàn</th><th>Chạy <code>verify</code></th></tr></thead><tbody>
-        <tr><td>Không harness</td><td>16/26 (62%)</td><td>—</td></tr>
-        <tr><td>Chỉ dẫn và ngữ cảnh (như E3a)</td><td>21/28 (75%)</td><td>27/28</td></tr>
-        <tr><td>Chỉ khối trạng thái tiêm lúc mở phiên</td><td>16/26 (62%)</td><td>24/26</td></tr>
-        <tr><td>Chỉ các tệp chỉ dẫn</td><td>14/27 (52%)</td><td>1/27</td></tr>
-        <tr><td>Một <code>CLAUDE.md</code> 6 dòng cùng nội dung, không cài kit</td><td>19/28 (68%)</td><td>—</td></tr>
-      </tbody></table></div>
-      <p>Không nhóm nào khác nhóm không harness một cách phát hiện được. Mức +44 điểm của E3a không lặp lại: nhóm chỉ dẫn vẫn đạt như cũ (75%), nhưng lần này nhóm không harness đạt 62% thay vì 30%. Về hành vi thì kết quả rõ ràng: chính khối trạng thái tiêm lúc mở phiên khiến agent chạy lệnh kiểm chứng (24/26 lần), còn các tệp chỉ dẫn đứng riêng gần như không có tác dụng (1/27) <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 9. E4: tác vụ thứ hai (hóa đơn, 9 quy tắc, 37 test ẩn), kit 2.2.1.</caption><thead><tr><th>Nhóm</th><th>Đúng hoàn toàn</th><th>So với không harness (95%)</th></tr></thead><tbody>
-        <tr><td>Không harness</td><td>14/17 (82%)</td><td>—</td></tr>
-        <tr><td>Chỉ dẫn và ngữ cảnh</td><td>5/17 (29%)</td><td><b>−53% [−73%, −20%]</b></td></tr>
-        <tr><td>Kit đầy đủ</td><td>5/15 (33%)</td><td><b>−49% [−70%, −15%]</b></td></tr>
-      </tbody></table></div>
-      <p>Trên tác vụ thứ hai, harness lại làm kết quả <b>kém hơn</b>. Khác biệt cũng nằm ở đúng một quy tắc kiểm tra đầu vào mà test nhìn thấy được không kiểm: từ chối giá kiểu float. Lời giải của nhóm có harness thường bỏ bước kiểm tra kiểu này. Vì sao thì chưa rõ <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 10. E5b: bản phát hành 2.3.1 với cổng review hoạt động, tác vụ checkout.</caption><thead><tr><th>Nhóm</th><th>Đúng hoàn toàn</th><th>So với không harness (95%)</th><th>Chi phí mỗi lần chạy, trung vị</th></tr></thead><tbody>
-        <tr><td>Không harness</td><td>4/13 (31%)</td><td>—</td><td>0,130 USD</td></tr>
-        <tr><td>Kit 2.3.1, cổng review</td><td>5/9 (56%)</td><td>+25% [−15%, +56%]</td><td>0,398 USD</td></tr>
-      </tbody></table></div>
-      <p>Bản 2.3.1 có tỷ lệ đúng cao hơn nhưng chưa đủ để chắc chắn, chi phí mỗi lần chạy gấp khoảng 3 lần, và reviewer vẫn duyệt cả mã sai ở 4/9 lần chạy. Ở đợt đo trước đó (E5), bộ chạy không lưu lại phiên làm việc, nên kit không xác thực được lần duyệt (APPROVE) nào, và agent phải bỏ qua cổng bằng lệnh <code>--no-review</code>; điều này được phát hiện khi đọc transcript sau khi đã phân tích, nên E5b được chạy lại với phiên được lưu <span class="ev" data-evidence="do">Đo</span>. Lần chạy thử trước E5 còn tìm ra một lỗi: trên một bản cài mới của một kho Python không có tệp đánh dấu dự án, lệnh test để trống. Reviewer khi đó từ chối các test mới vì lệnh test không thu thập chúng, còn việc sửa cấu hình lại bị guard chặn khi chạy không có người duyệt. Kết quả là một feature đã làm đúng không bao giờ qua được. Lỗi này đã được sửa ở bản 2.4.0, chưa phát hành (n = 1) <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 11. Mọi đợt trên tác vụ checkout (kit 2.2.x) và phép gộp theo đợt — thăm dò, không đăng ký trước.</caption><thead><tr><th>Đợt</th><th>Không harness</th><th>Harness</th><th>Chênh lệch</th></tr></thead><tbody>
-        <tr><td>E2b</td><td>7/19</td><td>12/20</td><td>+23</td></tr>
-        <tr><td>E2c</td><td>7/19</td><td>14/19</td><td>+37</td></tr>
-        <tr><td>E3a</td><td>12/40</td><td>25/37</td><td>+38</td></tr>
-        <tr><td>E3b</td><td>16/26</td><td>21/28</td><td>+13</td></tr>
-        <tr><td>E5</td><td>10/18</td><td>8/14</td><td>+2</td></tr>
-        <tr><td><b>Gộp theo đợt</b></td><td colspan="2"></td><td><b>+25% [+13%, +37%]</b></td></tr>
-      </tbody></table></div>
-      <p>Trên checkout, cả năm đợt đều nghiêng về harness nhưng độ lớn thay đổi. Nhóm có harness ổn định trong khoảng 57% đến 75%, còn nhóm không harness dao động từ 30% đến 67% giữa các đợt, dù mọi điều kiện ghi nhận được đều giống nhau <span class="ev" data-evidence="sl">SL</span>.</p>
-      <h3>Thí nghiệm 5: tác vụ dài, các phần phụ thuộc nhau</h3>
-      <p>Một lớp năm phần, phần sau đổi cách phần trước hoạt động, qua 8–10 phiên mới. Với phiên 20 lượt, cả hai nhóm làm xong mọi phần trong 2–3 phiên và đều còn lỗi ở các quy tắc test yếu không kiểm (đúng hoàn toàn 0/6 so với 0/6). Ở nhóm có harness, mọi phiên sau đó lặp lại “DONE PART 5”, viện dẫn các feature đã <code>passing</code>, trong khi phần 5 vẫn hỏng test ẩn — trạng thái một chiều mang theo phán quyết của một lệnh kiểm chứng yếu <span class="ev" data-evidence="mh">MH</span>. Với phiên chỉ 8 lượt trên kit đóng băng: 45,2% / 47,6% / 50,0% test ẩn (không harness / 2.2.0 / 2.2.0 có dòng “next action”), không khác biệt; dòng “next action” giảm nghi thức vào ca từ 24% xuống 16% số lệnh và tăng số lần sửa mã mỗi phiên từ 0,42 lên 0,60. Một đợt trước đó trông xấu hẳn cho harness đã chạy trên kit đang bị sửa dở và không lặp lại được — đã rút lại <span class="ev" data-evidence="do">Đo</span>.</p>
-      <h3>Tổng hợp: harness có ảnh hưởng tới chất lượng không?</h3>
-      <ul>
-        <li><b>Tùy tác vụ, kể cả về chiều:</b> trên checkout, harness tốt hơn ở cả năm đợt nhưng mỗi đợt một khác (+30 và +38 điểm ở các đợt chính, gộp theo đợt +25 điểm). Trên tác vụ hóa đơn, harness kém hơn 49 điểm <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Thứ thay đổi hành vi là khối trạng thái tiêm lúc mở phiên,</b> không phải gate và cũng không phải các tệp chỉ dẫn: riêng khối đó đã đủ để 24/26 agent chạy lệnh kiểm chứng, riêng các tệp chỉ dẫn chỉ được 1/27. Gate đứng riêng thì chủ yếu là chặn. Điều này sửa cách đọc trước đây của trang, “gate, không phải chỉ dẫn” <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Qua lệnh kiểm chứng mà nó ép, theo cả hai chiều.</b> Test đúng theo từng quy tắc nâng độ đúng có ý nghĩa thống kê; test sai được ép buộc hạ độ đúng xuống thấp nhất <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Có chi phí riêng:</b> 1,5–3 lần chi phí mỗi lần chạy, nghi thức vào ca mỗi phiên; trên các tác vụ ngắn mô hình đã tự kiểm, vòng lặp của harness không thêm độ đúng <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Gate có ích khi trỏ agent về một quy trình nó đã có:</b> khi chỉ dẫn vẫn có mặt, một thay đổi ở Stop hook (2.1.4) đưa Sonnet từ 1/4 lên 4/4 lần chạy đi đúng quy trình <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Là phần mềm có lỗi riêng:</b> bốn lỗi chỉ lộ ra khi thí nghiệm có kiểm soát, đều đã sửa kèm test hồi quy <span class="ev" data-evidence="do">Đo</span>.</li>
-        <li><b>Giới hạn:</b> chủ yếu một mô hình (Haiku), hai họ tác vụ do cùng một người viết, một máy; các kết quả đăng ký trước chỉ có trên hai tác vụ và trái chiều nhau; nhóm không harness dao động mạnh giữa các đợt <span class="ev" data-evidence="sl">SL</span>.</li>
-      </ul>
+      <p>Bản 2.3.1 thêm một cổng review: <code>verify</code> cần phán quyết APPROVE của reviewer <code>hk-reviewer</code> cho đúng nội dung hiện tại, đọc ở hook SubagentStop và đối chiếu với transcript của subagent; cùng một sổ sự cố và một cổng bàn giao. Một reviewer độc lập đã tìm ra cách giả một APPROVE ở bản 2.3.0, và bản 2.3.1 sửa lỗi đó. Kit nói rõ mô hình đe dọa: bản ghi review là bằng chứng chống việc bỏ qua review, không phải ranh giới bảo mật trước một agent viết mã để giả nó — ranh giới đó là sandbox của hệ điều hành và con người đọc diff. Bản 2.3.1 mới được đo trong một đợt nhỏ (xem <a href="results.html#ban-phat-hanh">trang Kết quả</a>) <span class="ev" data-evidence="sl">SL</span>.</p>
+      <div class="callout callout--build"><p class="callout__title">Kết quả thí nghiệm nằm ở trang riêng</p>
+        <p>Chín đợt thí nghiệm đăng ký trước so sánh agent có và không có harness-kit trên các tác vụ có test ẩn. Tóm tắt: kit thay đổi rõ hành vi của agent (khối trạng thái tiêm lúc mở phiên khiến agent chạy lệnh kiểm chứng), còn tác động lên độ đúng phụ thuộc vào tác vụ — tốt hơn trên checkout, kém hơn trên tác vụ hóa đơn <span class="ev" data-evidence="do">Đo</span>. Xem <a href="results.html">trang Kết quả</a>.</p></div>
       <h3>Hai kiểm tra trên Claude Code thật</h3>
       <ul>
         <li>Không dùng công cụ, mô hình nêu đúng feature đang active và lệnh kiểm chứng của nó — thông tin chỉ hook SessionStart đã đưa vào (n = 1, kiểm tra sự tồn tại) <span class="ev" data-evidence="mh">MH</span>.</li>
@@ -236,7 +134,7 @@
       </ul>
       <h3>Học từ các repo harness khác</h3>
       <p>Một khảo sát 17 repo harness mã nguồn mở đưa ra 81 đề xuất. Trong đó 20 đề xuất đã được đưa vào kit, 37 đề xuất đã lên kế hoạch, và 24 đề xuất còn để trong backlog <span class="ev" data-evidence="sl">SL</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 12. Ý tưởng lấy từ repo khác và bản kit chứa ý tưởng đó.</caption><thead><tr><th>Ý tưởng</th><th>Repo nguồn</th><th>Bản kit</th></tr></thead><tbody>
+      <div class="table-wrap"><table><caption>Bảng 2. Ý tưởng lấy từ repo khác và bản kit chứa ý tưởng đó.</caption><thead><tr><th>Ý tưởng</th><th>Repo nguồn</th><th>Bản kit</th></tr></thead><tbody>
         <tr><td>Từ chối lệnh kiểm chứng rỗng nghĩa (<code>echo</code>, <code>exit 0</code>, <code>|| true</code>)</td><td><a href="https://github.com/enmanuelmag/agent-harness-kit">enmanuelmag/agent-harness-kit</a></td><td>2.2.0</td></tr>
         <tr><td>Bảo vệ checker, chặn <code>--no-verify</code> và <code>core.hooksPath</code></td><td><a href="https://github.com/affaan-m/ECC">affaan-m/ECC</a>, <a href="https://github.com/manuelschipper/nah">manuelschipper/nah</a></td><td>2.2.0</td></tr>
         <tr><td>Phát hiện feature đã <code>passing</code> nhưng mã đã đổi</td><td><a href="https://github.com/Tsubaki-01/Iris">Tsubaki-01/Iris</a></td><td>2.2.0</td></tr>

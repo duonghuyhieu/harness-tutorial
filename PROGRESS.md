@@ -34,6 +34,9 @@ _Auto-updated by `harness.py handoff` at 2026-10-16T17:01:54+07:00_
       instructions"); kit facts → published 2.3.1 (168 tests, V001–V026, review gate and threat model).
 - [x] 2026-10-17: F016 E3b/E4/E5 (Bảng 8–11: context split, a second task with the opposite sign, the published 2.3.1),
       pooled checkout view, 2.3.1 fresh-install defect, ideas taken from other harness repos (Bảng 12).
+- [x] 2026-10-17: F017 restructure: problem → solution → mechanism → result — index journey matrix (Bảng 1), every
+      problem card gains "Trong harness-kit" and "Thí nghiệm cho thấy", new results.html (all experiments by question),
+      harness-kit.html keeps mechanisms; nav gains "Kết quả".
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 

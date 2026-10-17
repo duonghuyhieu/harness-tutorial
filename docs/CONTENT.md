@@ -329,6 +329,19 @@ Interactive pieces expected on this page: the feature state machine stepper (but
 verify pass / block) showing what the runtime allows; the hook timeline (SessionStart → UserPromptSubmit → PreToolUse
 → PostToolUse → PreCompact → Stop → SessionEnd) with what each does.
 
+## Page 4b — results.html (Kết quả thí nghiệm)
+
+Purpose: answer "what changes with harness-kit, and what does not" from the project's own experiments
+(ref: harness-v2-experiments). Sections: cach-do (hidden tests, pre-registration, noise floor, pinned kits,
+containment) · cau-tra-loi (all pre-registered batches in one table, differences in points with 95% intervals, the
+exploratory pooled checkout estimate) · hanh-vi (E3a/E3b: which part changes behaviour) · tac-vu-khac (E4) ·
+ban-phat-hanh (E5/E5b, the E5 correction, the fresh-install defect) · tham-do (exploratory experiments 1–5c) ·
+loi-harness (defects found by the experiments) · gioi-han. Facts: the evaluation facts listed under Page 4.
+Site structure (all pages): problem → solution (principle) → mechanism in harness-kit → experiment result. The index
+page carries the journey matrix (section hanh-trinh); every problem card carries "Trong harness-kit" and "Thí
+nghiệm cho thấy" with links into harness-kit.html and results.html; harness-kit.html keeps mechanisms and points to
+results.html for experiments.
+
 ## Page 5 — guide.html (Hướng dẫn sử dụng)
 
 1. `#cai-dat` — One command inside the project folder, then open Claude Code; nothing else is required:
@@ -394,5 +407,6 @@ on what the site uses it for. Keys and data:
 - `liu-2024` — Liu, N. F., et al. (2024). Lost in the middle: How language models use long contexts. TACL. https://arxiv.org/abs/2307.03172
 - `walkinglabs-2026` — Walking Labs (2026). Learn Harness Engineering (khóa học, bản tiếng Việt). https://walkinglabs.github.io/learn-harness-engineering/vi/
 - `harness-kit` — Dương Huy Hiếu (2026). harness-kit v2 (mã nguồn). https://github.com/duonghuyhieu/harness-kit
+- `harness-v2-experiments` — Dương Huy Hiếu (2026). Thí nghiệm có đối chứng về harness-kit: kế hoạch đăng ký trước, bộ chạy và dữ liệu từng lần chạy (E1–E5b, 15–17/10/2026). Kho nghiên cứu harness-v2 của tác giả, thư mục experiments/; chưa công bố trực tuyến.
 
 Footer note on every page: "Số liệu tra cứu ngày 15/10/2026. Mỗi con số mang nhãn bằng chứng: Đo · SX · MH · SL."

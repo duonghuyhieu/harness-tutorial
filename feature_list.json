@@ -691,6 +691,32 @@
       "priority": 27,
       "activated_at": "2026-10-17T17:11:22+07:00",
       "activated_commit": "16a4b46c000dc9fc18a806f706b8b5f45e57746f"
+    },
+    {
+      "id": "F017",
+      "category": "feature",
+      "behavior": "Site follows problem -> solution -> mechanism -> result: index journey matrix, every problem card links its harness-kit mechanism and experiment result, new results.html holds all experiments, harness-kit.html keeps mechanisms",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-17T20:55:51+07:00",
+        "commit": "8d3ea32",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.8,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md",
+        "assets/css/style.css",
+        "tests/check_site.py"
+      ],
+      "priority": 28,
+      "activated_at": "2026-10-17T20:55:49+07:00",
+      "activated_commit": "8d3ea324be66c7184f0d03eea1d64d5572eab775"
     }
   ]
 }

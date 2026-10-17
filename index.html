@@ -24,6 +24,7 @@
       <a href="problems.html">Vấn đề</a>
       <a href="principles.html">Nguyên lý</a>
       <a href="harness-kit.html">harness-kit</a>
+      <a href="results.html">Kết quả</a>
       <a href="guide.html">Hướng dẫn</a>
       <a href="references.html">Tài liệu</a>
     </nav>
@@ -36,6 +37,7 @@
     <p class="toc__title">Trong trang này</p>
     <ol>
       <li><a href="#luan-diem">Luận điểm</a></li>
+      <li><a href="#hanh-trinh">Từ vấn đề tới kết quả</a></li>
       <li><a href="#so-lieu">Số liệu then chốt</a></li>
       <li><a href="#dinh-nghia">Định nghĩa</a></li>
       <li><a href="#pho-tien-hoa">Phổ các tầng kỹ thuật</a></li>
@@ -48,7 +50,7 @@
       <p class="eyebrow">Tổng quan</p>
       <h1>Mô hình mạnh không có nghĩa là thực thi đáng tin cậy.</h1>
       <p class="lead">Harness — mọi thứ nằm ngoài trọng số của mô hình — quyết định bao nhiêu năng lực của mô hình
-        trở thành công việc đáng tin cậy. Trang này tóm tắt luận điểm, các số liệu nền tảng và lộ trình đọc.</p>
+        trở thành công việc đáng tin cậy. Trang này đi từ các vấn đề của AI agent, qua giải pháp và cách harness-kit áp dụng giải pháp đó, tới kết quả các thí nghiệm.</p>
 
       <div class="legend" role="note" aria-label="Chú giải nhãn bằng chứng">
         <span><span class="ev" data-evidence="do">Đo</span> số liệu công bố</span>
@@ -61,6 +63,30 @@
         <div class="loop-diagram" data-component="loop-diagram"></div>
         <figcaption>Hình 1. Vòng lặp maker → reviewer → gate mà harness-kit điều khiển: mỗi lượt làm đúng một feature; reviewer FAIL hoặc gate đỏ đưa phản hồi cụ thể về maker; chỉ pass-gate mới ghi <code>passing</code>.</figcaption>
       </figure>
+    </section>
+
+    <section id="hanh-trinh" class="reveal">
+      <h2>Từ vấn đề tới kết quả</h2>
+      <p>Site đi theo bốn bước. Mỗi vấn đề của AI agent được nối với nguyên lý xử lý, với cơ chế cụ thể mà harness-kit dùng, và với những gì các thí nghiệm có đối chứng đo được — kể cả chỗ kết quả không như mong đợi và chỗ chưa đo.</p>
+      <div class="flow">
+        <a class="flow__step" href="problems.html"><b>1 · Vấn đề</b><small>Agent khai xong khi chưa xong, vượt phạm vi, mất ngữ cảnh, tự chấm bài.</small></a>
+        <a class="flow__step" href="principles.html"><b>2 · Giải pháp</b><small>Harness engineering: “xong” do lệnh quyết định, trạng thái trên đĩa, tách người làm và người kiểm.</small></a>
+        <a class="flow__step" href="harness-kit.html"><b>3 · harness-kit</b><small>Biến nguyên lý thành cơ chế: <code>verify</code>, hook, khối trạng thái, cổng review.</small></a>
+        <a class="flow__step" href="results.html"><b>4 · Kết quả</b><small>9 đợt thí nghiệm đăng ký trước, với test ẩn mà agent không thấy.</small></a>
+      </div>
+      <div class="table-wrap"><table class="matrix"><caption>Bảng 1. Mỗi vấn đề, giải pháp, cơ chế trong harness-kit và kết quả thí nghiệm.</caption><thead><tr><th>Vấn đề</th><th>Giải pháp</th><th>Cơ chế trong harness-kit</th><th>Thí nghiệm cho thấy</th></tr></thead><tbody>
+        <tr><td><a href="problems.html#ap-luc-hoan-thanh">Áp lực hoàn thành nhiệm vụ</a></td><td><a href="principles.html#feature-list">Lối thoát chính thức “blocked”</a></td><td><code>block</code>, cổng Stop, sổ sự cố</td><td><a href="results.html#ban-phat-hanh">Chưa có thí nghiệm riêng</a></td></tr>
+        <tr><td><a href="problems.html#khai-sai">Khai “đã xong” sai</a></td><td><a href="principles.html#feature-list">“Xong” do lệnh quyết định</a></td><td><code>verify</code> là con đường duy nhất tới <code>passing</code></td><td><a href="results.html#cau-tra-loi">Giảm khoảng một nửa trên checkout; tăng trên tác vụ hóa đơn</a></td></tr>
+        <tr><td><a href="problems.html#reward-hacking">Reward hacking</a></td><td><a href="principles.html#maker-checker">Tách người làm và người kiểm</a></td><td>Guard bảo vệ trạng thái và checker; reviewer chỉ đọc</td><td><a href="results.html#tham-do">Ép test sai làm mã sai theo (86,8%)</a></td></tr>
+        <tr><td><a href="problems.html#pham-vi">Vượt phạm vi, làm dở dang</a></td><td><a href="principles.html#wip">Mỗi lần một feature</a></td><td><code>next</code> (WIP = 1), guard phạm vi</td><td><a href="results.html#loi-harness">Mọi feature qua <code>verify</code>; tìm ra một deadlock</a></td></tr>
+        <tr><td><a href="problems.html#mat-ngu-canh">Mất ngữ cảnh giữa các phiên</a></td><td><a href="principles.html#lien-tuc">Trạng thái nằm trên đĩa</a></td><td>Khối trạng thái tiêm lúc mở phiên, <code>handoff</code></td><td><a href="results.html#hanh-vi">24/26 agent chạy kiểm chứng (so với 1/27)</a></td></tr>
+        <tr><td><a href="problems.html#chi-dan-phinh">Tệp hướng dẫn khổng lồ</a></td><td><a href="principles.html#router">Tệp hướng dẫn là bản đồ</a></td><td><code>AGENTS.md</code> ≤ 200 dòng, skill định tuyến</td><td><a href="results.html#hanh-vi">Tệp chỉ dẫn đứng riêng gần như không tác dụng</a></td></tr>
+        <tr><td><a href="problems.html#prompt-injection">Prompt injection</a></td><td><a href="principles.html#quan-sat">Hàng rào và cô lập</a></td><td>Hook là hàng rào, không phải sandbox</td><td><a href="results.html#gioi-han">Chưa đo</a></td></tr>
+        <tr><td><a href="problems.html#giam-sat-yeu-di">Giám sát yếu đi</a></td><td><a href="principles.html#quan-sat">Quan sát quy trình</a></td><td>Trace, sổ sự cố, verdict được xác thực</td><td><a href="results.html#ban-phat-hanh">Mọi lần bỏ qua cổng đều được ghi lại</a></td></tr>
+        <tr><td><a href="problems.html#su-co-2026">Sự cố thực tế năm 2026</a></td><td><a href="principles.html#clean-state">Phòng thủ nhiều lớp</a></td><td>Guard, cổng, sổ sự cố; ranh giới là sandbox</td><td><a href="results.html#gioi-han">Ngoài phạm vi đo</a></td></tr>
+      </tbody></table></div>
+      <div class="callout callout--note"><p class="callout__title">Câu trả lời ngắn</p>
+        <p>harness-kit thay đổi rõ <b>hành vi</b> của agent: khối trạng thái được tiêm lúc mở phiên khiến agent chạy lệnh kiểm chứng, và mọi lần bỏ qua cổng đều để lại dấu vết <span class="ev" data-evidence="do">Đo</span>. Tác động lên <b>độ đúng</b> của mã thì phụ thuộc vào tác vụ: tốt hơn trên tác vụ checkout ở cả năm đợt (gộp +25 điểm), nhưng kém hơn 49 điểm trên một tác vụ thứ hai cùng dạng <span class="ev" data-evidence="do">Đo</span>. Chi tiết ở <a href="results.html">trang Kết quả</a>.</p></div>
     </section>
 
     <section id="so-lieu" class="reveal">
@@ -127,8 +153,9 @@
         <a class="card" href="problems.html"><span class="card__kicker">1</span><h3>Vấn đề</h3><p>Các lỗi thực tế của AI agent ngày nay.</p></a>
         <a class="card" href="principles.html"><span class="card__kicker">2</span><h3>Nguyên lý</h3><p>Nguyên lý xử lý theo harness engineering.</p></a>
         <a class="card" href="harness-kit.html"><span class="card__kicker">3</span><h3>harness-kit</h3><p>Cách harness-kit biến nguyên lý thành cơ chế.</p></a>
-        <a class="card" href="guide.html"><span class="card__kicker">4</span><h3>Hướng dẫn</h3><p>Cài đặt và quy trình làm việc hằng ngày.</p></a>
-        <a class="card" href="references.html"><span class="card__kicker">5</span><h3>Tài liệu tham khảo</h3><p>Nguồn của mọi con số trên site.</p></a>
+        <a class="card" href="results.html"><span class="card__kicker">4</span><h3>Kết quả</h3><p>Các thí nghiệm có đối chứng: harness thay đổi gì, và không thay đổi gì.</p></a>
+        <a class="card" href="guide.html"><span class="card__kicker">5</span><h3>Hướng dẫn</h3><p>Cài đặt và quy trình làm việc hằng ngày.</p></a>
+        <a class="card" href="references.html"><span class="card__kicker">6</span><h3>Tài liệu tham khảo</h3><p>Nguồn của mọi con số trên site.</p></a>
       </div>
 
       <h3>Tóm tắt</h3>
