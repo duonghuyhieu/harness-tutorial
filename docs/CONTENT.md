@@ -264,8 +264,11 @@ unless noted; the current public release is 2.3.1):
   (plain 62% instead of 30%); `verify` called in 24/26 block-only runs vs 1/27 files-only runs. E4, a second task
   (invoice, 9 rules, 37 hidden tests; n 15–17 per arm): plain 82%, instructions/context 29%, full kit 33%; full kit
   − plain −49% [−70%, −15%], instructions − plain −53% [−73%, −20%] — the opposite sign, again on one input-validation
-  rule. E5, the published 2.3.1 with its review gate, checkout (n 10–18): plain 56%, kit 2.2.1 57%, kit 2.3.1 90%;
-  2.3.1 − plain +34% [−2%, +58%], 2.2.1 − plain +2% [−30%, +32%]; cost per run about 6 × with the review gate.
+  rule. E5, the published 2.3.1, checkout (n 10–18): plain 56%, kit 2.2.1 57%, kit 2.3.1 90%; 2.3.1 − plain +34%
+  [−2%, +58%] — but the runner did not persist sessions, so the review gate could never approve (0 of 34 verdicts) and
+  the agents bypassed it with a recorded `--no-review` (found after the analysis). E5b with sessions persisted (the
+  gate working): plain 31%, kit 2.3.1 56%, +25% [−15%, +56%], cost per run about 3 ×; the reviewer approved code that
+  failed a spec rule in 4 of 9 runs.
   Deviations: account session limits (one top-up each), E4 stopped at its cost cap after 57/90 runs, E5's first batch
   invalid (experimenter's runner bug, caught by the kit owner's reviewer).
 - Checkout batches together [sl, exploratory]: within each randomized batch harness − plain was +23%, +37%, +38%,

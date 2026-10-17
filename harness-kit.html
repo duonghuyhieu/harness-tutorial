@@ -191,13 +191,12 @@
         <tr><td>Kit đầy đủ</td><td>5/15 (33%)</td><td><b>−49% [−70%, −15%]</b></td></tr>
       </tbody></table></div>
       <p>Trên tác vụ thứ hai, harness lại làm kết quả <b>kém hơn</b>. Khác biệt cũng nằm ở đúng một quy tắc kiểm tra đầu vào mà test nhìn thấy được không kiểm: từ chối giá kiểu float. Lời giải của nhóm có harness thường bỏ bước kiểm tra kiểu này. Vì sao thì chưa rõ <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 10. E5: bản phát hành 2.3.1 (có cổng review), tác vụ checkout.</caption><thead><tr><th>Nhóm</th><th>Đúng hoàn toàn</th><th>So với không harness (95%)</th><th>Chi phí mỗi lần chạy, trung vị</th></tr></thead><tbody>
-        <tr><td>Không harness</td><td>10/18 (56%)</td><td>—</td><td>0,116 USD</td></tr>
-        <tr><td>Kit 2.2.1</td><td>8/14 (57%)</td><td>+2% [−30%, +32%]</td><td>0,095 USD</td></tr>
-        <tr><td>Kit 2.3.1, cổng review</td><td>9/10 (90%)</td><td>+34% [−2%, +58%]</td><td>0,670 USD</td></tr>
+      <div class="table-wrap"><table><caption>Bảng 10. E5b: bản phát hành 2.3.1 với cổng review hoạt động, tác vụ checkout.</caption><thead><tr><th>Nhóm</th><th>Đúng hoàn toàn</th><th>So với không harness (95%)</th><th>Chi phí mỗi lần chạy, trung vị</th></tr></thead><tbody>
+        <tr><td>Không harness</td><td>4/13 (31%)</td><td>—</td><td>0,130 USD</td></tr>
+        <tr><td>Kit 2.3.1, cổng review</td><td>5/9 (56%)</td><td>+25% [−15%, +56%]</td><td>0,398 USD</td></tr>
       </tbody></table></div>
-      <p>Bản 2.3.1 cho tỷ lệ đúng cao nhất, nhưng chưa đủ để chắc chắn, và chi phí mỗi lần chạy gấp khoảng 6 lần <span class="ev" data-evidence="do">Đo</span>. Lần chạy thử trước E5 còn tìm ra một lỗi: trên một bản cài mới của một kho Python không có tệp đánh dấu dự án, lệnh test để trống. Reviewer khi đó từ chối các test mới vì lệnh test không thu thập chúng, còn việc sửa cấu hình lại bị guard chặn khi chạy không có người duyệt. Kết quả là một feature đã làm đúng không bao giờ qua được. Lỗi này đã được sửa ở bản 2.4.0, chưa phát hành (n = 1) <span class="ev" data-evidence="do">Đo</span>.</p>
-      <div class="table-wrap"><table><caption>Bảng 11. Mọi đợt trên tác vụ checkout (kit từ 2.2.0) và phép gộp theo đợt — thăm dò, không đăng ký trước.</caption><thead><tr><th>Đợt</th><th>Không harness</th><th>Harness</th><th>Chênh lệch</th></tr></thead><tbody>
+      <p>Bản 2.3.1 có tỷ lệ đúng cao hơn nhưng chưa đủ để chắc chắn, chi phí mỗi lần chạy gấp khoảng 3 lần, và reviewer vẫn duyệt cả mã sai ở 4/9 lần chạy. Ở đợt đo trước đó (E5), bộ chạy không lưu lại phiên làm việc, nên kit không xác thực được lần duyệt (APPROVE) nào, và agent phải bỏ qua cổng bằng lệnh <code>--no-review</code>; điều này được phát hiện khi đọc transcript sau khi đã phân tích, nên E5b được chạy lại với phiên được lưu <span class="ev" data-evidence="do">Đo</span>. Lần chạy thử trước E5 còn tìm ra một lỗi: trên một bản cài mới của một kho Python không có tệp đánh dấu dự án, lệnh test để trống. Reviewer khi đó từ chối các test mới vì lệnh test không thu thập chúng, còn việc sửa cấu hình lại bị guard chặn khi chạy không có người duyệt. Kết quả là một feature đã làm đúng không bao giờ qua được. Lỗi này đã được sửa ở bản 2.4.0, chưa phát hành (n = 1) <span class="ev" data-evidence="do">Đo</span>.</p>
+      <div class="table-wrap"><table><caption>Bảng 11. Mọi đợt trên tác vụ checkout (kit 2.2.x) và phép gộp theo đợt — thăm dò, không đăng ký trước.</caption><thead><tr><th>Đợt</th><th>Không harness</th><th>Harness</th><th>Chênh lệch</th></tr></thead><tbody>
         <tr><td>E2b</td><td>7/19</td><td>12/20</td><td>+23</td></tr>
         <tr><td>E2c</td><td>7/19</td><td>14/19</td><td>+37</td></tr>
         <tr><td>E3a</td><td>12/40</td><td>25/37</td><td>+38</td></tr>
