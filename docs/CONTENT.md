@@ -258,6 +258,33 @@ unless noted; the current public release is 2.3.1):
   and no gate, 32/39 ran `verify` on their own. Deviations: spend 34.35 USD against a registered cap of 20 USD; 18
   runs stopped by chunk caps were run later as a top-up. Limits: one task, one model, one OS; the context channel is
   not split further.
+- Pre-registered E3b, E4, E5 (17/10/2026) [do]. E3b, checkout, kit 2.2.1, split of the context channel (n 26–28 per
+  arm): fully correct plain 62%, instructions/context 75%, SessionStart block only 62%, instruction files only 52%,
+  a 6-line CLAUDE.md with the same content and no kit 68%; I − A +13% [−11%, +36%] — E3a's +44% did not replicate
+  (plain 62% instead of 30%); `verify` called in 24/26 block-only runs vs 1/27 files-only runs. E4, a second task
+  (invoice, 9 rules, 37 hidden tests; n 15–17 per arm): plain 82%, instructions/context 29%, full kit 33%; full kit
+  − plain −49% [−70%, −15%], instructions − plain −53% [−73%, −20%] — the opposite sign, again on one input-validation
+  rule. E5, the published 2.3.1 with its review gate, checkout (n 10–18): plain 56%, kit 2.2.1 57%, kit 2.3.1 90%;
+  2.3.1 − plain +34% [−2%, +58%], 2.2.1 − plain +2% [−30%, +32%]; cost per run about 6 × with the review gate.
+  Deviations: account session limits (one top-up each), E4 stopped at its cost cap after 57/90 runs, E5's first batch
+  invalid (experimenter's runner bug, caught by the kit owner's reviewer).
+- Checkout batches together [sl, exploratory]: within each randomized batch harness − plain was +23%, +37%, +38%,
+  +13%, +2%; a Mantel–Haenszel estimate stratified by batch gives +25% [+13%, +37%]. The harness arms stayed within
+  57% to 75% fully correct, the plain arm ranged from 30% to 67% between batches with identical recorded conditions.
+- Defect found by the E5 smoke (n = 1) [do]: on a fresh 2.3.1 install of a Python repo without marker files the test
+  command is empty, the reviewer rejects tests it does not collect, and the guarded config edit is denied headless —
+  a correct feature never passes. Fixed after 2.3.1 in the unpublished 2.4.0 (V033/V034/V036: an empty test command
+  no longer blocks the review; no guessed test command), which also removes template noise from the injected state
+  (V032, from E3a transcripts).
+- Ideas taken from other open-source harness repositories [sl] (survey of 17 repositories, 81 proposals: 20 built,
+  37 planned, 24 in the backlog). Published in 2.3.1: refuse trivial verification commands (enmanuelmag/agent-harness-kit),
+  protect the checker and deny `--no-verify` (affaan-m/ECC), git-bypass and self-protection lists (manuelschipper/nah),
+  stale-pass detection (Tsubaki-01/Iris), a review gate tied to the diff, an incident ledger and a handoff gate
+  (GammaLabTechnologies/harmonist), fixed reviewer verdicts (ZephrFish/harness-kit, harnessworks/harness-starter-kit),
+  reviewer prompt rules (obra/superpowers), a warn-only rationalization detector (affaan-m/ECC). Unpublished 2.4.0:
+  hook profiles (ECC), the user's request kept verbatim across compaction and injected state labelled as background
+  (shareAI-lab/learn-claude-code), secret redaction (RealZST/HarnessKit), full verify output on disk
+  (learn-claude-code), a follow-up queue (ZephrFish/harness-kit).
 - Stop-gate defect [do]: up to kit 2.1.5 a one-file change was invisible to the Stop gate (the first `git status`
   line lost its leading space); fixed in 2.2.0. Every harness arm of experiments 2–5 below ran with it.
 - Experiment 5 [do — small n]: a long task (one class, five parts, later parts change earlier ones) over 8 or 10
@@ -268,10 +295,11 @@ unless noted; the current public release is 2.3.1):
   to 16% of tool calls and raised code edits per session from 0.42 to 0.60 (plain 0.53). An earlier 8-turn batch
   that looked much worse for the harness ran on a kit being edited at the time and did not replicate — retracted.
 - Synthesis [sl]: with enough runs, the harness improved correctness and about halved the verification gap
-  (+30 points on 2.2.0, +38 on 2.2.1); it acts through the verification it enforces, in both directions (correct
-  per-rule tests raised correctness, enforced wrong tests lowered it below every other arm); on that task the
-  instructions and injected context carried the effect and gates alone were mostly cost — this corrects an earlier
-  reading "gates, not instructions"; a gate helps when it points the agent back to a workflow it already has; it has costs (1.5–3 × per run, per-session ceremony) and failure
+  (+30 points on 2.2.0, +38 on 2.2.1) on checkout, by an amount that varies between batches (pooled +25), and lowered
+  it on a second task of the same shape (−49): the effect on correctness depends on the task, in sign; it acts
+  through the verification it enforces, in both directions; the injected state, not gates or instruction files,
+  changes the agent's behaviour — this corrects an earlier reading "gates, not instructions"; a gate helps when it
+  points the agent back to a workflow it already has; it has costs (1.5–3 × per run, per-session ceremony) and failure
   modes of its own (defects found by the experiments, all fixed); variance is large, so small effects stay open.
 Dogfooding — this site was built with harness-kit's own loop (all [sx], single project, 15/10/2026):
 - 6 page features, each with `python tests/check_site.py --page <page>` as its verification command; maker
@@ -290,10 +318,9 @@ Dogfooding — this site was built with harness-kit's own loop (all [sx], single
   Lesson 01 predicts; logging them by layer pointed to the fix.
 
 Limits (must be stated): hooks are guardrails inside the agent's process, not a sandbox; turn on Claude Code's own
-sandboxing for filesystem/network isolation; the pre-registered results cover one task and one model; the ablation
-locates the effect in the instructions and injected context but does not split that channel — other models,
-harder tasks, independent test authors, an ablation inside the context channel and an evaluation of the 2.3.x
-gates remain.
+sandboxing for filesystem/network isolation; the pre-registered results cover two tasks and one model and disagree
+in sign; the plain arm moves between batches — more tasks, other models, independent test authors and longer work
+remain.
 
 Interactive pieces expected on this page: the feature state machine stepper (buttons: next / try / verify fail /
 verify pass / block) showing what the runtime allows; the hook timeline (SessionStart → UserPromptSubmit → PreToolUse

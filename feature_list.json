@@ -1,6 +1,6 @@
 {
   "project": "harness-tutorial",
-  "last_updated": "2026-10-16",
+  "last_updated": "2026-10-17",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -667,6 +667,30 @@
       "priority": 26,
       "activated_at": "2026-10-16T23:35:24+07:00",
       "activated_commit": "8f695192159a1eb03cd8057d00baa5c024cc82a8"
+    },
+    {
+      "id": "F016",
+      "category": "feature",
+      "behavior": "E3b/E4/E5 results, pooled checkout view, 2.3.1 fresh-install defect, and a table of ideas taken from other harness repositories",
+      "verification": "python tests/check_site.py --strict",
+      "status": "passing",
+      "depends_on": [],
+      "evidence": {
+        "verified_at": "2026-10-17T17:12:38+07:00",
+        "commit": "16a4b46",
+        "command": "python tests/check_site.py --strict",
+        "exit_code": 0,
+        "duration_s": 0.7,
+        "project_check": "quick",
+        "output_tail": "site check: PASS"
+      },
+      "scope": [
+        "*.html",
+        "docs/CONTENT.md"
+      ],
+      "priority": 27,
+      "activated_at": "2026-10-17T17:11:22+07:00",
+      "activated_commit": "16a4b46c000dc9fc18a806f706b8b5f45e57746f"
     }
   ]
 }

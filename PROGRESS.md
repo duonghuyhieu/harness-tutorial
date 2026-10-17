@@ -32,6 +32,8 @@ _Auto-updated by `harness.py handoff` at 2026-10-16T17:01:54+07:00_
 - [x] 2026-10-16: F014 pre-registered result leads the synthesis; Stop-gate defect disclosed; experiment 5/5c; 5b retracted.
 - [x] 2026-10-16: F015 E3a ablation (instructions/context carry the effect, gates alone do not; corrects "gates, not
       instructions"); kit facts → published 2.3.1 (168 tests, V001–V026, review gate and threat model).
+- [x] 2026-10-17: F016 E3b/E4/E5 (Bảng 8–11: context split, a second task with the opposite sign, the published 2.3.1),
+      pooled checkout view, 2.3.1 fresh-install defect, ideas taken from other harness repos (Bảng 12).
 ## In Progress
 - [ ] (none yet — run `python scripts/harness.py next`)
 
